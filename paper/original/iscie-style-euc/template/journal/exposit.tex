@@ -1,0 +1,54 @@
+%
+% exposit.tex
+%    システム制御情報学会  Ａ４版クラスファイル
+%    scitrans.cls のサンプル（解説・総説・展望記事のテンプレートファイル）
+%
+\documentclass[J]{scitrans}
+\usepackage{graphicx}
+%
+%               Usage:  \documentclass[J]{scitrans} (和文の場合)
+%                       \documentclass[E]{scitrans} (英文の場合)
+%
+% 年, 巻, 号 ページの設定
+%
+\appearyear{1996}
+\vol{7}
+\numberinvol{13}
+\setcounter{page}{1}
+\setcounter{volumepage}{1}
+
+\Journal{解説}{『特集名』}{\expositry}      %% 解説の時
+%%\Journal{総説}{『特集名』}{\survey}       %% 総説の時
+%%\Journal{展望}{『特集名』}{\technicalview}%%  展望の時
+
+%%\Journal{カテゴリ}{}      %% 特集号でない時は, 第2引数を空に
+
+%%\ForSubmission            %% 提出前に一度コメントをはずして
+                            %% 英文題目および著者名をご確認ください
+
+\begin{document}
+
+\title{システム制御情報学会スタイルファイルの\\ 使い方\quad
+  -- 解説, 展望, 総説の場合--}
+\author{鈴木　太郎*}
+
+\etitle{Usage of Style File for Transactions of the Institute of
+        Systems, Control and Information Engineers}
+\eauthor{Taro {\sc Suzuki}*}
+\headingtitle{システム制御情報学会スタイルファイルの使い方}
+\headingauthors{システム}
+
+\maketitle
+
+\acceptdate{1995年8月1日}
+
+\address{*}{〇〇大学　工学部}
+
+\keywords{style file, transactions, ISCIE, paper}
+
+%%% つぎの \input を削除し，本文を書き出して下さい．
+\input{tmp.tex}
+
+\end{document}
+%
+%% end of exposit.tex

@@ -1,0 +1,2813 @@
+%$Id: sci209.sty,v 1.23 2001-01-10 14:53:51+09 aoki Exp $
+
+\newif\if@msaitoauthordisp\@msaitoauthordispfalse
+\newif\if@shortpaper
+ \@shortpaperfalse
+\newif\if@transaction
+ \@transactionfalse
+\newif\if@journal
+ \@journalfalse
+\newif\if@forsubmission
+ \@forsubmissionfalse
+\newif\if@nonameoutput
+  \@nonameoutputfalse
+\newif\if@shortjournaltitle
+ \@shortjournaltitlefalse
+\newif\if@lecturejournaltitle
+ \@lecturejournaltitlefalse
+\newif\if@jdiscussion
+ \@jdiscussionfalse
+
+\newif\if@jbiography
+ \@jbiographyfalse
+\newif\if@jlongbiography
+ \@jlongbiographyfalse
+\newif\if@jshortbiography
+ \@jshortbiographyfalse
+\newif\if@lecturefigfile
+ \@lecturefigfilefalse
+\newif\if@mondou
+ \@mondoufalse
+
+\newif\if@longjournaltitle
+  \@longjournaltitlefalse
+
+\newif\if@centertitle
+  \@centertitlefalse
+\def\centertitle{\@centertitletrue}
+
+\@twosidetrue
+
+
+\def\Shortpaper{\@shortpapertrue}
+\def\ForSubmission{%
+  \appearyear{0000}
+  \vol{0}
+  \numberinvol{0}
+  \@forsubmissiontrue}
+
+	\newdimen \Q   \Q .25mm %
+\font\kwfont=cmbxti10 \@ptscale7
+	\newdimen\eikotopsep
+  \eikotopsep\topsep
+\def\gaiji#1{\ifvmode\leavevmode\fi\vrule width\zw height\zh}
+\newdimen\ronbuntitleheight
+\bgroup
+  \abstractsize
+  \global\ronbuntitleheight=\if@english18.9\zh\else27\zh\fi
+%% Added by Y. Kubo to define the title height under the E option.
+%% (20120229)
+%
+%% The title height in printed English papers is 11cm,
+%% 3.3cm of which is occupied by the English title.
+%% Since the current style file keeps 27\zh as the title height for Japanese
+%% papers having both Japanese and English titles,
+%% 27\zh x (11 - 3.3)/11 = 18.9\zh is the title height 
+%% for English papers only with the English title.
+%                                            
+\egroup
+
+\def\maketitle{%
+ \begingroup
+ \if@forsubmission%
+   \columnwidth0.7\textwidth \hsize\columnwidth \linewidth\columnwidth%
+   \@twocolumnfalse%
+   \setpageout{0}\pageoutstyle{}\pagestyle{empty}%
+   \begin{pageout}
+     \if@journal%
+      \englishtitleoutput\relax%
+     \else%
+      \ronbunyoushioutput\relax%
+     \fi%
+   \end{pageout}%
+   \@twocolumntrue%
+ \fi%
+ \endgroup
+ \par
+ \begingroup
+ \def\thefootnote{\fnsymbol{footnote}}
+ \def\@makefnmark{\hbox 
+ %
+ {$^{\@thefnmark}$}}
+ \if@twocolumn
+  \if@veryshortjournaltitle
+    \twocolumn[\relax]
+    \@veryshortmaketitle
+   \else
+     \twocolumn[\@maketitle] 
+   \fi
+ \else \newpage
+ \global\@topnum\z@ \@maketitle \fi\thispagestyle{plain}\@thanks
+ \endgroup
+ \setcounter{footnote}{0}
+ \c@diffvolumepage\c@page \advance\c@diffvolumepage by -\c@volumepage
+ \thispagestyle{myheadings}
+ \let\maketitle\relax
+ \let\@maketitle\relax
+ \gdef\@thanks{}\gdef\@author{}\gdef\@title{}\let\thanks\relax}
+
+ 
+\def\@maketitle{%
+  \if@shortpaper%
+    \@shorttitle
+  \else%
+    \if@journal\relax%
+        \if@shortjournaltitle%
+          \if@lecturejournaltitle%
+            \@lecturetitle%
+          \else%
+            \@sjournaltitle%
+          \fi
+         \else%
+          \@journaltitle
+         \fi%
+    \else%
+      \@transtitle
+   \fi
+ \fi}
+
+\def\@shorttitle{
+   \vbox to \if@english13.5\zw\else18\zw\fi{\offinterlineskip
+     %
+     \dimen0=\hsize\advance\dimen0 by -10\zw
+     \dimen1=\hsize\advance\dimen1 by -4\zw
+     \dimen2=\hsize\advance\dimen2 by -12\zw
+         \hbox to \textwidth{\hfill\semilarge\rule{7\zw}{0.3mm}\kern1.2\zw}
+     \vskip 0.5\zh
+     \hbox to \textwidth{\hfill\semilarge\bf%
+     \if@english{Short~Paper}\kern1.3\zw\else%
+     \semilarge\bf\kinto{6\zw}{\kanji@kenkyuusokuhou}\kern1.7\zw\fi}
+     \vskip 0.5\zh
+         \hbox to \textwidth{\hfill\semilarge\rule{7\zw}{0.3mm}\kern1.2\zw}
+     \vfill
+     \hbox to \textwidth{\hskip2\zw\parbox{\dimen0}{\lineskiplimit=3pt%
+                      \lineskip=3pt\LARGE\bf\baselineskip21pt
+                        \@title\nobreak{\rm *}}\hfill}
+     \vfill
+     \hbox to \textwidth{\hfill\parbox{\dimen1}{\lineskiplimit=3pt
+                         \lineskip=3pt\large\baselineskip14.5pt\raggedleft
+                         \@author}%
+                         \kern1.7\zw}
+     \if@english\else
+     \vfill
+     \hbox to \textwidth{\hskip2\zw\parbox{\dimen2}{\hyphenpenalty=10000%
+         \lineskiplimit=3pt%
+         \lineskip=3pt\raggedright\large\bf\baselineskip14.5pt
+             \@etitle\nobreak{\rm *}}\hfill}
+     \vfill
+     \hbox to \textwidth{\hfill\parbox{\dimen1}{\lineskiplimit=3pt%
+                         \lineskip=3pt\semilarge\baselineskip13.5pt\raggedleft
+                         \@eauthor}%
+                         \kern1.7\zw}
+     \fi
+     \vskip 1\zw
+                                %
+     }
+   \vskip 2\zw}
+
+\def\@sjournaltitle{
+   \vbox to \titleheight{\offinterlineskip
+     %
+     \dimen0=\hsize\advance\dimen0 by -10\zw
+     \hbox to \textwidth{\hfill\rule{\categoryrulewidth}{0.3mm}\kern1.2\zw}
+     \if@tokureverse%
+       \vskip 0.28\zh%
+     \else%
+       \vskip 0.5\zh%
+     \fi
+     \hbox to \textwidth{%
+       \hspace{1\zw}\issuename%
+       \hfill\abstractsize\bf\kinto{\categorywidth}{\category}\kern1.7\zw}
+     \if@tokureverse%
+       \vskip 0.28\zh%
+     \else%
+       \vskip 0.5\zh%
+     \fi
+         \hbox to \textwidth{\hfill\rule{\categoryrulewidth}{0.3mm}\kern1.2\zw}
+     \vfill
+	 \vskip.5zw
+     \if@centertitle%
+        {\lineskiplimit=3pt%
+                \lineskip=3pt\titlecharsize\bf\baselineskip\titlebaselineskip%
+          \begin{center}
+                \@title
+          \end{center}
+        }
+     \else%
+         \hbox to \textwidth{\hskip2\zw\parbox{\dimen0}{\lineskiplimit=3pt%
+                \lineskip=3pt\titlecharsize\bf\baselineskip17pt%
+                \@title}\hfill}%
+      \fi%
+     \vfill
+     \hbox to \textwidth{\hfill\authorcharsize \@author\kern1.7\zw}
+     \vskip 1\zw
+                                %
+     }
+   \vskip 2\zw}
+
+
+
+\def\lecturefig#1{\@lecturefigfiletrue%
+  \def\lectureFIG{#1}}
+\def\@lecturetitle{%
+  %
+     \offinterlineskip
+     %
+     \dimen0=\hsize\advance\dimen0 by -10\zw
+     \begin{minipage}[t]{0.20\textwidth}
+       \vbox to \titleheight{%
+        \if@mondou
+         \vskip 1\zh
+         \if@lecturefigfile%
+		   \ifx \includegraphics\@undefined
+             \epsfile{file=\lectureFIG,width=20mm}%
+		   \else
+             \resizebox{20mm}{!}{\includegraphics{\lectureFIG}}%
+		   \fi
+         \else%
+           \framebox[20mm]{\rule[0mm]{0mm}{16mm}}%
+         \fi
+         \vss
+        \else
+         \vskip 3\zh
+         \if@lecturefigfile%
+		   \ifx \includegraphics\@undefined
+             \epsfile{file=\lectureFIG,width=32mm,height=26mm}%
+		   \else
+             \resizebox{32mm}{26mm}{\includegraphics{\lectureFIG}}%
+		   \fi
+         \else%
+           \framebox[33mm]{\rule[0mm]{0mm}{26mm}}%
+         \fi
+        \fi}
+     \end{minipage}     
+     \begin{minipage}[t]{0.75\textwidth}
+       \vbox to \titleheight{%
+       \hbox to \textwidth{\hfill\rule{\categoryrulewidth}{0.3mm}\kern1.2\zw}
+       \if@tokureverse%
+         \vskip 0.28\zh%
+       \else%
+         \vskip 0.5\zh%
+       \fi
+       \hbox to \textwidth{%
+         \hspace{1\zw}\issuename%
+         \hfill\abstractsize\bf\kinto{\categorywidth}{\category}\kern1.7\zw}
+       \if@tokureverse%
+         \vskip 0.28\zh%
+       \else%
+         \vskip 0.5\zh%
+       \fi
+       \hbox to \textwidth{\hfill\rule{\categoryrulewidth}{0.3mm}\kern1.2\zw}
+       \vfill
+       \if@mondou
+         \hskip -40pt
+         \advance\dimen0 by -43pt
+         \xdef\@Mauthor{\@author}
+         \def\@author{\relax}
+       \fi
+       \hbox to \textwidth{\hskip2\zw\parbox{\dimen0}{\lineskiplimit=3pt%
+           \lineskip=3pt\titlecharsize\bf\baselineskip\titlebaselineskip%
+               \@title}\hfill}
+       \vfill
+       \hbox to \textwidth{\hfill\authorcharsize \@author\kern1.7\zw}}
+     \end{minipage}
+   \vskip 2\zw}
+
+\def\@veryshortmaketitle{%
+  \vbox to \titleheight{\offinterlineskip
+    %
+    \dimen0=\hsize\advance\dimen0 by -3\zw
+     \hbox to \columnwidth{\rule{\categoryrulewidth}{0.3mm}\kern1.2\zw\hfill~}
+      \if@tokureverse%
+        \vskip 0.28\zh%
+      \else%
+        \vskip 0.5\zh%
+      \fi
+     \hbox to \columnwidth{%
+       \abstractsize\bf\ \kinto{\categorywidth}{\category}\kern1.7\zw\hfill~}
+      \if@tokureverse%
+        \vskip 0.28\zh%
+      \else%
+        \vskip 0.5\zh%
+      \fi
+         \hbox to \columnwidth{%
+                  \rule{\categoryrulewidth}{0.3mm}\kern1.2\zw\hfill~}
+     \vskip 2\zh
+     \hbox to \columnwidth{\hskip2\zw\parbox{\dimen0}{\lineskiplimit=3pt%
+                \lineskip=3pt\titlecharsize\bf\baselineskip\titlebaselineskip%
+                        \@title}\hfill}
+      \if@msaitoauthordisp
+        \vfill
+        \hbox to \columnwidth{\hfill\authorcharsize \@author\kern1.7\zw}
+	\vskip -1\zw
+      \fi
+     \vskip 1\zw
+                                %
+     }}
+
+\def\@journaltitle{
+  \vbox to \titleheight{\offinterlineskip
+    %
+    \dimen0=\hsize\advance\dimen0 by -10\zw
+    \barline\par
+    \vskip 1\zw\noindent
+    \hbox to \textwidth{\hspace{1\zw}\issuename%
+      \hfill {\abstractsize\bf\kinto{\categorywidth}{\category}{~~}}}
+    \vfill
+    \hbox to \textwidth{\hskip2\zw\parbox{\dimen0}{\lineskiplimit=3pt%
+        \lineskip=3pt\LARGE\bf\baselineskip\titlebaselineskip \@title}\hfill}
+    \vfill
+    \hbox to \textwidth{\hfill\authorcharsize \@author\kern1.7\zw}
+    \vskip 2\zw
+    \barline
+    \vskip 2\zw}}
+
+\def\@transtitle{
+    \vbox to \ronbuntitleheight{\offinterlineskip
+      %
+      \dimen0=\hsize\advance\dimen0 by -10\zw
+      \dimen1=\hsize\advance\dimen1 by -4\zw
+      \dimen2=\hsize\advance\dimen2 by -12\zw
+      \hbox to \textwidth{\hfill\semilarge\typeout{--\the\zw}\rule{5\zw}{0.3mm}\kern1.2\zw}
+      \vskip 0.5\zh
+      \hbox to \textwidth{\hfill\semilarge\bf%
+      \if@english{Paper}\kern2.1\zw\else%
+      \kinto{4\zw}{\kanji@ronbun{}}\kern1.7\zw\fi}
+      \vskip 0.5\zh
+      \hbox to \textwidth{\hfill\semilarge\rule{5\zw}{0.3mm}\kern1.2\zw}
+      \vfill
+      \hbox to \textwidth{\hskip2\zw\parbox{\dimen0}{\lineskiplimit=3pt%
+          \lineskip=3pt\LARGE\bf\baselineskip21pt
+              \@title\nobreak{\rm *}}\hfill}
+      \vfill
+      \hbox to\textwidth{\hfill\parbox{\dimen1}{\lineskiplimit=3pt
+                         \lineskip=3pt\large\baselineskip14.5pt\raggedleft
+                         \@author}%
+                         \kern1.7\zw}
+      \vfill
+      \if@english\else
+      \hbox to \textwidth{\hskip2\zw\parbox{\dimen2}{\hyphenpenalty=10000%
+          \lineskiplimit=3pt\lineskip=3pt%
+          \raggedright\large\bf\baselineskip14.5pt
+              \@etitle\nobreak{\rm *}}\hfill}
+      \vfill
+      \hbox to \textwidth{\hfill\parbox{\dimen1}{\lineskiplimit=3pt%
+                         \lineskip=3pt\semilarge\baselineskip13.5pt\raggedleft
+                         \@eauthor}%
+                         \kern1.7\zw}
+      %
+      \vfill
+      \fi
+      }
+    %
+    \hbox to\textwidth{\hfill\parbox{152.75mm}{\parindent1.5em\lineskiplimit=2pt%
+        \lineskip=2pt\abstractsize\baselineskip10pt\@abstract}\hfill}
+    \vskip 2\zw
+    \vfill}
+
+\def\articleinit{%
+ \setcounter{footnote}{0}
+ \c@diffvolumepage\c@page \advance\c@diffvolumepage by -\c@volumepage
+ \thispagestyle{myheadings}
+ \let\maketitle\relax
+ \let\@maketitle\relax
+ \gdef\@thanks{}\gdef\@author{}\gdef\@title{}\let\thanks\relax}
+
+\newenvironment{Bookreview}[1]%
+  { \def\scireviewer{#1}
+    \begin{multicols}{2}
+    \vbox to \titleheight{\offinterlineskip
+      \def\thefootnote{\fnsymbol{footnote}}%
+      \dimen0=\hsize\advance\dimen0 by -10\zw
+      \hbox to \columnwidth{\rule{\categoryrulewidth}{0.3mm}\kern1.2\zw\hfill~}
+      \vskip 0.5\zh
+      \hbox to \columnwidth{%
+        \abstractsize\bf\ \kinto{\categorywidth}{\category}\kern1.7\zw\hfill~}
+      \vskip 0.5\zh
+      \hbox to \columnwidth{%
+        \rule{\categoryrulewidth}{0.3mm}\kern1.2\zw\hfill~}
+      \vfill}}%
+ {\begin{flushright}({\bf \scireviewer})\end{flushright}
+   \end{multicols}}
+
+\def\booktitle#1#2#3#4#5#6#7{%
+    \dimen0=\hsize\advance\dimen0 by -7\zw
+    \hbox to 0.48\textwidth{\hskip2\zw\parbox{\dimen0}{\lineskiplimit=3pt%
+        \lineskip=3pt\titlecharsize\bf\baselineskip15pt #1}\hfill}
+    \vskip 1.2\zw
+    \parbox{0.425\textwidth}{\raggedleft\large\bf #2}
+    \vskip 1.1\zw
+   \begin{tabular}{@{$\circ$ }p{0.22\textwidth}@{$\circ$ }p{0.22\textwidth}}
+      \parbox{4\zw}{\kinto{4\zw}{\kanji@shuppansha}}\hspace{1\zw} #3 &
+      {\kanji@hakkou}\hspace{1\zw} #4 \\
+      {\kanji@zenpage}\hspace{1\zw} #5 &
+      {\kanji@kakaku}\hspace{1\zw} #6 \kanji@en \\
+      \multicolumn{2}{@{$\circ$ }l}{ISBN\   #7} \\
+   \end{tabular}
+   \vskip \baselineskip
+}
+
+\def\reportheaddelimitation{{\large{\normalsize \kanji@colon}}}
+\def\reporthead#1#2#3#4#5#6{%
+  \begin{list}%
+    {}{%
+      \let\makelabel\descriptionlabel%
+      \setlength{\parsep}{0pt}
+      \settowidth{\labelwidth}{{\large\kanji@kaijoucolon}}
+      \setlength{\leftmargin}{\labelwidth}
+      \setlength{\rightmargin}{0pt}}
+    \item[\kanji@shusai\reportheaddelimitation] #1
+    \item[\kanji@kaiki\reportheaddelimitation] #2
+    \item[\kanji@kaijou\reportheaddelimitation] #3
+    \item[\kanji@sankashasuu\reportheaddelimitation] #4
+    \item[\kanji@happyouronbunsuu\reportheaddelimitation] #5
+    \item[Proceedings\kanji@hakkousho\reportheaddelimitation] #6
+  \end{list}
+  \par\vskip\baselineskip}
+
+\def\Cauthor#1{\gdef\@Cauthor{#1}}
+\def\comauthor{
+  \par\vskip\baselineskip
+  \begin{flushright}({\bf \@Cauthor})\end{flushright}}
+
+\def\mondouauthor{
+  \par\vskip\baselineskip
+  \begin{flushright}({\bf \@Mauthor})\end{flushright}}
+
+\newcounter{series} %
+
+\newdimen\fnindent
+\bgroup%
+  \footnotesize
+  \global\fnindent=3\zw
+\egroup
+
+\newcounter{volumepage}
+\setcounter{volumepage}{1}
+\newcounter{diffvolumepage}
+
+\def\eikovolumepage{%
+\newcount\@tmpcnta%
+\@tmpcnta\value{page}%
+  \advance\@tmpcnta by -\c@diffvolumepage%
+  \c@volumepage\@tmpcnta%
+  \@arabic{\@nameuse{c@volumepage}}}
+  
+\def\thevolumepage{\pagenumbersize --~{\eikovolumepage}~--}
+
+\if@english
+\def\title#1{\gdef\@title{#1}\gdef\@etitle{#1}}
+\def\author#1{\gdef\@author{#1}\gdef\@eauthor{#1}}
+\def\etitle#1{}
+\def\eauthor#1{}
+\long\def\abstract#1{\gdef\@abstract{#1}\let\@ronbunyoushi\@abstract}
+\else
+\def\title#1{\gdef\@title{#1}}
+\def\author#1{\gdef\@author{#1}}
+\def\etitle#1{\gdef\@etitle{#1}}
+\def\eauthor#1{\gdef\@eauthor{#1}}
+\long\def\abstract#1{\gdef\@abstract{#1}}
+\fi
+\def\TitlePar{\\\hskip 1.5em}
+\def\AuthorPar{\\\mbox{}\hfill}
+
+\def\iscwhen#1{\gdef\@when{#1}}
+\def\iscwhere#1{\gdef\@where{#1}}
+\def\attendance#1#2{\fdef\@attendance{#1}{#2}}
+
+\newdimen\addressindent
+  \addressindent\fnindent
+\newcounter{numberofaddress}
+\newif\if@firstaddress
+  \@firstaddresstrue
+\newbox\tmpaddressbox
+
+\def\address#1#2{%
+  \if@firstaddress\@firstaddressfalse%
+   \@ifundefined{r@eiko:addresscount}{\relax}{%
+    \edef\@@numberofaddress{\csname r@eiko:addresscount\endcsname\relax}%
+    \edef\tmpaddresscount{\expandafter\geteikolastpage\@@numberofaddress}%
+    %
+    %
+    %
+    %
+    {{\c@footnote=\tmpaddresscount\def\thefootnote{\fnsymbol{footnote}}}%
+	\xdef\@thefnmark{\thempfn}\global\setbox\tmpaddressbox\hbox{\@makefnmark}}%
+    \addressindent\wd\tmpaddressbox\advance\addressindent by 0.5\zw%
+    \global\c@numberofaddress\@ne}\relax%
+  \else\global\advance\c@numberofaddress by\@ne\relax%
+  \fi
+  \begingroup
+  \let\footnotesize\addresssize%
+  \def\thefootnote{\mbox{}}
+  \long\def\@makefntext##1{\noindent\hangafter=1\hangindent=\addressindent##1}
+  \@tempcnta0 \@tfor\@tempa:=#1\do{\advance\@tempcnta1 }%
+  \footnotetext[1]{\leavevmode\hbox to \addressindent
+  {\hfill{$^\@fnsymbol{\@tempcnta}$}\hskip 0.5\zw}%
+    {#2}}
+  \endgroup
+}
+
+\def\keywords#1{\begingroup
+  \let\footnotesize\addresssize%
+  \long\def\@makefntext##1{\noindent##1}
+  \footnotetext{\hyphenpenalty=3000%
+    {\if@forsubmission\it\else\kwfont\fi Key Words\/}: #1}
+  \endgroup}
+
+\def\kinto#1#2{\hbox to #1{\kintokanjiskip#2}}
+\def\kintokanjiskip{\kanjiskip=0pt plus 1fil minus 1fil%
+  \xkanjiskip=\kanjiskip}
+\def\ekinto#1#2{\hbox to #1{\hfil%
+\@tfor\@tempa:=#2\do{\@tempa\hskip 0pt plus 1fil minus 1fil}%
+\unskip\hfil}}
+\let\and\kanji@nakaguro
+\def\barline{{%
+  \dimen0=\textwidth
+  \divide\dimen0 by 300
+  \dimen0\dimen0
+  \hbox to \textwidth{\scriptsize\leaders\hbox to\dimen0{\hss$\mid$\hss}\hfill}}}
+
+\def\englishtitleoutput{%
+ \Large
+  \if@english\relax\else
+    \noindent
+    {\bf \kanji@wabundaimoku}\\
+      \@title\\
+    \vskip\baselineskip
+    \noindent
+    {\bf \kanji@tyosha}\\
+      \@author\\
+    \vskip\baselineskip
+  \fi
+    \noindent
+    {\bf English Title:}\\
+      \@etitle\\
+    \vskip\baselineskip
+    \noindent
+    {\bf Author:}\\
+      \@eauthor\\
+}
+
+\if@english
+\long\def\ronbunyoushi#1{}
+\else
+\long\def\ronbunyoushi#1{\gdef\@ronbunyoushi{#1}}
+\fi
+\def\ronbunyoushioutput{%
+  \if@journal\relax
+  \else%
+    \hbox to\columnwidth{\hfil\Large\bf \if@english{Abstract}\else\kanji@ronbun{}\kanji@youshi\fi\hfil}\par
+    \vskip2\baselineskip
+    \parindent12pt%
+    {\Large \if@english\@abstract\else\@ronbunyoushi\fi}
+  \fi%
+}
+
+
+
+\renewcommand{\thesection}{\arabic{section}.}
+\renewcommand{\thesubsection}{\thesection\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+\renewcommand{\theparagraph}{(\arabic{paragraph})}
+\renewcommand{\thesubparagraph}{(\alph{subparagraph})}
+\def\section{\@startsection {section}{1}%
+  {\parindent}{.5em plus .3em minus .0em}{.5em plus .3em minus .2em}%
+  {\large\bf}}
+\def\subsection{\@startsection{subsection}{2}{\parindent}%
+  {.5em plus .3em minus .0em}{1sp plus 1sp minus 1sp}{\semilarge\bf}}%
+\def\subsubsection{\@startsection{subsubsection}{3}{\parindent}%
+  {.1em plus .2em minus .1em}{1sp plus 1sp minus 1sp}{\normalsize\bf}}
+\def\eikotitledisplay{\@startsection {section}{1}%
+  {\z@}{.8em plus .1em minus .0em}{.4em plus .1em minus .1em}%
+  {\semilarge\bf}}
+
+\def\acknowledgement{%
+  \eikotitledisplay*{\hfil\if@english{Acknowledgements}%
+    \else{\kanji@shazi}\fi\hfil}%
+  \vskip0.5\baselineskip}
+\def\acknowledgment{%
+  \eikotitledisplay*{\hfil\if@english{Acknowledgments}%
+    \else{\kanji@shazi}\fi\hfil}%
+  \vskip0.5\baselineskip}
+
+\def\eikoappendixtitle{\if@english{Appendix}\else{\kanji@huroku}\fi}
+\def\appendix{%
+  \eikotitledisplay*{\hfil\if@english{Appendix}%
+    \else{\kanji@furoku}\fi\hfil}%
+  \setcounter{section}{0}%
+  \setcounter{subsection}{0}%
+  \setcounter{equation}{0}%
+  \setcounter{figure}{0}%
+  \setcounter{table}{0}%
+  \def\section{\@ifstar{\@isciestarsecapp}{\@isciesecapp}}%
+  \renewcommand{\theequation}{A\arabic{equation}}%
+  \renewcommand{\thefigure}{A\arabic{figure}}
+  \renewcommand{\thetable}{A\arabic{table}}
+  \vskip0.5\baselineskip%
+  }
+
+\def\appendices{
+  \eikotitledisplay*{\hfil{Appendices}\hfil}%
+  \setcounter{section}{0}%
+  \setcounter{subsection}{0}%
+  \setcounter{equation}{0}%
+  \setcounter{figure}{0}%
+  \setcounter{table}{0}%
+  \def\section{\@isciesecapp}%
+  \renewcommand{\theequation}{A\arabic{equation}}
+  \renewcommand{\thefigure}{A\arabic{figure}}
+  \renewcommand{\thetable}{A\arabic{table}}
+  }
+
+\def\@isciestarsecapp#1{%
+  \def\thesection{\eikoappendixtitle}%
+  \refstepcounter{section}%
+  \begin{list}%
+  {}{\labelsep 0pt
+  \labelwidth 0pt \leftmargin \labelsep \itemindent \parindent}%
+  \item {\bf #1} \end{list}\par
+}
+\def\@isciesecapp#1{%
+  \def\thesection{\eikoappendixtitle~\arabic{section}.}%
+  \refstepcounter{section}%
+  \begin{list}%
+  {\bf \eikoappendixtitle~\arabic{section}.}{\labelsep 1.8ex
+  \labelwidth 0pt \leftmargin \labelsep  \itemindent \parindent}%
+  \item {\bf #1} \end{list}\par
+}
+
+\newdimen\eikoparagraphtitlelength
+\def\paragraph#1{\refstepcounter{paragraph}
+ \setbox\@tempboxa\hbox{{\bf \theparagraph}\hskip1\zw{}}\@tempdima\wd\@tempboxa
+ \eikoparagraphtitlelength\columnwidth
+ \advance\eikoparagraphtitlelength by -\@tempdima
+ \advance\eikoparagraphtitlelength by -\parindent
+ \advance\@tempdima by \parindent
+ \setbox\@tempboxa\hbox{{\bf #1}}\@tempdimb\wd\@tempboxa
+ \ifdim\@tempdimb<\eikoparagraphtitlelength%
+  {\bf \theparagraph}\hskip1\zw{\bf #1}\par%
+ \else%
+  \begin{list}{\bf \theparagraph}%
+   {\topsep\z@\parsep\z@\itemsep\z@\parskip\z@\partopsep\z@%
+   \leftmargin\@tempdima\rightmargin\z@\labelsep1\zw
+   \listparindent\z@\labelwidth\@tempdima\advance\labelwidth by -1\zw}
+   \item {\bf #1}
+  \end{list}\par
+ \fi}
+\def\subparagraph#1{\refstepcounter{subparagraph}
+ \setbox\@tempboxa\hbox{{\bf \thesubparagraph}\hskip1\zw{}}\@tempdima\wd\@tempboxa
+ \eikoparagraphtitlelength\columnwidth
+ \advance\eikoparagraphtitlelength by -\@tempdima
+ \advance\eikoparagraphtitlelength by -\parindent
+ \advance\@tempdima by \parindent
+ \setbox\@tempboxa\hbox{{\bf #1}}\@tempdimb\wd\@tempboxa
+ \ifdim\@tempdimb<\eikoparagraphtitlelength%
+  {\bf \thesubparagraph}\hskip1\zw{\bf #1}\par%
+ \else%
+  \begin{list}{\bf \thesubparagraph}%
+   {\topsep\z@\parsep\z@\itemsep\z@\parskip\z@\partopsep\z@%
+   \leftmargin\@tempdima\rightmargin\z@\labelsep1\zw
+   \listparindent\z@\labelwidth\@tempdima\advance\labelwidth by -1\zw}
+   \item {\bf #1}
+  \end{list}\par
+ \fi}
+
+\def\@listI{\leftmargin\leftmargini
+    \topsep  \z@
+    \parsep  \z@
+    \itemsep \z@}
+\let\@listi\@listI
+\@listi 
+\def\@listii{\leftmargin\leftmarginii
+    \labelwidth\leftmarginii\advance\labelwidth-\labelsep
+    \topsep  \z@
+    \parsep  \z@
+    \itemsep \z@}
+\def\@listiii{\leftmargin\leftmarginiii
+    \labelwidth\leftmarginiii\advance\labelwidth-\labelsep
+    \topsep  \z@
+    \parsep  \z@
+    \itemsep \z@}
+
+\if@english\relax%
+\else 
+  \leftmargini 2\zw
+  \leftmarginii \zw
+  \leftmarginiii \zw
+  \leftmarginiv \zw
+  \leftmarginv \zw
+  \labelsep .5zw
+\fi
+
+\if@twocolumn%
+  \def\footnoterule{\kern-3\p@
+    \hrule width \columnwidth \kern 2.6\p@} %
+\else%
+ \def\footnoterule{\kern-3\p@
+    \hrule width 0.4\columnwidth \kern 2.6\p@}
+\fi
+\@addtoreset{footnote}{page}
+\def\thefootnote{\arabic{footnote}}
+\newcount\@fncnt
+\long\def\@makefntext#1{\noindent\hangafter=1\hangindent=\fnindent
+  \hbox to \fnindent{\hss$^{\@thefnmark}$}#1}
+
+
+
+
+\newcounter{savedpageout}
+\setcounter{savedpageout}{1}
+\def\setpageout#1{\setcounter{savedpageout}{#1}}
+\def\page@out{\arabic{page}}
+\def\pageoutstyle#1{\def\page@out{#1}}
+
+\newtoks\@stpage
+\newtoks\@stpageout
+
+\def\pageout{\clearpage%
+  \edef\@savedpage{\the\c@page}%
+  \@stpage=\expandafter{\thepage}%
+  \edef\@savedthepage{\the\@stpage}%
+  \setcounter{page}{\value{savedpageout}}%
+  \def\thepage{\page@out}}
+
+\def\endpageout{\clearpage%
+  \setcounter{savedpageout}{\value{page}}%
+  \setcounter{page}{\@savedpage}%
+  \@stpage=\expandafter{\@savedthepage}%
+  \edef\thepage{\the\@stpage}\global\@ignoretrue}
+
+
+
+
+
+
+
+
+\newcounter{remark}
+\newcounter{assumption}
+
+\newtheorem{theorem}{\if@english{Theorem}\else{\kanji@teiri}\fi}
+\newtheorem{lemma}{\if@english{Lemma}\else{\kanji@hodai}\fi}
+\newtheorem{proposition}{\if@english{Proposition}\else{\kanji@meidai}\fi}
+\newtheorem{corollary}{\if@english{Corollary}\else{\kanji@kei}\fi}
+\newtheorem{definition}{\if@english{Definition}\else{\kanji@teigi}\fi}
+\newtheorem{example}{\if@english{Example}\else{\kanji@reidai}\fi}
+
+\def\proof{\newparenenv{\if@english{Proof}\else{\kanji@shoumei}\fi}}
+\def\endproof{\mbox{}\hfill~$\Box$\endnewparenenv}
+
+\newenvironment{proofof}[1]{\vspace{0\baselineskip} \mbox{} \\ 
+        {{\hskip 4.0pt}\if@english{(Proof of #1)}
+      \else{\kanji@hirakikakko#1\kanji@noshoumei\kanji@tozikakko}\fi\hspace{0.5ex}}}{%
+          \mbox{}\hfill\mbox{}\mbox{}~\hfill~$\Box$%
+          \\[-1\baselineskip]\noindent\par}
+
+\def\remark{\refstepcounter{remark}%
+  \newparenenv{\if@english Remark~{\theremark}%
+  \else \kanji@tyuui~{\theremark}\fi}}
+\def\endremark{\endnewparenenv}
+
+\@namedef{remark*}{\newparenenv{\if@english Remark\else \kanji@tyuui\fi}}
+\@namedef{endremark*}{\endnewparenenv}
+
+\@namedef{condition*}{\newunderlineenv{\if@english Condition\else \kanji@jouken\fi}}
+\@namedef{endcondition*}{\endnewunderlineenv}
+
+\newenvironment{assumption}{\refstepcounter{assumption}\begin{list}%
+        {}{\leftmargin 0pt \rightmargin 0pt \labelsep 1\zw
+        \topsep\z@ \parskip\z@ \partopsep\z@ \parsep\z@ \itemsep\z@
+        \listparindent 0pt \if@english\labelwidth 8\zw \itemindent 9\zw%
+        \else\labelwidth 4\zw \itemindent 5\zw\fi}
+        \item[{\hskip 4.0pt}\if@english{\bf Assumption~{\theassumption}}
+      \else{\kanji@hirakikakko\kanji@katei~{\theassumption}\kanji@tozikakko}\fi]}{\end{list}}
+
+\newenvironment{step}{\begin{list}%
+        {\underline{\if@english{Step~{\arabic{enumi}}}%
+      \else{\kanji@step~{\arabic{enumi}}}\fi}\hfill}{\usecounter{enumi}
+        \if@english\leftmargin 4.5\zw\else\leftmargin 6\zw\fi
+        \rightmargin 0pt \labelsep 1\zw
+        \topsep\z@ \parskip\z@ \partopsep\z@ \parsep\z@ \itemsep\z@
+        \listparindent 0pt
+        \if@english\labelwidth 3.5\zw\else\labelwidth 5\zw\fi}}%
+        {\end{list}}
+
+\newenvironment{underlineassumption}{\refstepcounter{assumption}%
+        \begin{newunderlineenv}{\kanji@katei~{\arabic{assumption}}}}%
+        {\end{newunderlineenv}}
+
+\newenvironment{condition}{\begin{list}%
+        {\underline{\if@english{Condition~{\arabic{enumi}}}%
+      \else{\kanji@jouken~{\arabic{enumi}}}\fi}\hfill}{\usecounter{enumi}
+        \leftmargin 4\zw \rightmargin 0pt \labelsep 1\zw
+        \topsep\z@ \parskip\z@ \partopsep\z@ \parsep\z@ \itemsep\z@
+        \listparindent 0pt \labelwidth 3\zw}}%
+        {\end{list}}
+
+\def\newtheoremenv#1{%
+  \topsep\z@\parsep\z@\itemsep\z@\parskip\z@\partopsep\z@%
+  \trivlist \item[\hskip \labelsep{\hskip4pt\kanji@hirakidaikakko{\bf #1}\kanji@tozidaikakko}\,\,]}
+\def\endnewtheoremenv{\hfil\endtrivlist}
+
+\def\newparenenv#1{%
+  \labelsep\z@
+  \topsep\z@\parsep\z@\itemsep\z@\parskip\z@\partopsep\z@%
+  \trivlist \item[\hskip \labelsep{\if@english{\hskip4pt(#1)\ }%
+  \else{\hskip4pt\kanji@hirakikakko#1\kanji@tozikakko}\fi}\,]}
+\def\endnewparenenv{\hfil\endtrivlist}
+
+\def\newunderlineenv#1{\begin{list}%
+  {\underline{#1}}%
+  {\setbox\@tempboxa\hbox{\underline{#1}\kanji@space}\@tempdima\wd\@tempboxa
+   \topsep\z@\parsep\z@\itemsep\z@\parskip\z@\partopsep\z@%
+   \leftmargin\@tempdima\rightmargin\z@\labelsep1\zw
+   \listparindent\z@\labelwidth\@tempdima\advance\labelwidth by -1\zw}
+   \item}
+\def\endnewunderlineenv{\end{list}}
+
+\renewcommand{\@begintheorem}[2]
+        {\topsep\z@\parsep\z@\itemsep\z@\parskip\z@\partopsep\z@%
+        \trivlist \item[\hskip \labelsep{\hskip4pt\kanji@hirakidaikakko{\bf #1\ #2}\kanji@tozidaikakko}\,\,]}
+\renewcommand{\@opargbegintheorem}[3]
+        {\topsep\z@\parsep\z@\itemsep\z@\parskip\z@\partopsep\z@%
+        \trivlist \item[\hskip \labelsep{\hskip4pt\kanji@hirakidaikakko{\bf #1\ #2}\kanji@tozidaikakko\,%
+        \if@english(#3)\else\kanji@hirakikakko#3\kanji@tozikakko\fi}\,]}
+
+\renewcommand{\labelenumi}{(\theenumi)}
+
+\newdimen\enumleftmargin
+  \enumleftmargin 24.0168pt %
+
+\def\enumerate{\ifnum \@enumdepth >3 \@toodeep\else
+  \advance\@enumdepth \@ne 
+  \edef\@enumctr{enum\romannumeral\the\@enumdepth}\list
+  {\csname label\@enumctr\endcsname}{\usecounter
+    {\@enumctr}\leftmargin\enumleftmargin%
+    \def\makelabel##1{\hss\llap{##1}}}\fi}
+
+\def\endenumerate{\endlist}
+
+\def\expository{0}          %
+\def\expositry{0}           %
+\def\survey{1}              %
+\def\technicalview{2}       %
+\def\briefexpository{3}     %
+\def\briefexpositry{3}      %
+\def\sciforum{4}            %
+\def\editorialessay{5}      %
+\def\researchgroup{6}       %
+\def\discussion{7}          %
+\def\emaildiscussion{8}     %
+\def\tabletalk{9}           %
+\def\conversazione{10}      %
+\def\lecture{11}            %
+\def\review{12}             %
+\def\report{13}             %
+\def\rcomments{14}          %
+\def\titletwoc{15}          %
+\def\titlesinglec{16}       %
+\def\notitletwoc{17}        %
+\def\notitlesinglec{18}     %
+\def\isciemondou{19}        %
+\def\newproducts{20}	    %
+\def\bottomlinelimit{2\zh}
+\def\journallayout#1{%
+  \def\bottomlinelimit{2\zh}
+
+  \ifcase #1%
+  \relax%
+  \@longjournaltitletrue%
+  \@jbiographytrue      %
+  \relax\or%
+  \relax%
+  \@longjournaltitletrue%
+  \@jbiographytrue
+  \relax\or%
+  \relax%
+  \@longjournaltitletrue%
+  \@jbiographytrue
+  \relax\or%
+  \relax%
+  \@shortjournaltitletrue%
+  \@jbiographyfalse
+  \relax\or%
+  \relax%
+  \@shortjournaltitletrue%
+  \@jbiographytrue
+  \relax\or%
+  \relax%
+  \@shortjournaltitletrue%
+  \@jbiographyfalse
+  \relax\or%
+  \relax%
+  \@shortjournaltitletrue%
+  \@jbiographyfalse
+  \relax\or%
+  \relax%
+  \@shortjournaltitletrue%
+  \@jdiscussiontrue%
+  \@jbiographytrue%
+  \@jshortbiographytrue%
+  \relax\or%
+  \relax%
+  \@shortjournaltitletrue%
+  \@jdiscussiontrue
+  \@jbiographytrue%
+  \@jshortbiographytrue%
+  \relax\or%
+  \relax%
+  \@shortjournaltitletrue%
+  \@jdiscussiontrue
+  \@jbiographytrue%
+  \@jshortbiographytrue%
+  \relax\or%
+  \relax%
+  \@shortjournaltitletrue%
+  \@jdiscussiontrue
+  \@jbiographytrue%
+  \@jshortbiographytrue%
+  \relax\or%
+  \relax%
+  \@shortjournaltitletrue%
+  \@lecturejournaltitletrue%
+  \@jbiographytrue%
+  \relax\or%
+  \relax%
+  \@shortjournaltitletrue%
+  \@bookrevtrue%
+  \@jbiographyfalse
+  \relax\or%
+  \relax%
+  \@shortjournaltitletrue%
+  \@jbiographyfalse
+  \relax\or%
+  \relax%
+  \@shortjournaltitletrue%
+  \@veryshortjournaltitletrue%
+  \def\bottomlinelimit{8\zh}%
+  \@jbiographyfalse
+  \relax\or%
+  \relax%
+  \@shortjournaltitletrue%
+  \@jbiographyfalse
+  \relax\or%
+  \relax%
+  \@shortjournaltitletrue%
+  \@jbiographyfalse
+  \relax\or%
+  \relax%
+  \@jbiographyfalse
+  \relax\or%
+  \relax%
+  \@jbiographyfalse
+  \relax\or%
+  \relax%
+  \@shortjournaltitletrue%
+  \@lecturejournaltitletrue%
+  \@jbiographyfalse%
+  \@mondoutrue
+  \relax\or%
+  \relax%
+  \@shortjournaltitletrue%
+  \@veryshortjournaltitletrue%
+  \def\bottomlinelimit{8\zh}%
+  \@jbiographyfalse
+  \@msaitoauthordisptrue%
+  \relax\or%
+  \relax\fi
+
+
+
+  \newlength{\titleheight}
+  \setlength{\titleheight}{6\baselineskip}
+  \ifcase #1%
+      \setlength{\titleheight}{9\baselineskip}\or%
+      \setlength{\titleheight}{9\baselineskip}\or%
+      \setlength{\titleheight}{9\baselineskip}\or%
+      \setlength{\titleheight}{7\baselineskip}\or%
+      \setlength{\titleheight}{6\baselineskip}\or%
+      \setlength{\titleheight}{6\baselineskip}\or%
+      \setlength{\titleheight}{5\baselineskip}\or%
+      \setlength{\titleheight}{5\baselineskip}\or%
+      \setlength{\titleheight}{5\baselineskip}\or%
+      \setlength{\titleheight}{5\baselineskip}\or%
+      \setlength{\titleheight}{5\baselineskip}\or%
+      \setlength{\titleheight}{7\baselineskip}\or%
+      \setlength{\titleheight}{2\baselineskip}\or%
+      \setlength{\titleheight}{5\baselineskip}\or%
+      \setlength{\titleheight}{5\baselineskip}\or%
+      \setlength{\titleheight}{5\baselineskip}\or%
+      \setlength{\titleheight}{3\baselineskip}\or%
+      \setlength{\titleheight}{3\baselineskip}\or%
+      \setlength{\titleheight}{3\baselineskip}\or%
+      \setlength{\titleheight}{4\baselineskip}\or%
+      \setlength{\titleheight}{5\baselineskip}\or%
+      \relax\fi
+  \newlength{\titlebaselineskip}
+  \setlength{\titlebaselineskip}{13pt}
+  \ifcase #1%
+      \setlength{\titlebaselineskip}{13pt}\or%
+      \setlength{\titlebaselineskip}{13pt}\or%
+      \setlength{\titlebaselineskip}{13pt}\or%
+      \setlength{\titlebaselineskip}{13pt}\or%
+      \setlength{\titlebaselineskip}{13pt}\or%
+      \setlength{\titlebaselineskip}{13pt}\or%
+      \setlength{\titlebaselineskip}{13pt}\or%
+      \setlength{\titlebaselineskip}{13pt}\or%
+      \setlength{\titlebaselineskip}{13pt}\or%
+      \setlength{\titlebaselineskip}{13pt}\or%
+      \setlength{\titlebaselineskip}{13pt}\or%
+      \setlength{\titlebaselineskip}{13pt}\or%
+      \setlength{\titlebaselineskip}{13pt}\or%
+      \setlength{\titlebaselineskip}{13pt}\or%
+      \setlength{\titlebaselineskip}{13pt}\or%
+      \setlength{\titlebaselineskip}{13pt}\or%
+      \setlength{\titlebaselineskip}{13pt}\or%
+      \setlength{\titlebaselineskip}{13pt}\or%
+      \setlength{\titlebaselineskip}{13pt}\or%
+      \setlength{\titlebaselineskip}{13pt}\or%
+      \setlength{\titlebaselineskip}{13pt}\or%
+      \relax\fi
+  \def\titlecharsize{%
+    \ifcase #1%
+       \LARGE \or%
+       \LARGE \or%
+       \LARGE \or%
+       \LARGE \or%
+       \Large \or%
+       \Large \or%
+       \Large \or%
+       \Large \or%
+       \Large \or%
+       \Large \or%
+       \Large \or%
+       \LARGE \or%
+       \Large \or%
+       \Large \or%
+       \Large \or%
+       \Large \or%
+       \Large \or%
+       \relax \or%
+       \relax \or%
+       \Large \or%
+       \Large \or%
+       \Large\fi}%
+   \def\authorcharsize{%
+     \ifcase #1%
+        \large \or%
+        \large \or%
+        \large \or%
+        \large \or%
+        \large \or%
+        \large \or%
+        \large \or%
+        \large \or%
+        \large \or%
+        \large \or%
+        \large \or%
+        \large \or%
+        \large \or%
+        \large \or%
+        \large \or%
+        \large \or%
+        \large \or%
+        \relax \or%
+        \relax \or%
+        \large \or%
+        \large \or%
+        \semilarge\fi}%
+  \newlength{\categorywidth}     %
+  \newlength{\categoryrulewidth} %
+  \setlength{\categorywidth}{96\H}%
+  \setlength{\categoryrulewidth}{112\H}%
+  \ifcase #1%
+     \setlength{\categorywidth}{64\H}%
+     \setlength{\categoryrulewidth}{80\H}\or%
+     \setlength{\categorywidth}{64\H}%
+     \setlength{\categoryrulewidth}{80\H}\or%
+     \setlength{\categorywidth}{64\H}%
+     \setlength{\categoryrulewidth}{80\H}\or%
+     \setlength{\categorywidth}{96\H}%
+     \setlength{\categoryrulewidth}{112\H}\or%
+     \setlength{\categorywidth}{112\H}%
+     \setlength{\categoryrulewidth}{128\H}\or%
+     \setlength{\categorywidth}{80\H}%
+     \setlength{\categoryrulewidth}{96\H}\or%
+     \setlength{\categorywidth}{112\H}%
+     \setlength{\categoryrulewidth}{128\H}\or%
+     \setlength{\categorywidth}{64\H}%
+     \setlength{\categoryrulewidth}{80\H}\or%
+     \setlength{\categorywidth}{112\H}%
+     \setlength{\categoryrulewidth}{128\H}\or%
+     \setlength{\categorywidth}{64\H}%
+     \setlength{\categoryrulewidth}{80\H}\or%
+     \setlength{\categorywidth}{80\H}%
+     \setlength{\categoryrulewidth}{96\H}\or%
+     \setlength{\categorywidth}{64\H}%
+     \setlength{\categoryrulewidth}{80\H}\or%
+     \setlength{\categorywidth}{64\H}%
+     \setlength{\categoryrulewidth}{80\H}\or%
+     \setlength{\categorywidth}{128\H}%
+     \setlength{\categoryrulewidth}{144\H}\or%
+     \setlength{\categorywidth}{96\H}%
+     \setlength{\categoryrulewidth}{112\H}\or%
+     \setlength{\categorywidth}{0\H}%
+     \setlength{\categoryrulewidth}{0\H}\or%
+     \setlength{\categorywidth}{0\H}%
+     \setlength{\categoryrulewidth}{0\H}\or%
+     \setlength{\categorywidth}{0\H}%
+     \setlength{\categoryrulewidth}{0\H}\or%
+     \setlength{\categorywidth}{0\H}%
+     \setlength{\categoryrulewidth}{0\H}\or%
+     \setlength{\categorywidth}{144\H}%
+     \setlength{\categoryrulewidth}{160\H}\or%
+     \setlength{\categorywidth}{144\H}%
+     \setlength{\categoryrulewidth}{10\zw} \or%
+     \relax\fi
+  \ifcase #1%
+     \relax\fi
+  \def\ryakurekititle{%
+    \ifcase #1%
+       \kanji@tyosharyakureki     \or%
+       \kanji@tyosharyakureki     \or%
+       \kanji@tyosharyakureki     \or%
+       \kanji@tyosharyakureki     \or%
+       \kanji@tyosharyakureki     \or%
+       \kanji@tyosharyakureki     \or%
+       \kanji@tyosharyakureki     \or%
+       \kanji@touronsharyakureki  \or%
+       \kanji@touronsharyakureki  \or%
+       \kanji@tyosharyakureki     \or%
+       \kanji@shussekisharyakureki\or%
+       \kanji@tyosharyakureki     \or%
+       \kanji@tyosharyakureki     \or%
+       \kanji@tyosharyakureki     \or%
+       \kanji@tyosharyakureki     \or%
+       \kanji@tyosharyakureki     \or%
+       \kanji@tyosharyakureki     \or%
+       \kanji@tyosharyakureki     \or%
+       \kanji@tyosharyakureki     \or%
+       \kanji@tyosharyakureki     \or%
+       \kanji@tyosharyakureki     \or%
+       \relax\fi}
+  \if@jdiscussion%
+  \def\section{\@startsection {section}{1}%
+    {\parindent}{.5em plus .3em minus .0em}{.5em plus .3em minus .2em}%
+    {\large\bf\centering}}
+  \def\subsection{\@startsection{subsection}{2}{\parindent}%
+    {.5em plus .3em minus .0em}{1sp plus 1sp minus%
+      1sp}{\centering\semilarge\bf}}
+  \def\subsubsection{\@startsection{subsubsection}{3}{\parindent}%
+    {.1em plus .2em minus .1em}{1sp plus 1sp minus
+      1sp}{\centering\normalsize\bf}}
+  \fi
+}
+
+\def\Transaction{%
+  \renewcommand{\fnum@figure}{Fig.~\thefigure}
+  \renewcommand{\fnum@table}{Table~\thetable}
+  \def\rfig{\@Ref{Fig}}
+  \def\Rfig{\ref}
+  \def\rtab{\@Refnp{Table}}
+  \def\Rtab{\ref}
+  \def\@@tocfigure{\@ronbuntocfigure}
+  \def\@@toctable{\@ronbuntoctable}
+  \@transactiontrue
+  \@jbiographytrue
+  \if@english
+    \def\AcceptDate{Manuscript Received Date:~\@acceptdate}
+  \else
+    \def\AcceptDate{\kanji@genkouuketsuke\@acceptdate}
+  \fi
+}
+\def\@ronbunrfig#1{Fig.~\ref{#1}}
+\def\@ronbunrtab#1{Table~\ref{#1}}
+\def\@ronbuntocfigure#1#2{Fig.~{#1}}  %
+\def\@ronbuntoctable#1#2{Table~{#1}}
+\def\Journal#1#2#3{%
+  \if@english%
+    \renewcommand{\fnum@figure}{Fig.~\thefigure}
+    \renewcommand{\fnum@table}{Table~\thetable}
+  \else
+    \renewcommand{\fnum@figure}{\kanji@dai{}~{\thefigure}~\kanji@zu{}}
+    \renewcommand{\fnum@table}{\kanji@dai{}~{\thetable}~\kanji@hyo{}}
+  \fi
+  \def\rfig##1{\if@english{\@Ref{Fig}{##1}}\else{\@JReffig{##1}~\kanji@zu{}}\fi}
+  \def\Rfig{\ref}
+  \def\rtab##1{\if@english{\@Refnp{Table}{##1}}\else{\@JReftab{##1}~\kanji@hyo{}}\fi}
+  \def\Rtab{\ref}
+  \def\@@tocfigure{\@kaisetsutocfigure}
+  \def\@@toctable{\@kaisetsutoctable}
+  \renewcommand{\numberline}{\@kaisetsunumberline{\@figortable}}
+  \def\category{\large\bf #1}\relax
+  \def\tokushu{#2}
+  \ifx\tokushu\empty\relax%
+      \def\issuename{~\kanji@space~}\relax%
+  \else%
+    \if@tokureverse
+       \def\issuename{\colorbox[gray]{.8}{%
+          \Large\bf\textcolor[gray]{1}{\kanji@hirakikagikakko#2\kanji@tokushugou\kanji@tozikagikakko}}}
+     \else
+       \def\issuename{\Large\bf \kanji@hirakikagikakko#2\kanji@tokushugou\kanji@tozikagikakko}
+     \fi
+  \fi
+  \def\AcceptDate{\par~\hfill(\@acceptdate \kanji@uketsuke)}
+  \@journaltrue
+  \journallayout{#3}
+}
+\def\@kaisetsurfig#1{\kanji@dai{}~\ref{#1}~\kanji@zu{}}
+\def\@kaisetsurtab#1{\kanji@dai{}~\ref{#1}~\kanji@hyo{}}
+\def\@kaisetsutocfigure#1{\kanji@dai{}~{#1}}
+\def\@kaisetsutoctable#1{\kanji@dai{}~{#1}}
+\def\@kaisetsunumberline#1#2#3{\hbox to\@tempdima{{#2}~{#1}\hfil}%
+  \mbox{~~~}{#3}}
+
+\def\req#1{\if@english{\@EqRef{eq}{#1})}\else{(\@Refeq{#1})\kanji@siki}\fi}
+\def\Req#1{\if@english{(\ref{#1})}\else{(\ref{#1})}\fi}
+
+\def\rsec#1{{\bf\ref{#1}}}
+\def\@RefTheoremEnv#1{\gdef\R@f{#1}\gdef\@Reftype{{\bf #1\ }}%
+  \@Refenv}
+\def\rtheorem{\@RefTheoremEnv{\if@english{Theorem}\else{\kanji@teiri}\fi}}
+\def\rlemma{\@RefTheoremEnv{\if@english{Lemma}\else{\kanji@hodai}\fi}}
+\def\rproposition{\@RefTheoremEnv{\if@english{Proposition}\else{\kanji@meidai}\fi}}
+\def\rcorollary{\@RefTheoremEnv{\if@english{Corollary}\else{\kanji@kei}\fi}}
+\def\rdefinition{\@RefTheoremEnv{\if@english{Definition}\else{\kanji@teigi}\fi}}
+\def\rexample{\@RefTheoremEnv{\if@english{Example}\else{\kanji@reidai}\fi}}
+\def\rprocedure{\@RefTheoremEnv{\if@english{Step}\else{\kanji@tejun}\fi}}
+\def\rremark{\@RefTheoremEnv{\if@english{Remark}\else{\kanji@tyuui}\fi}}
+
+\def\eiko@bibtitle{\if@english{References}\else{\kanji@sankoubunken}\fi}
+\def\hagi@bibdot{}     %
+\renewcommand{\@cite}[2]{\mbox{}{#1\hagi@bibdot\if@tempswa , #2\fi}}
+\renewcommand{\thebibliography}[1]%
+ {\eikotitledisplay*{\hfill{\if@english{References}%
+   \else{\kanji@Sankoubunken}\fi}\hfill\mbox{}}\markboth
+ {\eiko@bibtitle}{\eiko@bibtitle}%
+ \vskip0.5\baselineskip\small\list%
+ {[\arabic{enumi}]}%
+ %
+ {\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+ \advance\leftmargin\labelsep%
+ \topsep\z@\parskip\z@\partopsep\z@\parsep\z@\itemsep\z@%
+ \usecounter{enumi}}
+ \def\newblock{\hskip .11em plus .33em minus .07em}
+ \sloppy
+ \sfcode`\.=1000\relax}
+
+
+\newcommand{\hagi@bibparen}{}%
+
+\def\isciecite{\@ifnextchar [{\@tempswatrue\@hagicitex}{%
+        \@tempswafalse\@hagicitex[]}}
+
+\def\@hagicite#1#2{%
+  \if@tempswa\mbox{#2}\fi\mbox{[#1]}}%
+
+\def\cite{\@ifstar{\cite@original}{\@killglue\nolinebreak\isciecite}}
+\def\cite@original{%
+  \@ifnextchar [{\@tempswatrue\@citex}{\@tempswafalse\@citex[]}}
+\def\chairperson{\relax}
+\def\discwhen#1{\noindent\kinto{3\zw}{\kanji@toki}\ :\ %
+  \begin{tabular}[t]{l}#1\end{tabular}\par}
+\def\discwhere#1{\noindent\kinto{3\zw}{\kanji@tokoro}\ :\ %
+  \begin{tabular}[t]{p{18\zw}}#1\end{tabular}\par}  %
+\def\discattend#1#2{\noindent\kinto{3\zw}{#1}\ :\ %
+  \begin{tabular}[t]{l}#2\end{tabular}\par}
+\def\discchair#1#2#3{\noindent\kinto{3\zw}{#1}\ :\ %
+  \begin{tabular}[t]{l}#2 \hspace{1\zw}(#3)\end{tabular}%
+  \def\chairperson{
+     \begin{flushright}{({\bf  #3 \hspace{0.2\zw} #2})}\end{flushright}\par}
+  \def\AcceptDate{\relax}%
+  \par}
+\def\speaker#1{\par{\bf #1}\hspace{1\zw}}
+
+\def\speakerpict{\@ifnextchar [{\@tempswatrue\@sppict}%
+  {\@tempswafalse\@sppict[]}}
+\def\@sppict[#1]#2{%
+  \begin{minipage}[t]{21mm}
+    \begin{center}
+      \if@tempswa
+		 \ifx \includegraphics\@undefined
+           \epsfile{file=#1,width=20mm}%
+		 \else
+           \resizebox{20mm}{!}{\includegraphics{#1}}%
+		 \fi
+      \else\framebox[20mm]{\rule[-25mm]{0mm}{25mm}}\fi\par
+      #2
+    \end{center}
+  \end{minipage}%
+}
+
+
+      
+
+
+
+
+\newif\if@first%
+\newcounter{@@@first}%
+\newcounter{@@@state}%
+\newcounter{@@@next}%
+\newcounter{@@@cur}%
+\newcounter{@@@curt}%
+\newcommand{\b@@@ENDLIST}{9999}%
+\def\hagi@bibrangesup{%
+  \def\@citex[##1]##2{%
+    \if@filesw\immediate\write\@auxout{\string\citation{##2}}\fi%
+    \def\@citea{}%
+    \@cite{%
+      \@firsttrue%
+      \if@english{\setcounter{@@@cur}{0}%
+        \@for\@citeb:=##2\do{\addtocounter{@@@cur}{1}}%
+        \ifnum\value{@@@cur}>1 Refs.\,\else Ref.\,\fi}%
+        \else{\kanji@SAnkoubunken}\fi
+        \setcounter{@@@state}{0}%
+        [\@for\@citeb:=##2,@@ENDLIST\do{%
+          \@ifundefined{b@\@citeb}%
+            {{\bf ?}%
+            \@warning%
+              {Citation `\@citeb' on page \thepage \space undefined}}%
+            {\setcounter{@@@next}{\csname b@\@citeb\endcsname}%
+            \ifcase\the@@@state%
+                %
+              \setcounter{@@@state}{1}%
+            \or%
+              \ifnum\value{@@@next}=\value{@@@curt}%
+                \setcounter{@@@state}{2}%
+                \setcounter{@@@first}{\value{@@@cur}}%
+              \else%
+                \if@first{}\else{\hagi@bibdot,\linebreak[3]}\fi%
+                \the@@@cur%
+                \@firstfalse%
+              \fi%
+            \or%
+              \ifnum\value{@@@next}=\value{@@@curt}%
+                \setcounter{@@@state}{3}%
+              \else%
+                \setcounter{@@@state}{1}%
+                \if@first{}\else{\hagi@bibdot,\linebreak[3]}\fi%
+                \the@@@first\hagi@bibdot,\linebreak[3]\the@@@cur%
+                \@firstfalse%
+              \fi%
+            \or%
+              \ifnum\value{@@@next}=\value{@@@curt}%
+              \else%
+                \setcounter{@@@state}{1}%
+                \if@first{}\else{\hagi@bibdot,\linebreak[3]}\fi
+                \the@@@first\hagi@bibdot--\linebreak[3]\the@@@cur%
+                                              %
+                                              %
+                                              %
+                \@firstfalse%
+              \fi%
+            \fi%
+            \setcounter{@@@cur}{\value{@@@next}}%
+            \setcounter{@@@curt}{\value{@@@cur}}%
+            \addtocounter{@@@curt}{1}}}]}%
+  {##1}}%
+  \def\@hagicitex[##1]##2{%
+    \if@filesw\immediate\write\@auxout{\string\citation{##2}}\fi%
+    \def\@citea{}%
+      \@hagicite{%
+        \@firsttrue%
+        \setcounter{@@@state}{0}%
+        \@for\@citeb:=##2,@@ENDLIST\do{%
+          \@ifundefined{b@\@citeb}%
+            {{\bf ?}%
+            \@warning%
+              {Citation `\@citeb' on page \thepage \space undefined}}%
+            {\setcounter{@@@next}{\csname b@\@citeb\endcsname}%
+            \ifcase\the@@@state%
+               %
+              \setcounter{@@@state}{1}%
+            \or%
+              \ifnum\value{@@@next}=\value{@@@curt}%
+                \setcounter{@@@state}{2}%
+                \setcounter{@@@first}{\value{@@@cur}}%
+              \else%
+                \if@first{\@killglue}\else{\hagi@bibparen,\nolinebreak}\fi%
+                \the@@@cur%
+                \@firstfalse%
+              \fi%
+            \or%
+              \ifnum\value{@@@next}=\value{@@@curt}%
+                \setcounter{@@@state}{3}%
+              \else%
+                \setcounter{@@@state}{1}%
+                \if@first{\@killglue}\else{\hagi@bibparen,\nolinebreak}\fi%
+                \the@@@first\hagi@bibparen,\nolinebreak\the@@@cur%
+                \@firstfalse%
+              \fi%
+            \or%
+              \ifnum\value{@@@next}=\value{@@@curt}%
+              \else%
+                \setcounter{@@@state}{1}%
+                \if@first{\@killglue}\else{\hagi@bibparen,\nolinebreak}\fi%
+                \the@@@first\hagi@bibparen--\nolinebreak\the@@@cur%
+                \@firstfalse%
+              \fi%
+            \fi%
+            \setcounter{@@@cur}{\value{@@@next}}%
+            \setcounter{@@@curt}{\value{@@@cur}}%
+            \addtocounter{@@@curt}{1}}}}%
+  {##1}}%
+}
+
+\hagi@bibrangesup
+
+\def\mbf#1{\mbox{\boldmath$#1$}}
+
+\def\maru#1{{\large\leavevmode\rlap{\hbox to1\zw{\hfil\kanji@maru\hfil}}%
+\hbox to1\zw{\hfil\raise.12\zh\hbox{${\hbox{\footnotesize #1}}$}\hfil}}}
+
+
+\newdimen\hagi@eqnarraysep
+\hagi@eqnarraysep 2pt %
+
+\def\[{\relax\topsep\eikotopsep%
+\ifmmode\@badmath\else\begin{trivlist}\item[]\leavevmode
+\hbox to\linewidth\bgroup$ \displaystyle
+\hskip\mathindent\bgroup\fi}
+\def\]{\relax\ifmmode \egroup $\hfil \egroup \end{trivlist}\else \@badmath \fi}
+\def\equation{\topsep\eikotopsep%
+\refstepcounter{equation}\trivlist \item[]\leavevmode
+\hbox to\linewidth\bgroup $ \displaystyle
+\hskip\mathindent}
+\def\endequation{$\hfil \displaywidth\linewidth\@eqnnum\egroup \endtrivlist}
+\def\eqnarray{\stepcounter{equation}\let\@currentlabel=\theequation
+\global\@eqnswtrue
+\global\@eqcnt\z@\tabskip\mathindent\let\\=\@eqncr
+\abovedisplayskip\eikotopsep\ifvmode\advance\abovedisplayskip\partopsep\fi
+\belowdisplayskip\abovedisplayskip
+\belowdisplayshortskip\abovedisplayskip
+\abovedisplayshortskip\abovedisplayskip
+$$\halign to
+\linewidth\bgroup\@eqnsel\hskip\@centering$\displaystyle\tabskip\z@
+{##}$&\global\@eqcnt\@ne \hskip \hagi@eqnarraysep \hfil$\displaystyle{##}$\hfil
+&\global\@eqcnt\tw@ \hskip \hagi@eqnarraysep $\displaystyle{##}$\hfil 
+\tabskip\@centering&\llap{##}\tabskip\z@\cr}
+\def\endeqnarray{\@@eqncr\egroup
+\global\advance\c@equation\m@ne$$\global\@ignoretrue }
+\newdimen\mathindent 
+\mathindent = 16.0112pt %
+
+
+
+
+
+\newtoks\@stequation
+
+\def\subequations{\refstepcounter{equation}%
+  \edef\@savedequation{\the\c@equation}%
+  \@stequation=\expandafter{\theequation}%
+  \edef\@savedtheequation{\the\@stequation}%
+  \edef\oldtheequation{\theequation}%
+  \setcounter{equation}{0}%
+  \def\theequation{\oldtheequation\alph{equation}}%
+  %
+  \def\label##1{\@bsphack\if@filesw {\let\thepage\relax
+   \xdef\@gtempa{\write\@auxout{\string
+      \newlabel{##1}{{\@currentlabel}{\thepage}}}}}\@gtempa
+   \if@nobreak \ifvmode\nobreak\fi\fi\fi\@esphack\ignorespaces}%
+}
+
+\def\endsubequations{\ifnum\value{equation}=0%
+  \@warning{No numbered-equations in subequations environment}\fi%
+  \ifnum\value{equation}=1%
+  \@warning{Only one numbered-equation in subequations environment}\fi%
+  \setcounter{equation}{\@savedequation}%
+  \@stequation=\expandafter{\@savedtheequation}%
+  \edef\theequation{\the\@stequation}\global\@ignoretrue}
+
+\newcounter{footequation}
+\setcounter{footequation}{0}
+\def\footnoteequation{\refstepcounter{footequation}%
+  \edef\@savedequation{\the\c@equation}%
+  \@stequation=\expandafter{\theequation}%
+  \edef\@savedtheequation{\the\@stequation}%
+  \edef\oldtheequation{\theequation}%
+  \def\theequation{F\arabic{footequation}}%
+  \advance\mathindent by \fnindent
+  \equation
+}
+
+\def\endfootnoteequation{%
+   \endequation%
+  \advance\mathindent by -\fnindent
+  \setcounter{equation}{\@savedequation}%
+  \@stequation=\expandafter{\@savedtheequation}%
+  \edef\theequation{\the\@stequation}\global\@ignoretrue}
+
+\newdimen\eikofootnotelinewidth
+
+\def\footnoteeqnarray{\refstepcounter{footequation}%
+  \edef\@savedequation{\the\c@equation}%
+  \@stequation=\expandafter{\theequation}%
+  \edef\@savedtheequation{\the\@stequation}%
+  \edef\oldtheequation{\theequation}%
+  \setcounter{equation}{\the\c@footequation}
+  \def\theequation{F\arabic{equation}}%
+  \let\@currentlabel=\theequation
+  \global\@eqnswtrue
+  \global\@eqcnt\z@\tabskip\mathindent\let\\=\@eqncr
+  \abovedisplayskip\topsep\ifvmode\advance\abovedisplayskip\partopsep\fi
+  \belowdisplayskip\abovedisplayskip
+  \belowdisplayshortskip\abovedisplayskip
+  \abovedisplayshortskip\abovedisplayskip
+  \eikofootnotelinewidth\linewidth
+  \advance\eikofootnotelinewidth by -\fnindent
+  $$\halign to
+  \eikofootnotelinewidth%
+  \bgroup\@eqnsel\hskip\@centering$\displaystyle\tabskip\z@
+  {##}$&\global\@eqcnt\@ne \hskip \hagi@eqnarraysep
+  \hfil$\displaystyle{##}$\hfil
+  &\global\@eqcnt\tw@ \hskip \hagi@eqnarraysep $\displaystyle{##}$\hfil 
+  \tabskip\@centering&\llap{##}\tabskip\z@\cr}
+  \def\endfootnoteeqnarray{%
+  \@@eqncr\egroup
+  \global\advance\c@equation\m@ne$$%
+  \setcounter{footequation}{\the\c@equation}
+  \setcounter{equation}{\@savedequation}%
+  \@stequation=\expandafter{\@savedtheequation}%
+  \edef\theequation{\the\@stequation}\global\@ignoretrue }
+
+
+
+
+
+\newif\ifsubcaphang
+\newif\ifsubcapcenter
+\newif\ifsubcapcenterlast
+\newif\ifsubcapnooneline
+
+\newcommand{\subfigtopskip}{6pt}     %
+                                     %
+\newcommand{\subfigbottomskip}{4pt}  %
+                                     %
+\newcommand{\subfigcapskip}{2pt}     %
+                                     %
+\newcommand{\subfigcapmargin}{4pt}   %
+                                     %
+                                     %
+\newcommand{\subtabtopskip}{0pt}     %
+                                     %
+\newcommand{\subtabbottomskip}{4pt}  %
+                                     %
+\newcommand{\subtabcapskip}{6pt}     %
+                                     %
+\newcommand{\subcapsize}{\footnotesize}           %
+\newcommand{\subcaplabelfont}{}      %
+
+\newcounter{subfigure}[figure]          %
+\def\thesubfigure{(\alph{subfigure})}   %
+\newcommand{\@thesubfigure}{%
+  {\subcaplabelfont\thesubfigure}\space}
+\let\p@subfigure\thefigure              %
+
+\let\ext@subfigure\ext@figure           %
+\newcommand{\l@subfigure}{%
+  \@dottedxxxline{\ext@subfigure}{2}{3.9em}{2.3em}}
+\newcounter{lofdepth}                   %
+\setcounter{lofdepth}{1}                %
+
+\newcounter{subtable}[table]            %
+\def\thesubtable{(\alph{subtable})}     %
+\newcommand{\@thesubtable}{%
+  {\subcaplabelfont\thesubtable}\space}
+\let\p@subtable\thetable                %
+
+\let\ext@subtable\ext@table             %
+\newcommand{\l@subtable}{%
+  \@dottedxxxline{\ext@subtable}{2}{3.9em}{2.3em}}
+\newcounter{lotdepth}                   %
+\setcounter{lotdepth}{1}                %
+
+
+  \subcaphangtrue %
+  \subcapcenterfalse
+  \subcapcenterlastfalse
+  \subcapnoonelinefalse
+\let\subcapsuze\relax %
+
+
+\newcommand{\subfigure}{%
+  \bgroup
+    %
+    %
+    \advance\csname c@\@captype\endcsname\@ne
+    \refstepcounter{sub\@captype}%
+    \leavevmode
+    \@ifnextchar [%
+      {\@subfloat{sub\@captype}}%
+      {\@subfloat{sub\@captype}[\@empty]}}
+
+\newcommand{\subtable}{%
+  \bgroup
+    \refstepcounter{sub\@captype}%
+    \leavevmode
+    \@ifnextchar [%
+      {\@subtable{sub\@captype}}%
+      {\@subtable{sub\@captype}[\@empty]}}
+
+\def\@subfloat#1[#2]#3{%
+    \setbox\@tempboxa \hbox{#3}%
+    \@tempdima=\wd\@tempboxa
+    \vtop{%
+      %
+      \vbox{%
+        \vskip\subfigtopskip
+        \box\@tempboxa}%
+      %
+      %
+      \ifx \@empty#2\relax \else
+        \vskip\subfigcapskip
+        \@subcaption{#1}{#2}%
+      \fi
+      %
+      \vskip\subfigbottomskip}%
+  \egroup}
+
+\def\@subtable#1[#2]#3{%
+  \newbox\@eikosubtablebox
+    \setbox\@eikosubtablebox \hbox{#3}%
+    \@tempdima=\wd\@eikosubtablebox
+    \vtop{%
+      %
+      \vskip\subtabtopskip
+      %
+      %
+      \ifx \@empty#2\relax \else
+        \@subcaption{#1}{#2}%
+        \vskip\subtabcapskip
+      \fi
+      \vbox{%
+        \box\@eikosubtablebox}%
+      %
+      \vskip\subtabbottomskip}%
+  \egroup}
+
+\newcommand{\@subfigcaptionlist}{}
+
+\newcommand{\@subcaption}[2]{%
+  \begingroup
+    \let\label\@gobble
+    \def\protect{\string\string\string}%
+    \xdef\@subfigcaptionlist{%
+      \@subfigcaptionlist,%
+      {\protect\numberline {\@currentlabel}%
+       \noexpand{\ignorespaces #2}}}%
+  \endgroup
+  \@nameuse{@make#1caption}{\@nameuse{@the#1}}{#2}}
+
+\newcommand{\@makesubfigurecaption}[2]{%
+  \setbox\@tempboxa \hbox{%
+    \subcapsize
+    \ignorespaces #1%
+    \ignorespaces #2}%
+  \@tempdimb=-\subfigcapmargin
+  \multiply\@tempdimb\tw@
+  \advance\@tempdimb\@tempdima
+    \hbox to\@tempdima{%
+      \hfil
+      \ifdim \wd\@tempboxa >\@tempdimb
+        \subfig@caption{#1}{#2}%
+      \else\ifsubcapnooneline
+        \subfig@caption{#1}{#2}%
+      \else 
+        \box\@tempboxa
+      \fi\fi
+      \hfil}}
+
+\let\@makesubtablecaption\@makesubfigurecaption
+
+\newcommand{\subfig@caption}[2]{%
+  \ifsubcaphang
+    \sbox{\@tempboxa}{%
+      \subcapsize
+      \ignorespaces #1}%
+    \addtolength{\@tempdimb}{-\wd\@tempboxa}%
+    \usebox{\@tempboxa}%
+    \subfig@captionpar{\@tempdimb}{#2}%
+  \else
+    \subfig@captionpar{\@tempdimb}{#1#2}%
+  \fi}
+
+\newcommand{\subfig@captionpar}[2]{%
+  \parbox[t]{#1}{%
+    \strut
+    \ifsubcapcenter
+      \setlength{\leftskip}{\@flushglue}%
+      \setlength{\rightskip}{\@flushglue}%
+      \setlength{\parfillskip}{\z@skip}%
+    \else\ifsubcapcenterlast
+      \addtolength{\leftskip}{0pt plus 1fil}%
+      \addtolength{\rightskip}{0pt plus -1fil}%
+      \setlength{\parfillskip}{0pt plus 2fil}%
+    \fi\fi
+    \subcapsize
+    \ignorespaces #2}}
+
+\newcommand{\@dottedxxxline}[6]{%
+  \ifnum #2>\@nameuse{c@#1depth}\else
+    \@dottedtocline{0}{#3}{#4}{#5}{#6}
+  \fi}
+
+\let\subfig@oldcaption\@caption
+
+\long\def\@caption#1[#2]#3{%
+  \subfig@oldcaption{#1}[{#2}]{#3}%
+  \@for \@tempa:=\@subfigcaptionlist \do {%
+    \ifx\@empty\@tempa\relax \else
+      \addcontentsline
+        {\@nameuse{ext@sub#1}}%
+        {sub#1}%
+        {\@tempa}%
+    \fi}%
+  \gdef\@subfigcaptionlist{}}
+
+
+
+
+
+\long\def\@makecaption#1#2{\footnotesize\baselineskip9pt
+\vskip 10pt
+\setbox\@tempboxa\hbox{\footnotesize #1~~~#2}
+\ifdim \wd\@tempboxa > \hsize%
+  \setbox\@tempboxa\hbox{\footnotesize #1~~~\mbox{}}%
+ \@tempdima=\hsize%
+  \advance\@tempdima by -\wd\@tempboxa
+  {\footnotesize #1}~~~\parbox[t]{\@tempdima}%
+  {%
+    {\footnotesize #2}}\par
+\else%
+  \hbox to\hsize{\hfil\box\@tempboxa\hfil}
+\fi}
+
+
+
+\parskip 0pt
+\topsep 4pt
+\floatsep 8pt plus 2pt minus 2pt
+\textfloatsep 12pt plus 2pt minus 4pt
+\intextsep 8pt plus 2pt minus 2pt
+\dblfloatsep 8pt plus 2pt minus 2pt
+\dbltextfloatsep 12pt plus 2pt minus 4pt
+
+\thinmuskip=1mu
+\medmuskip=2mu plus 1mu minus 1mu
+\thickmuskip=3mu plus 1mu minus 1mu
+
+\arraycolsep=2pt
+
+\def\topfraction{.965}
+\def\bottomfraction{.965}
+\def\textfraction{0.035}
+\def\dbltopfraction{.965}
+\setcounter{bottomnumber}{6}
+\setcounter{topnumber}{6}
+\setcounter{totalnumber}{8}
+\setcounter{dbltopnumber}{6}
+
+\jot 1pt
+
+    \predisplaypenalty 0
+    \postdisplaypenalty 0
+    \interdisplaylinepenalty 0
+    \@beginparpenalty 0
+    \@endparpenalty 0
+    \@itempenalty 0
+    \@secpenalty 0
+
+\newcommand{\isciecomment}[1]{}
+
+
+\def\T{^{\rm T}}
+\def\hinf{\mbox{$H^{\infty}$}}
+\def\re{\mathop{\rm Re\:}\nolimits}
+\def\im{\mathop{\rm Im\:}\nolimits}
+\def\Ohm{{\mathchar"700A}}
+
+\let\fracoriginal=\frac
+\def\frac#1#2{{\displaystyle \fracoriginal{#1}{#2}}}
+
+
+
+\mark{{}{}}
+\def\appearyear#1{\gdef\nensu@@{#1}}
+\def\vol#1{\gdef\kansu@@{#1}}
+\def\numberinvol#1{\gdef\gousu@@{#1}}
+\def\headingtitle#1{\gdef\@headingtitle{#1}}
+\def\headingauthors#1{\gdef\@headingauthors{#1}}
+\def\acceptdate#1{\gdef\@acceptdate{#1}}
+
+\newcounter{IHdiffpage}
+\newcounter{IHlastpage}
+\def\@evenheadcontents
+{\footnotesize
+  \if@journal
+  \kanji@gakkai\kanji@dai{}~{\kansu@@}~\kanji@kan\kanji@dai{}~{\gousu@@}~\kanji@gou(\nensu@@)
+  \else
+  \if@english{Transactions of ISCIE, Vol.~{\kansu@@}, No.~{\gousu@@}~(\nensu@@)}\else%
+  \kanji@Gakkai\kanji@ronbun{}\kanji@shi\kanji@space\kanji@dai{}~{\kansu@@}~\kanji@kan\kanji@dai{}~{\gousu@@}~\kanji@gou(\nensu@@)\fi\fi}
+\def\@myheadingcontents
+{\footnotesize
+  \if@journal
+  \kanji@space\kanji@GAkkai Vol.~{\kansu@@}, No.~{\gousu@@},
+  \else
+  \if@english{~Transactions of ISCIE, Vol.~{\kansu@@}, No.~{\gousu@@},}\else%
+  \kanji@space\kanji@Gakkai\kanji@ronbun{}\kanji@shi\kanji@comma Vol.~{\kansu@@}, No.~{\gousu@@},
+  \fi\fi%
+  \if@bookrev  %
+  p.~\thepage,
+  \else%
+    \@ifundefined{r@eiko:lastpage}{%
+      pp.~{\thepage}--{??},}{%
+        \global\c@IHdiffpage=\thepage\relax
+        \edef\@tempa{\@nameuse{r@eiko:lastpage}}
+        \c@IHlastpage=\expandafter\@car\@tempa\@nil\null\relax
+       \global\advance\c@IHdiffpage by -\c@IHlastpage\relax
+       \ifnum\c@IHdiffpage=0%
+         p.~\thepage,
+       \else%
+        pp.~{\thepage}--{\ref{eiko:lastpage}},
+      \fi}
+  \fi
+  {\nensu@@}}
+
+\def\ps@headings{\let\@mkboth\markboth
+\def\@oddfoot{\hfil\pagenumbersize\thevolumepage\hfil}
+\def\@evenfoot{\hfil\pagenumbersize\thevolumepage\hfil}
+\def\@oddhead{%
+  \underline{\hbox to\textwidth{%
+  \pagenumbersize
+  \phantom{\thepage}\hfil{\footnotesize\ifx\@headingauthors\empty\relax%
+    \else%
+      \@headingauthors\if@english :\ \else\kanji@colon\fi%
+    \fi\@headingtitle}\hfil
+  {\bf\thepage}}}}
+\def\@evenhead{%
+  \underline{\hbox to\textwidth{%
+  \pagenumbersize{\bf\thepage}\hfil\@evenheadcontents\hfil\phantom{\thepage}}}}
+\def\sectionmark##1{\markboth {\uppercase{\ifnum \c@secnumdepth>\z@
+ \thesection\hskip 1em\relax \fi ##1}}{}}
+\def\subsectionmark##1{\markright{\ifnum \c@secnumdepth >\@ne
+ \thesubsection\hskip 1em\relax \fi ##1}}}
+
+\def\ps@myheadings{\let\@mkboth\@gobbletwo
+\def\@oddhead{\@myheadingcontents\hfil\pagenumbersize\bf\thepage}
+\def\@oddfoot{\hfil\pagenumbersize\thevolumepage\hfil}
+\def\@evenfoot{\hfil\pagenumbersize\thevolumepage\hfil}
+\def\@evenhead{{\pagenumbersize\bf\thepage}\hfil\@myheadingcontents}
+\def\sectionmark##1{}\def\subsectionmark##1{}}
+
+\def\ps@nomyheadings{\let\@mkboth\@gobbletwo
+\def\@oddhead{\pagenumbersize\phantom{\bf\thepage}\hfil\bf\thepage}
+\def\@oddfoot{\hfil\pagenumbersize\thevolumepage\hfil}
+\def\@evenfoot{\hfil\pagenumbersize\thevolumepage\hfil}
+\def\@evenhead{{\pagenumbersize\bf\thepage}\hfil\phantom{\bf\thepage}}
+\def\sectionmark##1{}\def\subsectionmark##1{}}
+
+\pagestyle{headings}
+\pagenumbering{arabic}
+
+
+
+\newcount\@minsofar
+\newcount\@min
+\newcount\@Float@temp
+
+\def\@Ref#1{\gdef\R@f{#1}\gdef\@Reftype{#1.\,}%
+ \gdef\@Reftypes{#1s.\,}\@Reffloat}
+\def\@Refnp#1{\gdef\R@f{#1}%
+ \gdef\@Reftype{#1~}\gdef\@Reftypes{#1s~}\@Reffloat}
+\def\@JReffig{\gdef\R@f{Fig}\gdef\@Reftype{\kanji@dai{}~}%
+ \gdef\@Reftypes{\kanji@dai{}~}\@Reffloat}
+\def\@JReftab{\gdef\R@f{Table}\gdef\@Reftype{\kanji@dai{}~}%
+ \gdef\@Reftypes{\kanji@dai{}~}\@Reffloat}
+\def\@Reftype{}
+\def\@Reftypes{}
+
+\def\@Reffloat#1{\leavevmode%
+\@tempcnta\z@%
+\@for\count@Float:=#1\do{%
+ \advance \@tempcnta by \@ne
+}%
+\ifnum \@tempcnta > \@ne%
+ {\@Reftypes}%
+\else%
+ {\@Reftype}%
+\fi%
+ \@tempcntb\m@ne \let\@h@ld\relax \def\@Floata{}%
+ \@min\m@ne%
+\@for\@Float:=#1\do{\@ifundefined{r@\@Float}{\@tempcntb\m@ne{\bf ?}}%
+ {\@minsofar\z@ \@for\@scan@Floats:=#1\do{%
+  \@ifundefined{r@\@scan@Floats}{\@Float@temp\m@ne}%
+   {\edef\@tempa{\@nameuse{r@\@scan@Floats}}%
+     \edef\num@Float{\expandafter\@car\@tempa \@nil}%
+     \@Float@temp\num@Float \relax}%
+   \ifnum\@Float@temp > \@min%
+    \ifnum\@minsofar = \z@%
+      \@minsofar\number\@Float@temp%
+      \edef\@scan@copy{\@scan@Floats}%
+    \else%
+     \ifnum\@Float@temp < \@minsofar%
+      \@minsofar\number\@Float@temp%
+      \edef\@scan@copy{\@scan@Floats}%
+     \fi%
+    \fi%
+   \fi}%
+  \@tempcnta\@min%
+  \ifnum\@minsofar > \z@%
+   \advance\@tempcnta\@ne%
+   \@min\@minsofar%
+    \ifnum\@tempcnta=\@minsofar%
+     \ifx\@h@ld\relax%
+      \edef\@tempa{\@nameuse{r@\@scan@copy}}%
+       \edef\num@Float{\expandafter\@car\@tempa \@nil}%
+        \edef\@h@ld{\@Floata\num@Float}%
+     \else%
+      \edef\@tempa{\@nameuse{r@\@scan@copy}}%
+       \edef\num@Float{\expandafter\@car\@tempa \@nil}%
+        \edef\@h@ld{\if@english{}--\else{}$\sim$\fi\num@Float}%
+     \fi%
+    \else%
+     \edef\@tempa{\@nameuse{r@\@scan@copy}}%
+      \edef\num@Float{\expandafter\@car\@tempa \@nil}%
+       \@h@ld\@Floata\num@Float%
+     \let\@h@ld\relax%
+    \fi%
+  \fi%
+ }%
+ \def\@Floata{,\ }%
+}%
+\@h@ld}
+
+\newcount\@Env@temp
+
+\def\@Refenv#1{\leavevmode%
+\@tempcnta\z@%
+\@for\count@Env:=#1\do{%
+ \advance \@tempcnta by \@ne%
+}%
+ {\@Reftype}%
+ \@tempcntb\m@ne\let\@h@ld\relax\def\@Enva{}%
+ \@min\m@ne%
+\@for\@Env:=#1\do{\@ifundefined{r@\@Env}{\@tempcntb\m@ne{\bf ?}}%
+ {\@minsofar\z@ \@for\@scan@Envs:=#1\do{%
+  \@ifundefined{r@\@scan@Envs}{\@Env@temp\m@ne}%
+   {\edef\@tempa{\@nameuse{r@\@scan@Envs}}%
+     \edef\num@Env{\expandafter\@car\@tempa \@nil}%
+     \@Env@temp\num@Env \relax}%
+   \ifnum\@Env@temp > \@min%
+    \ifnum\@minsofar = \z@%
+      \@minsofar\number\@Env@temp%
+      \edef\@scan@copy{\@scan@Envs}%
+    \else%
+     \ifnum\@Env@temp < \@minsofar%
+      \@minsofar\number\@Env@temp%
+      \edef\@scan@copy{\@scan@Envs}%
+     \fi%
+    \fi%
+   \fi}%
+  \@tempcnta\@min%
+  \ifnum\@minsofar > \z@%
+   \advance\@tempcnta\@ne%
+   \@min\@minsofar%
+    \ifnum\@tempcnta=\@minsofar%
+     \ifx\@h@ld\relax%
+      \edef\@tempa{\@nameuse{r@\@scan@copy}}%
+       \edef\num@Env{\expandafter\@car\@tempa \@nil}%
+        \let\oldnum@Env=\num@Env%
+        \def\num@Env{{\noexpand\bf\oldnum@Env}}%
+        \edef\@h@ld{\@Enva\num@Env}%
+     \else%
+      \edef\@tempa{\@nameuse{r@\@scan@copy}}%
+       \edef\num@Env{\expandafter\@car\@tempa \@nil}%
+        \let\oldnum@Env=\num@Env%
+        \def\num@Env{{\noexpand\bf\oldnum@Env}}%
+        \edef\@h@ld{\if@english{}--\else{}$\sim$\fi\num@Env}%
+     \fi%
+    \else%
+     \edef\@tempa{\@nameuse{r@\@scan@copy}}%
+      \edef\num@Env{\expandafter\@car\@tempa \@nil}%
+       \let\oldnum@Env=\num@Env%
+       \edef\num@Env{{\noexpand\bf\oldnum@Env}}%
+       \@h@ld\@Enva{\num@Env}%
+     \let\@h@ld\relax%
+    \fi%
+  \fi%
+ }%
+ \def\@Enva{,\ }%
+}%
+\@h@ld}
+
+
+\newcount\@Eq@temp
+
+\def\@EqRef#1{%
+ \gdef\@EqReftype{\if@english #1.\,(\else (\fi}%
+ \gdef\@EqReftypes{\if@english #1s.\,(\else (\fi}\@Refeq}
+\def\@EqReftype{}
+\def\@EqReftypes{}
+
+\def\@Refeq#1{%
+  \gdef\R@f{Eq}%
+  \leavevmode%
+  \@tempcnta\z@%
+  \@for\count@Eq:=#1\do{%
+    \advance \@tempcnta by \@ne
+  }%
+  \ifnum \@tempcnta > \@ne%
+   {\@EqReftypes}%
+  \else%
+   {\@EqReftype}%
+  \fi%
+ \@tempcntb\m@ne \let\@h@ld\relax \def\@Eqa{}%
+ \@min\m@ne%
+\@for\@Eq:=#1\do{\@ifundefined{r@\@Eq}{\@tempcntb\m@ne{\bf ?}}%
+ {\@minsofar\z@ \@for\@scan@Eqs:=#1\do{%
+  \@ifundefined{r@\@scan@Eqs}{\@Eq@temp\m@ne}%
+   {\edef\@tempa{\@nameuse{r@\@scan@Eqs}}%
+     \edef\num@Eq{\expandafter\@car\@tempa \@nil}%
+     \@Eq@temp\num@Eq \relax}%
+   \ifnum\@Eq@temp > \@min%
+    \ifnum\@minsofar = \z@%
+      \@minsofar\number\@Eq@temp%
+      \edef\@scan@copy{\@scan@Eqs}%
+    \else%
+     \ifnum\@Eq@temp < \@minsofar%
+      \@minsofar\number\@Eq@temp%
+      \edef\@scan@copy{\@scan@Eqs}%
+     \fi%
+    \fi%
+   \fi}%
+  \@tempcnta\@min%
+  \ifnum\@minsofar > \z@%
+   \advance\@tempcnta\@ne%
+   \@min\@minsofar%
+    \ifnum\@tempcnta=\@minsofar%
+     \ifx\@h@ld\relax%
+      \edef\@tempa{\@nameuse{r@\@scan@copy}}%
+       \edef\num@Eq{\expandafter\@car\@tempa \@nil}%
+        \edef\@h@ld{\@Eqa\num@Eq}%
+     \else%
+      \edef\@tempa{\@nameuse{r@\@scan@copy}}%
+       \edef\num@Eq{\expandafter\@car\@tempa \@nil}%
+        \edef\@h@ld{\if@english )--(\else{})$\sim$(\fi\num@Eq}%
+     \fi%
+    \else%
+     \edef\@tempa{\@nameuse{r@\@scan@copy}}%
+      \edef\num@Eq{\expandafter\@car\@tempa \@nil}%
+       \@h@ld\@Eqa\num@Eq%
+     \let\@h@ld\relax%
+    \fi%
+  \fi%
+ }%
+ \def\@Eqa{), (}%
+}%
+\@h@ld}
+
+
+\newdimen\eiko@rubywidth
+{\rubytiny\global\eiko@rubywidth 3\zw}
+
+\def\ruby#1#2{\leavevmode \edef\eiko@rubytemp{#2}%
+\setbox0=\hbox{#1}\setbox1=\hbox{\rubytiny#2}%
+\ifdim\wd0>\wd1 \dimen0=\wd0 \else \dimen0=\wd1 \fi
+\ifx\eiko@rubytemp\empty\relax%
+\else\ifdim\dimen0<\eiko@rubywidth \dimen0=\eiko@rubywidth\fi\fi
+\hbox{\kanjiskip=\fill
+ \vbox{\hbox to \dimen0{\rubytiny\mbox{}\hfill#2\hfill\mbox{}}%
+  \nointerlineskip \hbox to \dimen0{\hfil#1\hfil}}}}
+
+\newif\if@eikobiographywithphoto
+  \@eikobiographywithphotofalse
+\newcounter{eikobiographycount}
+
+\def\biographon{\@jbiographytrue}
+
+\def\chosharyakureki{%
+  \if@shortpaper{\relax}
+  \else 
+    \if@english%
+      \eikotitledisplay*{\hfil{Authors}\hfil}%
+    \else%
+      \if@journal%
+        \if@jbiography%
+          \eikotitledisplay*{\hfil{\ryakurekititle}\hfil}%
+        \else{\relax}%
+        \fi%
+      \else%
+        \eikotitledisplay*{\hfil{\kanji@tyosharyakureki}\hfil}%
+      \fi%
+    \fi%
+ \fi
+}
+
+\def\ryakureki#1{%
+  \eikotitledisplay*{\hfil{#1}\hfil}%
+}
+
+\def\authorbiography{\@ifstar%
+{\@eikobiographywithphotofalse\eikoauthorbiography}%
+ {\@eikobiographywithphototrue\eikoauthorbiography}}
+\def\eikoauthorbiography{\@ifnextchar [{\@tempswatrue\@uthorbiography}%
+ {\@tempswafalse\@uthorbiography[]}}
+
+\long\def\@uthorbiography[#1]#2#3#4#5{%
+ \def\kaiinshikaku{#4}%
+ \ifx\kaiinshikaku\empty{\gdef\@kaiinshikaku{\relax}}%
+   \else{\gdef\@kaiinshikaku{(#4)}}\fi%
+ \if@journal%
+  \if@jbiography%
+   \if@jshortbiography%
+     \@outshortbiography{#2}{#3}{#5}%
+   \else%
+     \@outbiography{#1}{#2}{#3}{#5}%
+   \fi
+  \fi
+ \else
+  \if@shortpaper{\relax}
+  \else%
+     \@outbiography{#1}{#2}{#3}{#5}%
+  \fi
+ \fi
+}
+
+\long\def\@outbiography#1#2#3#4{%
+  {\ryakurekinamesize
+  \setcounter{eikobiographycount}{6}%
+  \if@eikobiographywithphoto%
+  \setbox\@tempboxa\vbox{%
+   \lfsep1ex
+   \separateruby{#2}{#3} \@kaiinshikaku\par
+   \vskip0.5\baselineskip
+   {\ryakurekicharsize
+    \begin{leftfigure}{25mm}{7}
+	 \vskip-2mm
+     \if@tempswa
+		 \ifx \includegraphics\@undefined
+           \epsfile{file=#1,width=20mm}%
+		 \else
+           \resizebox{20mm}{!}{\includegraphics{#1}}%
+		 \fi
+     \else\framebox[20mm]{\rule[-23mm]{0mm}{23mm}}\fi
+    \end{leftfigure}
+    {#4 a b c d e f g h i j k l m}
+
+   }
+  }
+  \ifdim \ht\@tempboxa > 105pt%
+  \ifdim \ht\@tempboxa < 115pt%
+   \setcounter{eikobiographycount}{7}%
+  \fi%
+  \fi
+  \fi
+  \setbox\@tempboxa\vbox{%
+   \lfsep1ex
+   \separateruby{#2}{#3} \@kaiinshikaku\par
+   \vskip0.5\baselineskip
+   {\ryakurekicharsize
+    \if@eikobiographywithphoto%
+    \begin{leftfigure}{25mm}{\c@eikobiographycount}
+	 \vskip-2mm
+     \if@tempswa
+		 \ifx \includegraphics\@undefined
+           \epsfile{file=#1,width=20mm}%
+		 \else
+           \resizebox{20mm}{!}{\includegraphics{#1}}%
+		 \fi
+     \else\framebox[20mm]{\rule[-23mm]{0mm}{23mm}}\fi
+    \end{leftfigure}
+    \fi
+    {#4}
+
+   }
+  }
+
+  \ifdim \ht\@tempboxa < 99pt%
+   \@tempdima 99pt%
+  \else%
+   \@tempdima \ht\@tempboxa%
+  \fi%
+  \vbox{\hbox{
+  \ryakurekinamesize
+  \vbox to\@tempdima{%
+   \lfsep1ex
+   \if@english%
+     \hspace*{-1\zw}%
+   \else%
+     \hspace*{-1\zw}%
+   \fi%
+   \separateruby{#2}{#3} \@kaiinshikaku\par
+   {\ryakurekicharsize
+    \if@eikobiographywithphoto%
+    \begin{leftfigure}{25mm}{\c@eikobiographycount}
+	 \vskip-2mm
+     \if@tempswa
+		 \ifx \includegraphics\@undefined
+           \epsfile{file=#1,width=20mm}%
+		 \else
+           \resizebox{20mm}{!}{\includegraphics{#1}}%
+		 \fi
+     \else\framebox[20mm]{\rule[-23mm]{0mm}{23mm}}\fi
+    \end{leftfigure}
+    \fi
+    {#4}
+
+   }
+   \vfill
+  }}}}%
+  \vskip\baselineskip
+}
+
+\def\@outshortbiography#1#2#3{%
+ \pagenumbersize\separateruby{#1}{#2} \@kaiinshikaku\par%
+ {\footnotesize #3}\par\vskip\baselineskip
+}
+
+\def\surname{\egtsc}
+\long\def\separateruby#1#2{%
+ \def\eiko@allruby{#2}%
+ \ifx\eiko@allruby\empty{%
+  \@for\@authorkanji:=#1\do{%
+    \ruby{\@authorkanji}{}%
+  }%
+ }%
+ \else{%
+  \@tempcnta\z@%
+  \@for\@authorkanji:=#1\do{%
+    \advance\@tempcnta by \@ne%
+    \@tempcntb\z@%
+    \@for\@furigana:=#2\do{%
+      \advance\@tempcntb by \@ne%
+      \ifnum \@tempcnta = \@tempcntb%
+        \ruby{\@authorkanji}{\@furigana}\unskip%
+      \fi%
+    }%
+  }%
+ }%
+ \fi%
+}
+
+\newdimen\lfsep
+\lfsep=3ex       %
+\def\leftfigure#1#2{
+\@ifnextchar [{\@leftcut{figure}{#1}{#2}}{\@leftcut{figure}{#1}{#2}[0]}}
+\def\@leftcut#1#2#3[#4]{\makeblank{#2}{#3}{#2}{#4}
+\@nltop=#4 \ifnum\@nltop>0 \begin{nullfloat}{#1}{#2}{0pt}{#4}
+\else \begin{nullfloat}{#1}{#2}{-#2}{#4} \fi}
+\def\endleftfigure#1 #2\par{\end{nullfloat}#2\par#1}
+
+\def\rightfigure#1#2{
+\@ifnextchar [{\@rightcut{figure}{#1}{#2}}{\@rightcut{figure}{#1}{#2}[0]}}
+\def\@rightcut#1#2#3[#4]{\makeblank{#2}{#3}{0pt}{#4}
+\@parwd=\columnwidth \advance \@parwd by -#2
+\begin{nullfloat}{#1}{#2}{\@parwd}{#4}}
+\let\endrightfigure=\endleftfigure
+
+\def\nullfloat#1#2#3#4{\def\@captype{#1}
+ %
+\noindent\hbox to 0pt \bgroup \hskip\lfsep\hskip #3
+\vbox to 0pt \bgroup \vskip #4\baselineskip\hsize #2 \advance\hsize -2\lfsep
+\textwidth\hsize\columnwidth\hsize \@parboxrestore}
+\def\endnullfloat{\vss\egroup\hss\egroup\vskip-\baselineskip}
+
+\newdimen\@parwd \newcount\@nlp \newcount\@nlpi \newcount\@nltop
+\def\rightblank#1#2{\makeblank{#1}{#2}{0pt}{0}}
+\def\leftblank#1#2{\makeblank{#1}{#2}{#1}{0}}
+\def\makeblank#1#2#3#4{ %
+\@parwd=\columnwidth \advance \@parwd by -#1
+\@nlpi=#2 \advance \@nlpi by 1
+\@nltop=#4 \advance \@nlpi by \@nltop
+\edef\@PS{\parshape=\@nlpi}
+\@nlp=0 \ifnum\@nltop>0
+\loop\ifnum\@nlp<\@nltop\advance\@nlp by 1
+ \edef\@PS{\@PS 0pt\columnwidth}\repeat
+\fi \advance\@nlp by 1
+\loop\ifnum\@nlp<\@nlpi\advance\@nlp by 1 \edef\@PS{\@PS #3\@parwd}\repeat
+\edef\@PS{\@PS 0pt\columnwidth} \@PS}
+\def\Par{\\[\parskip]\hspace*{\parindent}}
+
+
+
+
+\def\endarray{\hdl@endarray \egroup\egroup \hdl@arrayrestore}
+\def\endtabular{\hdl@endarray \egroup\egroup \hdl@arrayrestore $\egroup}
+\expandafter\let\csname endtabular*\endcsname = \endtabular
+
+\def\@array[#1]#2{\setbox\@arstrutbox=\hbox{\vrule 
+                height\arraystretch \ht\strutbox
+                depth\arraystretch \dp\strutbox
+                width\z@}%
+        \hdl@arrayinit
+        \@mkpream{#2}\edef\@preamble{\halign \noexpand\@halignto
+                \bgroup \tabskip\z@ \@arstrut \@preamble \tabskip\z@ \cr}%
+        \let\@startpbox\@@startpbox \let\@endpbox\@@endpbox
+        \hdl@preaminit
+        \if #1t\vtop \else \if#1b\vbox \else \vcenter \fi\fi
+        \bgroup \let\par\relax
+        \let\@sharp##\let\protect\relax \lineskip\z@\baselineskip\z@\@preamble}
+
+\def\@xarraycr{\@ifnextchar[{\@argarraycr}{\ifnum0=`{\fi}${}\hdl@cr}}
+\def\@xtabularcr{\@ifnextchar[{\@argtabularcr}{\ifnum0=`{\fi}\hdl@cr}}
+\def\@xargarraycr#1{\@tempdima #1\advance\@tempdima \dp \@arstrutbox 
+        \vrule \@height\z@ \@depth\@tempdima \@width\z@
+        \hdl@argcr\@tempdima}
+\def\@yargarraycr#1{\hdl@argcr{#1}\noalign{\vskip #1}}
+
+\def\multicolumn#1#2#3{\multispan{#1}\begingroup
+        \def\hdl@arraydashrule{\ifnum\@lastchclass=6\relax
+                        \@addtopreamble{\hdl@vdashrule{\hdl@currentcolumn}}%
+                \else\@tempcnta#1\advance\@tempcnta\hdl@currentcolumn
+                        \@addtopreamble{\hdl@vdashrule{\the\@tempcnta}}\fi}%
+        \@mkpream{#2}%
+        \def\@sharp{#3}\let\protect\relax
+        \let\@startpbox\@@startpbox\let\@endpbox\@@endpbox
+        \hdl@preaminit
+        \@arstrut \@preamble\endgroup
+        \global\advance\hdl@currentcolumn#1\ignorespaces}
+
+\def\@addamp{\if@firstamp\@firstampfalse \else
+        \edef\@preamble{\@preamble \global\advance\hdl@currentcolumn\@ne &}%
+        \advance\hdl@columns\@ne \fi}
+\let\hdl@mkpream\@mkpream
+
+\def\@mkpream{\hdl@columns\@ne \let\hdl@vdashrule\relax \let\hdl@colhtdp\relax
+        \hdl@mkpream}
+
+\def\@arrayclassz{\ifcase \@lastchclass \@acolampacol \or \@ampacol \or
+                \or \or \@addamp \or
+                \@acolampacol \or \@firstampfalse \@acol \fi
+        \edef\@preamble{\@preamble
+                \ifcase \@chnum 
+                \hfil\hdl@putcolumn{$\relax\@sharp$}\hfil
+                \or \hdl@putcolumn{$\relax\@sharp$}\hfil
+                \or \hfil\hdl@putcolumn{$\relax\@sharp$}\fi}}
+\def\@tabclassz{\ifcase \@lastchclass \@acolampacol \or \@ampacol \or
+                \or \or \@addamp \or
+                \@acolampacol \or \@firstampfalse \@acol \fi
+        \edef\@preamble{\@preamble
+        \ifcase \@chnum 
+                \hfil\hdl@putcolumn{\@sharp\unskip}\hfil 
+                \or \hdl@putcolumn{\@sharp\unskip}\hfil 
+                \or \hfil\hskip\z@ \hdl@putcolumn{\@sharp\unskip}\fi}}
+
+\def\@testpach#1{\@chclass \ifnum \@lastchclass=\tw@ 4 \else 
+        \ifnum \@lastchclass=3 5 \else
+                \z@ \if #1c\@chnum \z@ \else
+                        \if #1l\@chnum \@ne \else
+                        \if #1r\@chnum \tw@ \else
+                \@chclass \if #1|\@ne \let\@arrayrule\hdl@arrayrule \else
+                        \if #1:\@ne \let\@arrayrule\hdl@arraydashrule \else
+                        \if #1!\@ne \let\@arrayrule\hdl@arraythickrule \else
+                        \if #1@\tw@ \else
+                        \if #1p3 \else \z@ \@preamerr 0\fi
+        \fi  \fi  \fi  \fi  \fi  \fi  \fi  \fi \fi}
+
+\newdimen\arrayrulethickwidth
+\arrayrulethickwidth 2\arrayrulewidth
+\def\hline{\noalign{\ifnum0=`}\fi \hrule\@height\arrayrulewidth
+        \hdl@hline\arrayrulewidth
+        \let\@tempb\hline\futurelet\@tempa\hdl@xhline}
+\def\hlinethick{\noalign{\ifnum0=`}\fi \hrule\@height \arrayrulethickwidth
+        \hdl@hline\arrayrulethickwidth
+        \let\@tempb\hline\futurelet\@tempa\hdl@xhline}
+
+\def\clinethick#1{\@clinethick[#1]}
+\def\@clinethick[#1-#2]{\noalign{\global\@cla#1\relax
+\global\advance\@cla\m@ne
+\ifnum\@cla>0\global\let\@gtempa\@clinethicka\else
+  \global\let\@gtempa\@clinethickb\fi
+\global\@clb#2\relax
+\global\advance\@clb-\@cla}\@gtempa
+\noalign{\vskip-\arrayrulethickwidth}}
+
+\def\@clinethicka{\multispan\@cla&\multispan\@clb
+\unskip\leaders\hrule \@height \arrayrulethickwidth \hfill
+\cr}
+
+\def\@clinethickb{\multispan\@clb
+\unskip\leaders\hrule \@height \arrayrulethickwidth \hfill
+\cr}
+
+\def\@@startpbox#1{\setbox\hdl@box\vtop\bgroup\hsize#1\@arrayparboxrestore}
+\def\@@endpbox{\par\vskip\dp\@arstrutbox\egroup\hdl@colhtdp\box\hdl@box\hfil}
+
+
+\newdimen\hdashlinewidth \hdashlinewidth4pt %
+\newdimen\hdashlinegap \hdashlinegap4pt %
+\newif\ifhdl@drawing
+\newif\ifhdl@doublerule
+\newcount\hdl@totalheight \newcount\hdl@totalheightsave
+\newcount\hdl@columns
+\newcount\hdl@currentcolumn \newcount\hdl@currentcolumnsave
+\newbox\hdl@box
+\newdimen\hdl@height \newdimen\hdl@heightsave
+\newdimen\hdl@depth \newdimen\hdl@depthsave
+
+\gdef\hdl@vdashcolumn{}
+\gdef\hdl@vdashcols{}
+
+
+\def\hdashline{\multispan{\hdl@columns}\unskip\hdl@hcline
+        \noalign{\ifnum0=`}\fi
+        \let\@tempb\hdashline\futurelet\@tempa\hdl@xhline}
+
+\def\hdl@xhline{\ifx\@tempa\hline \hdl@ixhline\fi
+        \ifx\@tempa\hdashline \hdl@ixhline\fi
+        \ifnum0=`{\fi}}
+\def\hdl@ixhline{\vskip\doublerulesep\hdl@hline\doublerulesep}
+
+\def\hdl@hline#1{\@tempcnta#1
+        \global\advance\hdl@totalheight\@tempcnta
+        \xdef\hdl@vdashcols{\hdl@vdashcols
+                (-1,-1,/\the\@tempcnta);}}
+
+\def\hdl@hcline{\vrule\@height\arrayrulewidth\@width\hdashlinewidth
+        \hskip.5\hdashlinegap
+        \xleaders\hbox{\hskip.5\hdashlinegap
+                \vrule\@height\arrayrulewidth\@width\hdashlinewidth
+                \hskip.5\hdashlinegap}\hfill
+        \hskip.5\hdashlinegap
+        \vrule\@height\arrayrulewidth\@width\hdashlinewidth\cr
+        \noalign{\vskip-\arrayrulewidth}}
+
+\def\cdashline#1{\hdl@cline[#1]}
+\def\hdl@cline[#1-#2]{\noalign{\global\@cla#1\relax
+                \global\advance\@cla\m@ne
+                \ifnum\@cla>0\global\let\@gtempa\hdl@clinea\else
+                        \global\let\@gtempa\hdl@clineb\fi
+                \global\@clb#2\relax
+                \global\advance\@clb-\@cla}\@gtempa}
+
+\def\hdl@clinea{\multispan\@cla&\multispan\@clb\unskip\hdl@hcline}
+\def\hdl@clineb{\multispan\@clb\unskip\hdl@hcline}
+
+
+\def\hdl@arrayinit{
+        \hdl@totalheightsave\hdl@totalheight \global\hdl@totalheight\z@
+        \hdl@currentcolumnsave\hdl@currentcolumn \global\hdl@currentcolumn\z@
+        \hdl@heightsave\hdl@height \global\hdl@height\z@
+        \hdl@depthsave\hdl@depth \global\hdl@depth\z@
+        \edef\hdl@vdashcolumnsave{\hdl@vdashcolumn}\gdef\hdl@vdashcolumn{}%
+        \edef\hdl@vdashcolssave{\hdl@vdashcols}\gdef\hdl@vdashcols{}}
+\def\hdl@preaminit{\let\hdl@vdashrule\hdl@@vdashrule
+        \let\hdl@colhtdp\hdl@@colhtdp}
+
+\def\hdl@putcolumn#1{\setbox\hdl@box\hbox{#1}\hdl@colhtdp \box\hdl@box}
+\def\hdl@@colhtdp{%
+        \ifdim\hdl@height<\ht\hdl@box \global\hdl@height\ht\hdl@box \fi
+        \ifdim\hdl@depth<\dp\hdl@box \global\hdl@depth\dp\hdl@box\fi}
+
+\let\hdl@arrayrule\@arrayrule
+\def\hdl@arraydashrule{\ifnum\@lastchclass=6\relax
+                \@addtopreamble{\hdl@vdashrule{0}}%
+        \else \@addtopreamble{\hdl@vdashrule{\the\hdl@columns}}\fi}
+\def\hdl@arraythickrule{\@addtopreamble{\hskip -1\arrayrulewidth
+        \vrule \@width 2\arrayrulewidth\hskip -1\arrayrulewidth}}
+
+\def\hdl@@vdashrule#1{\xdef\hdl@vdashcolumn{\hdl@vdashcolumn#1,}}
+
+
+\def\hdl@cr{\cr\noalign{\hdl@@cr\z@}}
+\def\hdl@argcr#1{\cr\noalign{\hdl@@cr{#1}}}
+\def\hdl@@cr#1{
+        \ifdim\hdl@height<\ht\@arstrutbox \hdl@height\ht\@arstrutbox\fi
+        \ifdim\hdl@depth<\dp\@arstrutbox \hdl@depth\dp\@arstrutbox\fi
+        \@tempcnta\hdl@height \advance\@tempcnta\hdl@depth
+        \@tempdima#1\advance\@tempcnta\@tempdima
+        \global\advance\hdl@totalheight\@tempcnta
+        \xdef\hdl@vdashcols{\hdl@vdashcols
+                (\hdl@vdashcolumn-1,-1,/\the\@tempcnta);}%
+        \gdef\hdl@vdashcolumn{}\global\hdl@currentcolumn\z@
+        \global\hdl@height\z@ \global\hdl@depth\z@}
+
+
+\def\hdl@endarray{\crcr \noalign{
+        \ifdim\hdl@height=\z@
+                \ifdim\hdl@depth=\z@ \else \hdl@@cr\z@ \fi
+        \else \hdl@@cr\z@ \fi}\omit
+        \def\hdl@vdrow{}\global\let\hdl@vd\relax
+        \global\let\hdl@amp\relax \global\let\hdl@omit\relax
+        \hdl@makevd
+        \global\let\hdl@vd\hdl@@vd
+        \global\let\hdl@amp\hdl@@amp \global\let\hdl@omit\hdl@@omit
+        \hdl@vdrow\cr}
+\def\hdl@arrayrestore{\global\hdl@totalheight\hdl@totalheightsave
+        \global\hdl@currentcolumn\hdl@currentcolumnsave
+        \global\hdl@height\hdl@heightsave
+        \global\hdl@depth\hdl@depthsave
+        \xdef\hdl@vdashcolumn{\hdl@vdashcolumnsave}%
+        \xdef\hdl@vdashcols{\hdl@vdashcolssave}}
+\def\hdl@@amp{&}
+\def\hdl@@omit{\omit}
+
+\def\hdl@makevd{\@tempcnta\hdl@totalheight \@tempcntb\hdl@totalheight
+        \hdl@drawingfalse \def\@tempb{}%
+        \hdl@doublerulefalse
+        \expandafter\hdl@imakevd\hdl@vdashcols\@nil;%
+        \ifhdl@drawing \hdl@drawvd \fi
+        \edef\hdl@vdashcols{\@tempb}%
+        \ifhdl@doublerule
+                \edef\hdl@vdrow{\hdl@vdrow\hskip\doublerulesep}%
+                \let\next\hdl@makevd
+        \else
+                \advance\hdl@currentcolumn\@ne
+                \ifnum\hdl@currentcolumn>\hdl@columns \let\next\relax
+                \else
+                        \ifnum\hdl@currentcolumn=\@ne
+                                \edef\hdl@vdrow{\hdl@vdrow\hfil}%
+                        \else
+                                \edef\hdl@vdrow{\hdl@vdrow
+                                        \hdl@amp \hdl@omit \hfil}%
+                        \fi
+                        \let\next\hdl@makevd
+        \fi\fi\next}
+\def\hdl@imakevd#1;{\def\@tempa{#1}\ifx\@tempa\@nnil \let\next\relax
+        \else \hdl@iimakevd#1\let\next\hdl@imakevd \fi \next}
+\def\hdl@iimakevd(#1/#2){\hdl@iiimakevd#1\@nil
+        \edef\@tempb{\@tempb(\@tempc/#2);}\advance\@tempcntb-#2}
+\def\hdl@iiimakevd#1,#2,#3\@nil{%
+        \ifnum#1<\z@\def\@tempc{-1,-1,}%
+                \ifhdl@drawing \hdl@drawvd \hdl@drawingfalse \fi
+        \else
+                \ifnum#1=\hdl@currentcolumn \relax
+                        \ifhdl@drawing \else
+                                \@tempcnta\@tempcntb \hdl@drawingtrue
+                        \fi
+                        \def\@tempc{#2,#3}%
+                        \ifnum#1=#2\relax \hdl@doubleruletrue \fi
+                \else
+                        \ifhdl@drawing \hdl@drawvd \hdl@drawingfalse \fi
+                        \def\@tempc{#1,#2,#3}%
+        \fi\fi}
+\def\hdl@drawvd{\advance\@tempcnta-\@tempcntb
+        \edef\hdl@vdrow{\hdl@vdrow \hdl@vd{\the\@tempcntb}{\the\@tempcnta}}}
+
+\def\hdl@@vd#1#2{\vbox to\z@{\vss\hbox{\hskip-.5\arrayrulewidth
+        \raise#1sp\vbox to#2sp{
+                \hrule\@height.5\hdashlinewidth\@width\arrayrulewidth
+                \vskip.5\hdashlinegap
+                \xleaders\vbox{\vskip.5\hdashlinegap
+                        \hrule\@height\hdashlinewidth\@width\arrayrulewidth
+                        \vskip.5\hdashlinegap}\vfil
+                \vskip.5\hdashlinegap
+                \hrule\@height.5\hdashlinewidth\@width\arrayrulewidth}%
+        \hskip-.5\arrayrulewidth}}}
+
+\newif\if@slashboxentryexist
+ \@slashboxentryexisttrue
+\newbox\@slashboxa
+\newbox\@slashboxb
+\newbox\@slashboxc
+\newcount\@slashboxwd
+\newcount\@slashboxht
+\newdimen\@slashsepl
+\newdimen\@slashsepr
+\def\slashbox{%
+  \@slashboxentryexisttrue%
+  \def\@slashboxpicture##1{%
+    \put(0,0){\line(##1,1){\@slashboxwd}}%
+    \put(0,\@slashboxht){\makebox(0,0)[tl]{\box\@slashboxa}}%
+    \put(\@slashboxwd,0){\makebox(0,0)[br]{\box\@slashboxb}}%
+  }%
+  \@slashbox
+}%
+\def\backslashbox{%
+  \@slashboxentryexisttrue%
+  \def\@slashboxpicture##1{%
+    \put(0,\@slashboxht){\line(##1,-1){\@slashboxwd}}%
+    \put(0,0){\makebox(0,0)[bl]{\box\@slashboxa}}%
+    \put(\@slashboxwd,\@slashboxht){\makebox(0,0)[tr]{\box\@slashboxb}}%
+  }%
+  \@slashbox
+}%
+\def\noentryslashbox{%
+  \@slashboxentryexistfalse%
+  \def\@slashboxpicture##1{%
+    \put(0,0){\line(##1,1){\@slashboxwd}}%
+    \put(0,\@slashboxht){\makebox(0,0)[tl]{\box\@slashboxa}}%
+    \put(\@slashboxwd,0){\makebox(0,0)[br]{\box\@slashboxb}}%
+  }%
+  \@slashbox
+}%
+\def\noentrybackslashbox{%
+  \@slashboxentryexistfalse%
+  \def\@slashboxpicture##1{%
+    \put(0,\@slashboxht){\line(##1,-1){\@slashboxwd}}%
+    \put(0,0){\makebox(0,0)[bl]{\box\@slashboxa}}%
+    \put(\@slashboxwd,\@slashboxht){\makebox(0,0)[tr]{\box\@slashboxb}}%
+  }%
+  \@slashbox
+}%
+\def\@slashbox{\@ifnextchar [{\@@slashbox}{\@@slashbox[0pt]}}
+\def\@@slashbox[#1]{\@ifnextchar [{\@@@slashbox[#1]}{\@@@slashbox[#1][c]}}
+\def\@@@slashbox[#1][#2]#3#4{%
+  \@slashsepl=\tabcolsep
+  \@slashsepr=\tabcolsep
+    \@tfor\@tempa :=#2\do{\expandafter\let
+        \csname @slashsep\@tempa\endcsname=\z@}%
+  \setbox\@slashboxa=\hbox{\strut\hskip\tabcolsep\shortstack[l]{#3}}%
+  \setbox\@slashboxb=\hbox{\shortstack[r]{#4}\hskip\tabcolsep\strut}%
+  \setbox\@slashboxa=\hbox{\raise\dp\@slashboxa\box\@slashboxa}%
+  \setbox\@slashboxb=\hbox{\raise\dp\@slashboxb\box\@slashboxb}%
+  \setbox\@slashboxc=\hbox{%
+    \@tempdima=\wd\@slashboxa
+    \advance\@tempdima by \wd\@slashboxb
+    \advance\@tempdima by \@slashsepl
+    \advance\@tempdima by \@slashsepr
+    \@tempdimb=#1\relax%
+    \ifdim\@tempdimb>\@tempdima \@tempdima=\@tempdimb\fi%
+    \@tempdimb=\ht\@slashboxa
+    \advance\@tempdimb by \dp\@slashboxa
+        \if@slashboxentryexist
+      \advance\@tempdimb by \ht\@slashboxb
+      \advance\@tempdimb by \dp\@slashboxb
+    \fi
+    \@tempcnta=\@tempdima
+    \@tempcntb=\@tempdimb
+    \advance\@tempcnta by \@tempcntb
+    \advance\@tempcnta by -1
+    \divide\@tempcnta by \@tempcntb
+    \ifnum\@tempcnta>6 \@tempcnta=6
+      \@tempdimb=0.166666666\@tempdima
+    \else
+      \ifnum\@tempcnta<1 \@tempcnta=1\fi
+      \@tempdima=\@tempdimb
+      \multiply\@tempdima by \@tempcnta
+    \fi%
+    \advance\@tempdima by -\@slashsepl
+    \advance\@tempdima by -\@slashsepr
+    \@slashboxwd=\@tempdima
+    \@slashboxht=\@tempdimb
+    \@tempcntb=\@slashsepl
+    \setlength{\unitlength}{1sp}%
+    \begin{picture}(\@slashboxwd,\@slashboxht)(\@tempcntb,0)
+    \advance\@tempdima by \@slashsepl
+    \advance\@tempdima by \@slashsepr
+    \@slashboxwd=\@tempdima
+    \@slashboxpicture{\@tempcnta}
+    \end{picture}%
+  }%
+  $\vcenter{\box\@slashboxc}$%
+}%
+
+\newdimen\dimen@@
+\newdimen\dimen@@@
+\newdimen\@eikolastfootheight
+ \@eikolastfootheight\z@
+\newbox\@eikolastfootnote
+\newbox\@eikolastrightfootnote
+
+\newif\if@leftfootnoteexist
+  \@leftfootnoteexistfalse
+\newif\if@rightfootnoteexist
+  \@rightfootnoteexistfalse
+\newif\if@footnoteexist
+  \@footnoteexistfalse
+\newif\if@makerightfootnote
+  \@makerightfootnotefalse
+
+\edef\geteikolastpage#1#2{#1}
+\newcounter{tmpeikocounter}
+
+\def\balancecolumns{%
+  \if@footnoteexist%
+   \if@makerightfootnote%
+    \setbox\@eikolastfootnote\vbox{%
+    \vskip\skip\footins\footnoterule%
+    \if@leftfootnoteexist\unvbox\@leftcolumnfootnote\fi}%
+    \setbox\@eikolastrightfootnote\vbox{%
+    \vskip\skip\footins\footnoterule%
+    \if@rightfootnoteexist\unvbox\@rightcolumnfootnote\fi}%
+    \@eikolastfootheight=\ht\@eikolastfootnote
+     \advance\@eikolastfootheight by \ht\@eikolastrightfootnote
+   \else
+    \setbox\@eikolastfootnote\vbox{%
+    \vskip\skip\footins\footnoterule%
+    \if@leftfootnoteexist\unvbox\@leftcolumnfootnote\fi%
+    \if@rightfootnoteexist\unvbox\@rightcolumnfootnote\fi}
+    \@eikolastfootheight=\ht\@eikolastfootnote
+   \fi
+  \fi%
+   \setbox0\vbox{\unvbox\@outputbox} \dimen@@=\ht0
+   \advance\dimen@@ by\topskip %
+   \divide\dimen@@ by2 \splittopskip=\topskip
+   {\vbadness=10000 \loop \dimen@@@\dimen@@
+     \advance\dimen@@@ by -\@eikolastfootheight
+     \global\setbox3=\copy0
+     \global\setbox1=\vsplit3 to\dimen@@@
+    \ifdim\ht3>\dimen@@ \global\advance\dimen@@ by1pt\repeat}
+   \ifdim\ht3=0pt \dimen@@=\ht0\fi
+   \ifdim\dimen@@>\textheight \dimen@@=\textheight\fi
+   \setbox0=\vbox to \dimen@@{%
+     \unvbox1\if@footnoteexist\unvbox\@eikolastfootnote\fi\vfill}
+   \setbox2=\vbox to \dimen@@{\unvbox3\vfill}
+   \if\ht0>\ht2 \setbox2=\vbox to\ht0{\unvbox2\vfill}\dimen@@=\ht0\else
+   \if\ht2>\ht0 \setbox0=\vbox to\ht2{\unvbox0\vfill}\dimen@@=\ht2\fi\fi
+  \wd0=\hsize \wd2=\hsize
+\ifdim\dp0>\dp2\advance\dimen@@ by\dp0\else\advance\dimen@@ by\dp2\fi
+\setbox\@outputbox\vbox to\@colht{\hbox to\textwidth{\box0\hfil\box2}%
+  \@tempdimb\dimen@@ \advance\@tempdimb by \bottomlinelimit\relax%
+  \@ifundefined{r@eiko:lastpage}{\relax}{%
+   \edef\@@tmpeiko{\csname r@eiko:lastpage\endcsname\relax}
+        \edef\tmpeiko{\expandafter\geteikolastpage\@@tmpeiko}
+    \setcounter{tmpeikocounter}{\tmpeiko}
+   \ifnum\c@tmpeikocounter=\c@page
+    {\ifdim\@tempdimb<\@colht%
+     \vskip1\zh%
+     \hbox to\textwidth{\hfill\vbox to0.4pt{\hrule width 100mm}\hfill}%
+    \fi}%
+   \fi}%
+  \vfill}}
+
+\newif\if@lastpagebalancing \@lastpagebalancingtrue %
+
+
+\newlength{\@interlinegap}
+
+\def\@outputdblcol{\if@firstcolumn \global\@firstcolumnfalse
+    \global\setbox\@leftcolumn\box\@outputbox
+\ifx \@currsize\normalsize \global\@interlinegap 3\Q\else%
+ \ifx \@currsize\footnotesize \global\@interlinegap -2pt\else%
+  \ifx \@currsize\small \global\@interlinegap 0pt\fi\fi\fi%
+  \else \global\@firstcolumntrue
+\if@leftfootnoteexist\setbox\@leftcolumn\vbox to\@colht{\boxmaxdepth\maxdepth
+\@texttop\dimen128=\dp\@leftcolumn
+\unvbox\@leftcolumn\vfill\vskip\skip\footins\footnoterule%
+\unvbox\@leftcolumnfootnote
+\vskip-\dimen128\@textbottom}
+\global\maxdepth\@maxdepth\else
+\setbox\@leftcolumn\vbox to\@colht{\boxmaxdepth\maxdepth
+\@texttop\dimen128=\dp\@leftcolumn
+\unvbox\@leftcolumn\vfill%
+\vskip-\dimen128\@textbottom}
+\global\maxdepth\@maxdepth\fi
+\if@rightfootnoteexist\setbox\@outputbox\vbox to\@colht{\boxmaxdepth\maxdepth
+\@texttop\dimen128=\dp\@outputbox
+\unvbox\@outputbox\vfill\vskip\skip\footins\footnoterule%
+\unvbox\@rightcolumnfootnote
+\vskip-\dimen128\@textbottom}
+\global\maxdepth\@maxdepth\else
+\setbox\@outputbox\vbox to\@colht{\boxmaxdepth\maxdepth
+\@texttop\dimen128=\dp\@outputbox
+\unvbox\@outputbox\vfill%
+\vskip-\dimen128\@textbottom}
+\global\maxdepth\@maxdepth\fi
+    \setbox\@outputbox\vbox{\hbox to\textwidth{\hbox to\columnwidth
+      {\box\@leftcolumn \hss}\hfil \vrule width\columnseprule\hfil
+       \hbox to\columnwidth{\box\@outputbox \hss}}}\@combinedblfloats
+       \@outputpage \begingroup \@dblfloatplacement \@startdblcolumn
+       \@whilesw\if@fcolmade \fi{\@outputpage\@startdblcolumn}\endgroup
+    \fi}
+
+\def\balancing@outputdblcol{\if@firstcolumn %
+ \else \global\@firstcolumntrue
+  %
+  \setbox\@outputbox\vbox{\@tempdima\baselineskip
+   \advance\@tempdima-\ht\@outputbox \advance\@tempdima-\dp\@leftcolumn
+   \unvbox\@leftcolumn\ifdim\@tempdima<0mm\vskip\lineskip\else\vskip\@tempdima\fi
+   \penalty\interlinepenalty\unvbox\@outputbox}
+ \fi
+ \balancecolumns %
+ \@combinedblfloats
+ \@outputpage \begingroup \@dblfloatplacement \@startdblcolumn
+ \@whilesw\if@fcolmade \fi{\@outputpage\@startdblcolumn}\endgroup}
+
+\newbox\@leftcolumnfootnote \newbox\@rightcolumnfootnote
+
+
+\let\@makecoloriginal=\@makecol
+\def\@makecol{\if@firstcolumn
+\ifvoid\footins \setbox\@outputbox\box\@cclv
+\global\@leftfootnoteexistfalse\global\@footnoteexistfalse
+   \else\global\@leftfootnoteexisttrue\global\@footnoteexisttrue
+\setbox\@outputbox\box\@cclv
+\global\setbox\@leftcolumnfootnote\box\footins
+\fi
+     \xdef\@freelist{\@freelist\@midlist}\gdef\@midlist{}\@combinefloats
+\else
+\ifvoid\footins \setbox\@outputbox\box\@cclv
+\global\@rightfootnoteexistfalse
+   \else\global\@rightfootnoteexisttrue\global\@footnoteexisttrue
+\setbox\@outputbox\box\@cclv
+\global\setbox\@rightcolumnfootnote\box\footins
+\fi
+     \xdef\@freelist{\@freelist\@midlist}\gdef\@midlist{}\@combinefloats
+\fi
+}
+
+
+
+
+
+
+
+\def\url{\bgroup\@sanitize\catcode`/=\active\@url}
+{\catcode`/=\active
+  \gdef\@url#1{\def/{\penalty0 \char`\/\penalty0 }#1\egroup}}
+
+\def\numfootnotemark[#1]{{\def\thefootnote{\arabic{footnote}}\footnotemark[#1]}}

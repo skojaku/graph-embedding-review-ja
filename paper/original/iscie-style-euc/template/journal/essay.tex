@@ -1,0 +1,52 @@
+%
+% essay.tex システム/制御/情報
+%    システム制御情報学会 Ａ４版クラスファイル
+%    scitrans.cls のサンプル（編集後記・前記のテンプレートファイル）
+%
+\documentclass[J]{scitrans}
+\usepackage{graphicx}
+%               Usage:  \documentclass[J]{scitrans} (和文の場合)
+%                       \documentclass[E]{scitrans} (英文の場合)
+%
+% 年, 巻, 号 ページの設定
+%
+\appearyear{1995}
+\vol{7}
+\numberinvol{13}
+\setcounter{page}{3}
+\setcounter{volumepage}{1}
+
+
+\Journal{編集後記}{『特集名』}{\editorialessay}      %% 編集後記の時
+%\Journal{編集前記}{『特集名』}{\editorialessay}     %% 編集前記の時
+
+%%\ForSubmission                        %% 論文要旨を出力したいとき
+                                        %% コメントをはずしてください
+
+\begin{document}
+
+\title{システム制御情報学会スタイルファイルの使い方を企画して}
+\author{システム　太郎*}
+
+\etitle{Usage of Style File for Transactions of the Institute of
+        Systems, Control and Information Engineers}
+
+\eauthor{Taro {\sc System}*}
+
+\headingtitle{システム制御情報学会論文誌用スタイルファイルの使い方を企画して}
+\headingauthors{システム}
+
+\maketitle
+
+\acceptdate{1995年8月1日}
+
+\address{*}{京都大学　工学部}
+
+%\keywords{style file, transactions, ISCIE, paper}
+
+%%% つぎの \input を削除し，本文を書き出して下さい．
+\input{tmp-short.tex}
+
+\end{document}
+%
+%% end of essay.tex

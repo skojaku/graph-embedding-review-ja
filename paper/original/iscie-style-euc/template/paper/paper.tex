@@ -1,0 +1,85 @@
+%
+% paper.tex  
+%    システム制御情報学会論文誌  論文・研究速報用Ａ４版クラスファイル
+%    scitrans.cls のサンプル（論文のテンプレートファイル）
+%
+\documentclass[J]{scitrans}
+\usepackage{graphicx}
+%
+%               Usage:  \documentclass[J]{scitrans} (和文の場合)
+%                       \documentclass[E]{scitrans} (英文の場合)
+
+%
+% 年, 巻, 号 ページの設定
+%
+
+%
+\appearyear{0000}                           %% 投稿時は変更しないでください
+\vol{0}                                     %% 投稿時は変更しないでください
+\numberinvol{0}                             %% 投稿時は変更しないでください
+\setcounter{page}{1}
+\setcounter{volumepage}{1}
+
+\Transaction                                    %% 論文および研究速報のとき
+%%\Shortpaper                                   %% 研究速報のとき
+
+\ForSubmission                                %% 論文投稿時には
+                                                %% コメントをはずしてください
+
+\begin{document}
+
+\title{システム制御情報学会スタイルファイルの\\ 使い方 論文誌用}
+\author{鈴木　太郎${}^\dagger$・佐藤　花子${}^\ddagger$・田中　次郎${}^\dagger$}
+\etitle{Usage of the Style File for Transactions of the Institute of
+        Systems, Control and Information Engineers}
+\eauthor{Taro {\sc Suzuki}${}^\dagger$, Hanako {\sc Sato}${}^\ddagger$
+ and Jiro {\sc Tanaka}${}^\dagger$}
+\headingtitle{システム制御情報学会スタイルファイルの使い方}
+\headingauthors{鈴木・佐藤・田中}
+
+%% 論文要旨(論文および研究速報のときに書いてください)
+%
+\ronbunyoushi{
+      論文要旨
+      論文の要旨はこうである．論文の要旨はこうである．
+      論文の要旨はこうである．論文の要旨はこうである．
+      論文の要旨はこうである．論文の要旨はこうである．
+      論文の要旨はこうである．論文の要旨はこうである．
+      論文の要旨はこうである．論文の要旨はこうである．
+      論文の要旨はこうである．論文の要旨はこうである．}
+
+%% 英文要旨(論文のときのみ書いてください)
+%
+\abstract{
+        This is an abstract.  This is an abstract.
+        This is an abstract.  This is an abstract.
+        This is an abstract.  This is an abstract.
+        This is an abstract.  This is an abstract.
+        This is an abstract.  This is an abstract.
+        This is an abstract.  This is an abstract.
+        This is an abstract.  This is an abstract.}
+
+
+\maketitle
+
+\acceptdate{1995年8月1日}
+
+\address{*}{\AcceptDate}
+
+%%%「講演論文等をもとにした投稿論文の取り扱い方針」に従い，システム制御情報学会研究発表講演会など本学会が主催する講演会やシンポジウムでの速報性の高い講演論文を元にして論文を投稿する場合は，以下にその旨を記入して下さい．論文の所定の脚注部に記載されます．
+\address{*}{第○○回システム制御情報学会研究発表講演会にて発表(20××年△△月)}
+
+\address{**}{〇〇大学　大学院　工学研究科　Graduate School of Engineering, OO University;
+        Yoshida-Honmachi, Sakyo ward, Kyoto city, Kyoto 606-01, JAPAN}
+\address{***}{××大学　基礎工学部　Faculty of Engineering Science,
+        XX University;
+        1-3 Machikaneyamacho, Toyonaka city, Osaka 560, JAPAN}
+\keywords{style file, transactions, ISCIE, paper.}
+
+
+%%% つぎの \input を削除し，本文を書き出して下さい．
+\input{tmp.tex}
+
+\end{document}
+%
+%% end of paper.tex

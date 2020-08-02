@@ -1,0 +1,209 @@
+%
+% mondou.tex  
+%    システム制御情報学会  Ａ４版クラスファイル
+%    scitrans.cls のサンプル（アイ・サイ問答教室のテンプレートファイル）
+%
+\documentclass[J]{scitrans}
+\usepackage{graphicx}
+%\usepackage{epsfig}
+%
+%               Usage:  \documentclass[J]{scitrans} (和文の場合)
+%                       \documentclass[E]{scitrans} (英文の場合)
+
+%
+% 年, 巻, 号 ページの設定
+%
+
+%
+\appearyear{0000}                           %% 投稿時は変更しないでください
+\vol{0}                                     %% 投稿時は変更しないでください
+\numberinvol{0}                             %% 投稿時は変更しないでください
+\setcounter{page}{1}
+\setcounter{volumepage}{1}
+
+%\Transaction                                    %% 論文および研究速報のとき
+%%\Shortpaper                                   %% 研究速報のとき
+
+\ForSubmission                                %% 論文投稿時には
+\Journal{アイ・サイ問答教室}{}{\isciemondou}
+                                                %% コメントをはずしてください
+
+\begin{document}
+
+\title{アイ・サイ問答教室の \LaTeX 原稿はどう書くの？}
+\author{システム　太郎$^*$}
+\etitle{How to prepare \LaTeX \ source file for ISCIE MONDOU}
+\eauthor{Taro {\sc System}$^*$}
+\headingtitle{アイ・サイ問答教室の \LaTeX 原稿はどう書くの？}
+\headingauthors{システム}
+
+%% 論文要旨(論文および研究速報のときに書いてください)
+%% アイ・サイ問答教室の場合は書く必要はありません．
+%
+\ronbunyoushi{
+      論文の要旨はこうである．論文の要旨はこうである．
+      論文の要旨はこうである．論文の要旨はこうである．
+      論文の要旨はこうである．論文の要旨はこうである．
+      論文の要旨はこうである．論文の要旨はこうである．
+      論文の要旨はこうである．論文の要旨はこうである．
+      論文の要旨はこうである．論文の要旨はこうである．
+      論文の要旨はこうである．論文の要旨はこうである．}
+
+%% 英文要旨(論文のときのみ書いてください)
+%% アイ・サイ問答教室の場合は書く必要はありません．
+%
+\abstract{
+        This is an abstract.  This is an abstract.
+        This is an abstract.  This is an abstract.
+        This is an abstract.  This is an abstract.
+        This is an abstract.  This is an abstract.
+        This is an abstract.  This is an abstract.
+        This is an abstract.  This is an abstract.
+        This is an abstract.  This is an abstract.}
+
+
+\maketitle
+
+% アイ・サイ問答教室には \acceptdate は必要ありません
+%\acceptdate{1995年8月1日}
+
+%% ここから本文を書き下すか，ファイルを \input します．
+
+アイ・サイ問答教室の原稿執筆を依頼された某大学のアイ先生が
+同僚のサイ先生に質問をしています．
+
+\begin{description}
+
+\item[アイ] 
+  「サイさん，システム制御情報学会から『アイ・サイ問答教室』の原稿
+    を依頼されたんだけど，サイさんはたしか以前書いてたよね？」
+\item[サイ] 
+  「おー，アイさんにも執筆依頼が来たんだね．あの企画，評判が良い
+    そうだけど，書き手にとってはなかなかたいへんなんだよね．」
+\item[アイ] 
+  「そうそう，どうやって面白く書こうか頭を悩ましているところなん
+    だけど，中身もさることながら，原稿の準備についてちょっとわから
+    ないことがあって．」
+\item[サイ]
+  「？？」
+\item[アイ]
+  「学会の Web サイトに \LaTeX のスタイルファイルがあるということ
+    で早速ダウンロードしたんだけど・・・」
+\item[サイ] 
+  「あっ，そうそう，『アイ・サイ問答教室』のサンプルがなくて僕
+    も困ったおぼえがある．」
+\item[アイ]
+  「そうなんだ．学会事務局に電話で聞いたんだけど，『ありません』
+    という冷たい返事で．」
+\item[サイ] 
+  「僕が原稿書いたのは2年前なのに，いまだに改善されていないんだね．
+    学会の編集委員に知り合いがいるから，今度会ったらちゃんとするよ
+    うにいっとくよ．」
+\item[アイ]
+  「それはありがたいことだけど，今回の僕の原稿締切りには到底間に
+    合わないよ．」
+\item[サイ] 
+  「いつ？」
+\item[アイ] 
+  「今週末．」
+\item[サイ]
+  「そりゃまた急な話だなぁ．締切り直前にならないと仕事しないのは
+    学生時代からちっとも変わってないね．」
+\item[アイ]
+  「だから，今ある学会のスタイルファイルでどう準備したら良いか教え
+    てもらおうと．」
+\item[サイ] 
+  「しょうがないなぁ．たしか原稿ファイルをどこかに保存してあるはず
+    だから・・・．ああ，これだ．」
+\item[アイ]
+  「見つかった？」
+\item[サイ] 
+  「うん．えーっと，どうやら \verb|usage.tex| というファイルに手を
+    加えて作ったようだ．」
+\item[アイ]
+  「それで？」
+\item[サイ] 
+  「\verb|\Journal{アイ・サイ問答教室}{}{\isciemondou}|という一行
+    が，\verb|\begin{document}|の前に入っているようだ．」
+\item[アイ] 
+  「へぇー，\verb|\isciemondou| なんてコマンドがあるんだ．全く説明
+    がないからわからないよ．」
+\item[サイ] 
+  「そう．僕もスタイルファイルの中身を読んで見つけたおぼえがある．」
+\item[アイ]
+  「それで，肝心の本文はどう書いたら良いのかな？」
+\item[サイ] 
+  「まず，タイトルとか著者の情報を書き出すんだけど，論文要旨や
+    \verb|\acceptdate|を書く必要はないみたいだ．あと，著者名と
+    所属は本文の終わりに印刷されるので，\verb|\end{document}|の前に，
+    \verb|\mondouauthor| と \verb|\address| の二行が書いてあるね．」
+\item[アイ] 
+  「\verb|usage.tex|のソースには，本文の後に著者略歴のサンプルがあ
+    るけど，これは不要だね．」
+\item[サイ] 
+  「うん．特にコメントアウトしていなくても印刷はされないようだ．」
+\item[アイ] 
+  「原稿の種類によって出力を変えているってことだね．」
+\item[サイ] 
+  「文中で，『アイ』と『サイ』が対話する部分は，\verb|description|
+   環境を使ってるね．\verb|\item[アイ]|，\verb|\item[サイ]| の後に
+   それぞれの発言を書くんだ．」
+\item[アイ] 
+  「なるほど．ところで，『アイ』と『サイ』以外に登場人物が居ても良
+    いのかな？」
+\item[サイ] 
+  「そういうことは著者に任されていて，ある程度自由にして良いと思う
+    よ．読者のために内容をわかりやすくする工夫ならウェルカムのはずだ．」
+\item[アイ] 
+  「あと，数式とか図表を使いたい場合にはどうしたら良いんだろうか？」
+\item[サイ] 
+  「他の種類の原稿と同じように，学会の執筆要項や標準表記法にしたが
+    うのが基本だね．」
+\item[アイ] 
+  「なるほど．」
+\item[サイ]
+  「ただし，『アイ・サイ問答教室』の性格上，口語調の原稿になるわけ
+    で，言葉づかいや漢字と仮名の使い分けに関しては，標準表記法を厳
+    密に守る必要はないよ．」
+\item[アイ] 
+  「そうか，よくわかった．ありがとう．ついでにサイさんのそのファイ
+    ルをメールで送ってくれるとありがたいんだけど．」
+\item[サイ]
+  「了解．今度の飲み会はアイさんのおごりだね．」
+\end{description}
+
+\begin{thebibliography}{9}
+\bibitem{lamport}
+        Leslie Lamport:
+        \LaTeX: A Document Preparation System User's Guide and
+        Reference Manual, 2nd Edition,
+        Addison-Wesley, (1994)
+\end{thebibliography}
+
+% 著者と所属は原稿の終わりに加えます．
+% 原稿のはじめには \address を書かないで下さい．
+\mondouauthor
+\address{*}{システム制御情報大学}
+
+% つぎの \chosharyakureki と \authorbiography は不要ですが
+% コメントアウトしなくても印刷はされません．
+\chosharyakureki
+
+\authorbiography{シス,テム,　,太,郎}{しす,てむ,,た,ろう}{正会員}{%
+19XX年生．
+19XX年XX大学XX課程修了．
+同年同大学XX学部助手．
+同大学大型XXセンター助教授，
+同大学大学院XX研究科助教授を経て
+現在．
+システム制御情報大学XX研究所教授．
+博士（工学）．
+XX，XX，XXなどの研究に従事．
+XX学会，
+XX学会，
+XX学会各会員．
+}
+
+\end{document}
+%
+%% end of mondou.tex

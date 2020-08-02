@@ -1,0 +1,24 @@
+% $Id: JT1scimc.fd,v 1.2 2000-11-01 18:12:26+09 aoki Exp $
+\ProvidesFile{JT1scimc.fd}
+\DeclareKanjiFamily{JT1}{scimc}{}
+\DeclareRelationFont{JT1}{scimc}{m}{}{OT1}{cmr}{m}{}
+\DeclareRelationFont{JT1}{scimc}{bx}{}{OT1}{cmr}{bx}{}
+\DeclareFontShape{JT1}{scimc}{m}{n}{
+    <5>     sfixed *  [5.175] tmin10 %  7Q \tiny
+    <6>     sfixed *  [5.914] tmin10 %  8Q
+    <7>     sfixed *  [7.393] tmin10 % 10Q \scriptsize
+    <8>     sfixed *  [8.132] tmin10 % 11Q
+    <9>     sfixed *  [8.871] tmin10 % 12Q \small \footnotesize
+    <10>    sfixed *  [9.610] tmin10 % 13Q \normalsize \abstractsize \pagenumbersize
+    <10.95> sfixed * [10.350] tmin10 % 14Q \semilarge
+    <12>    sfixed * [11.828] tmin10 % 16Q \large
+    <14.4>  sfixed * [13.307] tmin10 % 18Q \Large
+    <17.28> sfixed * [16.264] tmin10 % 22Q \LARGE
+    <20.74> sfixed * [19.221] tmin10 % 26Q \huge
+    <24.88> sfixed * [23.656] tmin10 % 32Q \Huge
+    <-> tmin10
+}{}
+\DeclareFontShape{JT1}{scimc}{bx}{n}{<->ssub*scigt/m/n}{}
+\DeclareFontShape{JT1}{scimc}{m}{sc}{<->ssub*scimc/m/n}{}
+\DeclareFontShape{JT1}{scimc}{m}{sl}{<->ssub*scimc/m/n}{}
+\DeclareFontShape{JT1}{scimc}{m}{it}{<->ssub*scimc/m/n}{}
