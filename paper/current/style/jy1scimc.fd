@@ -1,0 +1,24 @@
+% $Id: JY1scimc.fd,v 1.5 2000-11-01 18:11:46+09 aoki Exp $
+\ProvidesFile{JY1scimc.fd}
+\DeclareKanjiFamily{JY1}{scimc}{}
+\DeclareRelationFont{JY1}{scimc}{m}{}{OT1}{cmr}{m}{}
+\DeclareRelationFont{JY1}{scimc}{bx}{}{OT1}{cmr}{bx}{}
+\DeclareFontShape{JY1}{scimc}{m}{n}{
+    <5>     sfixed *  [5.175] min10 %  7Q \tiny
+    <6>     sfixed *  [5.914] min10 %  8Q
+    <7>     sfixed *  [7.393] min10 % 10Q \scriptsize
+    <8>     sfixed *  [8.132] min10 % 11Q
+    <9>     sfixed *  [8.871] min10 % 12Q \small \footnotesize
+    <10>    sfixed *  [9.610] min10 % 13Q \normalsize \abstractsize \pagenumbersize
+    <10.95> sfixed * [10.350] min10 % 14Q \semilarge
+    <12>    sfixed * [11.828] min10 % 16Q \large
+    <14.4>  sfixed * [13.307] min10 % 18Q \Large
+    <17.28> sfixed * [16.264] min10 % 22Q \LARGE
+    <20.74> sfixed * [19.221] min10 % 26Q \huge
+    <24.88> sfixed * [23.656] min10 % 32Q \Huge
+    <-> min10
+}{}
+\DeclareFontShape{JY1}{scimc}{bx}{n}{<->ssub*scigt/m/n}{}
+\DeclareFontShape{JY1}{scimc}{m}{sc}{<->ssub*scimc/m/n}{}
+\DeclareFontShape{JY1}{scimc}{m}{sl}{<->ssub*scimc/m/n}{}
+\DeclareFontShape{JY1}{scimc}{m}{it}{<->ssub*scimc/m/n}{}

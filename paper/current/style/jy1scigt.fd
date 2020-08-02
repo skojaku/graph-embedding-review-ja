@@ -1,0 +1,22 @@
+% $Id: JY1scigt.fd,v 1.5 2000-11-17 19:49:33+09 aoki Exp $
+\ProvidesFile{JY1scigt.fd}
+\DeclareKanjiFamily{JY1}{scigt}{}
+\DeclareRelationFont{JY1}{scigt}{m}{}{OT1}{cmr}{bx}{}
+
+\DeclareFontShape{JY1}{scigt}{m}{n}{%
+    <5>     sfixed *  [5.175] goth10 %  7Q \tiny                                    
+    <6>     sfixed *  [5.914] goth10 %  8Q                                          
+    <7>     sfixed *  [7.393] goth10 % 10Q \scriptsize                              
+    <8>     sfixed *  [8.132] goth10 % 11Q                                          
+    <9>     sfixed *  [8.871] goth10 % 12Q \small \footnotesize                     
+    <10>    sfixed *  [9.610] goth10 % 13Q \normalsize \abstractsize \pagenumbersize
+    <10.95> sfixed * [10.350] goth10 % 14Q \semilarge                               
+    <12>    sfixed * [11.828] goth10 % 16Q \large                                   
+    <14.4>  sfixed * [13.307] goth10 % 18Q \Large                                    
+    <17.28> sfixed * [16.264] goth10 % 22Q \LARGE                                   
+    <20.74> sfixed * [19.221] goth10 % 26Q \huge                                    
+    <24.88> sfixed * [23.656] goth10 % 32Q \Huge                                    
+    <-> goth10
+}{}
+\DeclareFontShape{JY1}{scigt}{bx}{n}{<->ssub*scigt/m/n}{}
+\DeclareFontShape{JY1}{scigt}{m}{it}{<->ssub*scigt/m/n}{}

@@ -1,0 +1,22 @@
+% $Id: JT1scigt.fd,v 1.2 2000-11-17 19:49:40+09 aoki Exp $
+\ProvidesFile{JT1scigt.fd}
+\DeclareKanjiFamily{JT1}{scigt}{}
+\DeclareRelationFont{JT1}{scigt}{m}{}{OT1}{cmr}{bx}{}
+
+\DeclareFontShape{JT1}{scigt}{m}{n}{%
+    <5>     sfixed *  [5.175] tgoth10 %  7Q \tiny                                    
+    <6>     sfixed *  [5.914] tgoth10 %  8Q                                          
+    <7>     sfixed *  [7.393] tgoth10 % 10Q \scriptsize                              
+    <8>     sfixed *  [8.132] tgoth10 % 11Q                                          
+    <9>     sfixed *  [8.871] tgoth10 % 12Q \small \footnotesize                     
+    <10>    sfixed *  [9.610] tgoth10 % 13Q \normalsize \abstractsize \pagenumbersize
+    <10.95> sfixed * [10.350] tgoth10 % 14Q \semilarge                               
+    <12>    sfixed * [11.828] tgoth10 % 16Q \large                                   
+    <14.4>  sfixed * [13.307] tgoth10 % 18Q \Large                                    
+    <17.28> sfixed * [16.264] tgoth10 % 22Q \LARGE                                   
+    <20.74> sfixed * [19.221] tgoth10 % 26Q \huge                                    
+    <24.88> sfixed * [23.656] tgoth10 % 32Q \Huge                                    
+    <-> tgoth10
+}{}
+\DeclareFontShape{JT1}{scigt}{bx}{n}{<->ssub*scigt/m/n}{}
+\DeclareFontShape{JT1}{scigt}{m}{it}{<->ssub*scigt/m/n}{}

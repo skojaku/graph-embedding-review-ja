@@ -1,0 +1,107 @@
+% $Id: scij.sty,v 1.11 2001-01-10 14:55:03+09 aoki Exp $
+
+\kanjifamily{scimc}
+\def\mcdefault{scimc}
+\def\gtdefault{scigt}
+
+% based on jsize10.clo
+\let\orig@normalsize=\normalsize
+\let\orig@small=\small
+\renewcommand{\normalsize}{%
+  \orig@normalsize\@setfontsize\normalsize\@xpt{20H}\@setzw{3.25mm}}
+\renewcommand{\small}{%
+  \orig@small\@setfontsize\small\@ixpt{18H}\@setzw{3mm}}
+\let\footnotesize=\small
+\renewcommand{\tiny}{\@setfontsize\tiny\@vpt{11H}\@setzw{1.75mm}}
+\renewcommand{\scriptsize}{\@setfontsize\scriptsize\@viipt{16H}\@setzw{2.5mm}}
+\renewcommand{\large}{\@setfontsize\large\@xiipt{25H}\@setzw{4mm}}
+\renewcommand{\Large}{\@setfontsize\Large\@xivpt{28H}\@setzw{4.5mm}}
+\renewcommand{\LARGE}{\@setfontsize\LARGE\@xviipt{34H}\@setzw{5.5mm}}
+\renewcommand{\huge}{\@setfontsize\huge\@xxpt{40H}\@setzw{6.5mm}}
+\renewcommand{\Huge}{\@setfontsize\Huge\@xxvpt{50H}\@setzw{8mm}}
+
+% additional sizes
+\let\abstractsize=\normalsize
+\let\pagenumbersize=\normalsize
+\newcommand{\semilarge}{\@setfontsize\semilarge\@xipt{17H}\@setzw{3.5mm}}
+
+\def\kanji@colon{：}
+\def\kanji@comma{，}
+\def\kanji@dai{第}
+\def\kanji@en{円}
+\def\kanji@furoku{付~~~~~~録}
+\def\kanji@gakkai{システム/制御/情報　}
+\def\kanji@GAkkai{システム/制御/情報，}
+\def\kanji@Gakkai{システム制御情報学会}
+\def\kanji@genkouuketsuke{原稿受付　}
+\def\kanji@gou{号　}
+\def\kanji@hakkousho{発行所}
+\def\kanji@hakkou{発　行}
+\def\kanji@happyouronbunsuu{発表論文数}
+\def\kanji@hodai{補題}
+\def\kanji@huroku{付録}
+\def\kanji@hyo{表}
+\def\kanji@jouken{条件}
+\def\kanji@kaijoucolon{会　場：}
+\def\kanji@kaijou{会　場}
+\def\kanji@kaiki{会　期}
+\def\kanji@kakaku{価　格}
+\def\kanji@kan{巻　}
+\def\kanji@katei{仮定}
+\def\kanji@kei{系}
+\def\kanji@kenkyuusokuhou{研究速報}
+\def\kanji@meidai{命題}
+\def\kanji@noshoumei{の証明}
+\def\kanji@reidai{例題}
+\def\kanji@ronbun{論文}
+\def\kanji@sankashasuu{参加者数}
+\def\kanji@sankoubunken{参 考 文 献}
+\def\kanji@SAnkoubunken{参考文献}
+\def\kanji@Sankoubunken{参~考~文~献}
+\def\kanji@shazi{謝~~~~~~辞}
+\def\kanji@shi{誌}
+\def\kanji@shoumei{証明}
+\def\kanji@shuppansha{出版社}
+\def\kanji@shusai{主　催}
+\def\kanji@shussekisharyakureki{出~席~者~略~歴}
+\def\kanji@siki{式}
+\def\kanji@sirosikaku{□}
+\def\kanji@space{　}
+\def\kanji@step{ステップ}
+\def\kanji@teigi{定義}
+\def\kanji@teiri{定理}
+\def\kanji@tejun{手順}
+\def\kanji@tokushugou{特集号}
+\def\kanji@touronsharyakureki{討~論~者~略~歴}
+\def\kanji@hirakidaikakko{【}
+\def\kanji@tozidaikakko{】}
+\def\kanji@hirakikagikakko{「}
+\def\kanji@tozikagikakko{」}
+\def\kanji@hirakikakko{（}
+\def\kanji@tozikakko{）}
+\def\kanji@tyosharyakureki{著~者~略~歴}
+\def\kanji@tyosha{著者:}
+\def\kanji@tyuui{注意}
+\def\kanji@uketsuke{受付}
+\def\kanji@wabundaimoku{和文題目:}
+\def\kanji@youshi{要旨}
+\def\kanji@zenpage{全ページ}
+\def\kanji@zu{図}
+\def\kanji@toki{とき}
+\def\kanji@tokoro{ところ}
+\def\kanji@maru{○}
+\def\kanji@nakaguro{・}
+
+% for Japanese typesetting
+
+\widowpenalty	0
+\clubpenalty	0
+\@clubpenalty	0
+
+%\topsep0mm
+\parskip0mm
+\partopsep0mm
+\itemsep0mm
+\@beginparpenalty0
+\@endparpenalty0
+\@itempenalty0

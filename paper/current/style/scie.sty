@@ -1,0 +1,104 @@
+% $Id: scie.sty,v 1.6 2000-12-13 09:20:20+09 aoki Exp $
+
+% based on size10.clo
+\let\orig@normalsize=\normalsize
+\let\orig@small=\small
+\let\orig@footnotesize=\footnotesize
+\let\orig@tiny=\tiny
+\let\orig@scriptsize=\scriptsize
+\let\orig@large=\large
+\let\orig@Large=\Large
+\let\orig@LARGE=\LARGE
+\let\orig@huge=\huge
+\let\orig@Huge=\Huge
+\renewcommand{\normalsize}{\orig@normalsize\@setzw{3.25mm}}
+\renewcommand{\small}{\orig@small\@setzw{3mm}}
+\let\footnotesize=\small
+\renewcommand{\tiny}{\orig@tiny\@setzw{1.75mm}}
+\renewcommand{\scriptsize}{\orig@scriptsize\@setzw{2.5mm}}
+\renewcommand{\large}{\orig@large\@setzw{4mm}}
+\renewcommand{\Large}{\orig@Large\@setzw{4.5mm}}
+\renewcommand{\LARGE}{\orig@LARGE\@setzw{5.5mm}}
+\renewcommand{\huge}{\orig@huge\@setzw{6.5mm}}
+\renewcommand{\Huge}{\orig@Huge\@setzw{8mm}}
+
+% additional sizes
+\let\abstractsize=\normalsize
+\let\pagenumbersize=\normalsize
+
+% (based on size11.clo)
+\newcommand\semilarge{%
+   \@setfontsize\semilarge\@xipt{13.6}%
+   \abovedisplayskip 11\p@ \@plus3\p@ \@minus6\p@
+   \abovedisplayshortskip \z@ \@plus3\p@
+   \belowdisplayshortskip 6.5\p@ \@plus3.5\p@ \@minus3\p@
+   \belowdisplayskip \abovedisplayskip
+   \let\@listi\@listI
+   \@setzw{3.5mm}}
+
+\def\kanji@colon{:}
+\def\kanji@comma{,}
+\def\kanji@dai{**}
+\def\kanji@en{**}
+\def\kanji@furoku{**}
+\def\kanji@gakkai{**}
+\def\kanji@GAkkai{**}
+\def\kanji@Gakkai{**}
+\def\kanji@genkouuketsuke{**}
+\def\kanji@gou{**}
+\def\kanji@hakkousho{**}
+\def\kanji@hakkou{**}
+\def\kanji@happyouronbunsuu{**}
+\def\kanji@hodai{**}
+\def\kanji@huroku{**}
+\def\kanji@hyo{**}
+\def\kanji@jouken{**}
+\def\kanji@kaijoucolon{**}
+\def\kanji@kaijou{**}
+\def\kanji@kaiki{**}
+\def\kanji@kakaku{**}
+\def\kanji@kan{**}
+\def\kanji@katei{**}
+\def\kanji@kei{**}
+\def\kanji@kenkyuusokuhou{**}
+\def\kanji@meidai{**}
+\def\kanji@noshoumei{**}
+\def\kanji@reidai{**}
+\def\kanji@ronbun{**}
+\def\kanji@sankashasuu{**}
+\def\kanji@sankoubunken{**}
+\def\kanji@SAnkoubunken{**}
+\def\kanji@Sankoubunken{**}
+\def\kanji@shazi{**}
+\def\kanji@shi{**}
+\def\kanji@shoumei{**}
+\def\kanji@shuppansha{**}
+\def\kanji@shusai{**}
+\def\kanji@shussekisharyakureki{**}
+\def\kanji@siki{**}
+\def\kanji@sirosikaku{**}
+\def\kanji@space{\hskip\zw}
+\def\kanji@step{**}
+\def\kanji@teigi{**}
+\def\kanji@teiri{**}
+\def\kanji@tejun{**}
+\def\kanji@tokushugou{**}
+\def\kanji@touronsharyakureki{**}
+\def\kanji@hirakidaikakko{[}
+\def\kanji@tozidaikakko{]}
+\def\kanji@hirakikagikakko{[}
+\def\kanji@tozikagikakko{]}
+\def\kanji@hirakikakko{(}
+\def\kanji@tozikakko{)}
+\def\kanji@tyosharyakureki{**}
+\def\kanji@tyosha{**}
+\def\kanji@tyuui{**}
+\def\kanji@uketsuke{**}
+\def\kanji@wabundaimoku{**}
+\def\kanji@youshi{**}
+\def\kanji@zenpage{**}
+\def\kanji@zu{**}
+\def\kanji@toki{**}
+\def\kanji@tokoro{**}
+\def\kanji@maru{**}
+\def\kanji@nakaguro{$\cdot$}
