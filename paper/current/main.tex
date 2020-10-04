@@ -96,7 +96,7 @@
         可視化のために各単語の空間ベクトルの次元(300次元)を主成分分析によって2次元に減らした。
         点線は各球団と本拠地がある都道府県を示している。
         都道府県と球団が左右に分かれ、球団の上下の順序は本拠地のそれと大まかに対応している。
-        単語の位置を得るため、国立国語研究所の日本語ウェブコーパス（NWJC）で学習させたWord2Vecを用いた\protect\cite{kawamura2020chive}。
+        単語の位置を得るため、国立国語研究所の日本語ウェブコーパスで学習させたWord2Vecを用いた\protect\cite{kawamura2020chive}。
     }
     \label{fig:baseballmap}
 \end{figure}
@@ -119,6 +119,16 @@ $v({\rm 福岡}) + v({\rm 球団}) = v({\rm 福岡}) + v({\rm ファイターズ
 図1の分散表現もWord2Vecによって得られたものである。
 
 \subsection{Word2Vec}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\hsize]{schematic-word2vec.pdf}
+    \caption{
+        Word2Vecは単語を入力としてその周辺の単語を出力するニューラルネットワークである。
+        中間層が入力する単語の埋め込み空間上の座標である。
+    }
+    \label{fig:baseballmap}
+\end{figure}
 
 Word2Vecは2層で構成されるニューラルネットワークである(図2)。
 入力層は文章中の単語、出力層は周辺に現われる単語、そして中間層が入力単語の分散表現である\footnote{これはSkip-gram法と呼ばれるWord2Vecの1つの手法である。Word2Vecの別の手法として、各単語を出力、周辺語を入力とするCBOW(Continuous Bag-of-Words)法がある\cite{Mikolov2013}。}。
