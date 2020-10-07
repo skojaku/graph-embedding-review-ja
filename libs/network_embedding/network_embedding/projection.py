@@ -4,8 +4,10 @@ from scipy import optimize
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.decomposition import PCA
 
-def pca(vec, dim = 1, **pca_params): 
-    return PCA(n_components = dim, **pca_params).fit_transform(vec)
+
+def pca(vec, dim=1, **pca_params):
+    return PCA(n_components=dim, **pca_params).fit_transform(vec)
+
 
 def get_semi_space(
     vec,

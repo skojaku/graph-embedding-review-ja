@@ -66,7 +66,9 @@ def load_airport():
     s = net.subgraph(largest_cc)
     net = nx.adjacency_matrix(s)
 
-    node_table = node_table.loc[np.isin(node_table["id"].values, np.array(list(largest_cc))), :]
+    node_table = node_table.loc[
+        np.isin(node_table["id"].values, np.array(list(largest_cc))), :
+    ]
 
     # Add network stats
     node_table["deg"] = np.array(net.sum(axis=0)).reshape(-1)

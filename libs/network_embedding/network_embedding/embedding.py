@@ -52,13 +52,13 @@ def embed_network(A, dim, window_length=5):
     mat_seq = [
         [logW],
         [np.log(wmin) * np.ones((N, 1)), np.ones((1, N))],
-        #[np.log(np.sum(W)) * np.ones((N, 1)), np.ones((1, N))],
+        # [np.log(np.sum(W)) * np.ones((N, 1)), np.ones((1, N))],
         [-logw.reshape((N, 1)), np.ones((1, N))],
         [-np.ones((N, 1)), logw.reshape((1, N))],
     ]
 
     c = mat_prod_matrix_seq(mat_seq, np.ones((N, 1)))
-    #mat_seq += [[c/N, np.ones((1, N))]]
+    # mat_seq += [[c/N, np.ones((1, N))]]
     mat_seq += [[-np.sum(c) / (N * N) * np.ones((N, 1)), np.ones((1, N))]]
     vec, s, _ = rSVD_for_decomposable_matrix(mat_seq, dim)
 
