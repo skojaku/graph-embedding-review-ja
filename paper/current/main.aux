@@ -1,0 +1,80 @@
+\relax 
+\citation{kawamura2020chive}
+\citation{kawamura2020chive}
+\@writefile{toc}{\contentsline {section}{\numberline {1.}はじめに}{1}\protected@file@percent }
+\newlabel{sec:introduction}{{1.}{1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces  プロ野球球団と都道府県の分散表現。可視化のために埋め込み空間の次元(300次元)を主成分分析によって2次元に減らした。点線は各球団と本拠地の都道府県の対応を示している。この分散表現はWord2Vecに国立国語研究所の日本語コーパスを学習させて構築した\cite {kawamura2020chive}。}}{1}\protected@file@percent }
+\newlabel{fig:baseballmap}{{1}{1}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.}埋め込み法}{1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}自然言語処理と埋め込み法}{1}\protected@file@percent }
+\citation{Mikolov2013a}
+\citation{Mikolov2013}
+\citation{Tshitoyan2019}
+\citation{Levy2014,pennington-etal-2014-glove,joulin2016fasttext,Bojanowski2017}
+\citation{gensim}
+\citation{Bryan2014}
+\citation{Grover2016,Dong2017}
+\citation{An2018}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces  Word2Vecは単語を入力としてその周辺の単語を予測するニューラルネットワークである。中間層が入力する単語の埋め込み空間上の座標である。}}{2}\protected@file@percent }
+\newlabel{fig:word2vec}{{2}{2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Word2Vec}{2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}ネットワークの埋め込み法}{2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces  DeepWalkのしくみ。頂点を単語とする文をランダム・ウォークで生成し、Word2Vecに与える。}}{2}\protected@file@percent }
+\newlabel{fig:deepwalk}{{3}{2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}埋め込み空間の分析ツール}{2}\protected@file@percent }
+\citation{Maaten2008}
+\citation{McInnes2018}
+\citation{code}
+\citation{opsahl_2011}
+\citation{Qiu2018}
+\@writefile{toc}{\contentsline {section}{\numberline {3.}ネットワークの埋め込みの実践}{3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}空港ネットワークの埋め込み}{3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces  空港ネットワークの埋め込み。可視化のため128次元の埋め込み空間をLDAを用いて2次元に射影した。各点は空港を表し、点の大きさはネットワーク上で隣接する空港の数を表す。LDAへの入力ラベルとして、空港の地域(アジア、アフリカ、アメリカ、オセアニア、ヨーロッパ)を用いた。}}{3}\protected@file@percent }
+\newlabel{fig:airport}{{4}{3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}ライフサイエンス研究の埋め込み}{3}\protected@file@percent }
+\citation{Weber2013}
+\citation{MEDLINE}
+\citation{Narin1976}
+\citation{code}
+\citation{Peng2020}
+\citation{Chinazzi2019,Ke2019}
+\citation{Tang2015}
+\citation{Grover2016}
+\citation{Tang2015a}
+\citation{Gao2018}
+\citation{Dong2017}
+\citation{Seshadhri2020,Tandon2020}
+\bibcite{Mikolov2013a}{1}
+\bibcite{kawamura2020chive}{2}
+\bibcite{Mikolov2013}{3}
+\bibcite{Tshitoyan2019}{4}
+\bibcite{Levy2014}{5}
+\bibcite{pennington-etal-2014-glove}{6}
+\@writefile{toc}{\contentsline {section}{\numberline {4.}おわりに}{4}\protected@file@percent }
+\bibcite{joulin2016fasttext}{7}
+\bibcite{Bojanowski2017}{8}
+\bibcite{gensim}{9}
+\bibcite{Bryan2014}{10}
+\bibcite{Grover2016}{11}
+\bibcite{Dong2017}{12}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces  生命科学分野の雑誌の引用ネットワークの埋め込み。MEDLINEに登録されている$5,274$誌を128次元の空間に埋め込んだ。{\bf  (A)} 可視化のためLDAを用いて2次元面に射影した。LDAに与えるデータ点（雑誌）のラベルとして、National Library of Medicineによる雑誌の分野別分類を用いた。{\bf  (B)} 基礎から臨床までのスペクトル。このスペクトルは、基礎研究であるMicrobiologyと、臨床研究であるNursingとChildがなるべく離れるように、埋め込み空間上の全雑誌を直線に射影したものである。軸上の雑誌の位置の中央値で分野を降順に並べている。{\bf  (C)} 基礎と臨床研究の引用ネットワーク。 全雑誌を(B)の軸上の位置で順にならべ、全雑誌を10のグループに等分した。黒円は雑誌のグループを表す。グループ$i$から$j$への矢印は$i$から$j$への引用を表す。矢印の幅は引用数を表す。}}{5}\protected@file@percent }
+\newlabel{fig:journal-map}{{5}{5}}
+\bibcite{An2018}{13}
+\bibcite{Maaten2008}{14}
+\bibcite{McInnes2018}{15}
+\bibcite{code}{16}
+\bibcite{opsahl_2011}{17}
+\bibcite{Qiu2018}{18}
+\bibcite{Weber2013}{19}
+\bibcite{MEDLINE}{20}
+\bibcite{Narin1976}{21}
+\bibcite{Peng2020}{22}
+\bibcite{Chinazzi2019}{23}
+\bibcite{Ke2019}{24}
+\bibcite{Tang2015}{25}
+\bibcite{Tang2015a}{26}
+\bibcite{Gao2018}{27}
+\bibcite{Meng2020}{28}
+\bibcite{Seshadhri2020}{29}
+\bibcite{Tandon2020}{30}
+\newlabel{eiko:addresscount}{{1}{6}} \newlabel{eiko:lastpage}{{6}{6}}

@@ -1,0 +1,188 @@
+\begin{thebibliography}{10}
+
+\bibitem{Mikolov2013a}
+T.~Mikolov, I.~Sutskever, K.~Chen, G.~Corrado, and J.~Dean.
+\newblock {Distributed Representations of Words and Phrases and their
+  Compositionality}.
+\newblock {\em Proceedings of the 2016 Conference on Empirical Methods in
+  Natural Language Processing}, pages 1389--1399, oct 2013.
+
+\bibitem{kawamura2020chive}
+河村宗一郎, 久本空海, 真鍋陽俊, 高岡一馬and 内田佳孝, 岡照晃, and 浅原正幸.
+\newblock chive 2.0:
+  Sudachiとnwjcを用いた実用的な日本語単語ベクトルの実現へ向けて.
+\newblock In {\em 言語処理学会第26回年次大会(NLP2020)}, pages NLP2020--P6--16.
+  言語処理学会, 2020.
+
+\bibitem{Mikolov2013}
+T.~Mikolov, K.~Chen, G.~Corrado, and J.~Dean.
+\newblock {Efficient Estimation of Word Representations in Vector Space}.
+\newblock {\em Preprint arXiv}, pages 1--12, jan 2013.
+
+\bibitem{Tshitoyan2019}
+V.~Tshitoyan, J.~Dagdelen, L.~Weston, A.~Dunn, Z.~Rong, O.~Kononova, K.~A.
+  Persson, G.~Ceder, and A.~Jain.
+\newblock {Unsupervised word embeddings capture latent knowledge from materials
+  science literature}.
+\newblock {\em Nature}, 571(7763):95--98, 2019.
+
+\bibitem{Levy2014}
+O.~Levy and Y.~Goldberg.
+\newblock {Neural word embedding as implicit matrix factorization}.
+\newblock {\em Advances in Neural Information Processing Systems},
+  3(January):2177--2185, 2014.
+
+\bibitem{pennington-etal-2014-glove}
+{HANSON ER}, J.~Pennington, R.~Socher, and C.~Manning.
+\newblock {{\{}G{\}}lo{\{}V{\}}e: Global Vectors for Word Representation}.
+\newblock In {\em Proceedings of the 2014 Conference on Empirical Methods in
+  Natural Language Processing ({\{}EMNLP{\}})}, volume~19, pages 1532--1543,
+  Doha, Qatar, oct 2014. Association for Computational Linguistics.
+
+\bibitem{joulin2016fasttext}
+A.~Joulin, E.~Grave, P.~Bojanowski, M.~Douze, H.~J{\'e}gou, and T.~Mikolov.
+\newblock Fasttext.zip: Compressing text classification models.
+\newblock {\em arXiv preprint arXiv:1612.03651}, 2016.
+
+\bibitem{Bojanowski2017}
+P.~Bojanowski, E.~Grave, A.~Joulin, and T.~Mikolov.
+\newblock Enriching word vectors with subword information.
+\newblock {\em Transactions of the Association for Computational Linguistics},
+  5:135--146, 2017.
+
+\bibitem{gensim}
+R.~{\v R}eh{\r u}{\v r}ek and P.~Sojka.
+\newblock gensim.
+\newblock {\url{https://radimrehurek.com/gensim/index.html}. [Accessed 26th
+  Sept. 2020]}.
+
+\bibitem{Bryan2014}
+B.~Perozzi, R.~Al-Rfou, and S.~Skiena.
+\newblock {DeepWalk: Online Learning of Social Representations}.
+\newblock In {\em Proceedings of the 20th ACM SIGKDD International Conference
+  on Knowledge Discovery and Data Mining}, KDD '14, pages 701--710, New York,
+  New York, USA, 2014. ACM Press.
+
+\bibitem{Grover2016}
+A.~Grover and J.~Leskovec.
+\newblock {Node2Vec: Scalable Feature Learning for Networks}.
+\newblock In {\em Proceedings of the 22Nd ACM SIGKDD International Conference
+  on Knowledge Discovery and Data Mining}, KDD '16, pages 855--864, New York,
+  NY, USA, 2016. ACM.
+
+\bibitem{Dong2017}
+Y.~Dong, N.~V. Chawla, and A.~Swami.
+\newblock {Metapath2vec: Scalable representation learning for heterogeneous
+  networks}.
+\newblock {\em Proceedings of the ACM SIGKDD International Conference on
+  Knowledge Discovery and Data Mining}, Part F1296:135--144, 2017.
+
+\bibitem{An2018}
+J.~An, H.~Kwak, and Y.-Y. Ahn.
+\newblock {S}em{A}xis: A lightweight framework to characterize domain-specific
+  word semantics beyond sentiment.
+\newblock In {\em Proceedings of the 56th Annual Meeting of the Association for
+  Computational Linguistics (Volume 1: Long Papers)}, pages 2450--2461,
+  Melbourne, Australia, July 2018. Association for Computational Linguistics.
+
+\bibitem{Maaten2008}
+L.~van~der Maaten and G.~Hinton.
+\newblock Visualizing data using t-sne.
+\newblock {\em Journal of Machine Learning Research}, 9(86):2579--2605, 2008.
+
+\bibitem{McInnes2018}
+L.~McInnes, J.~Healy, and J.~Melville.
+\newblock {UMAP: Uniform Manifold Approximation and Projection for Dimension
+  Reduction}.
+\newblock {\em Preprint arXiv}, 2018.
+
+\bibitem{code}
+S.~Kojaku.
+\newblock skojaku/graph-embedding-review-ja.
+
+\bibitem{opsahl_2011}
+Why anchorage is not (that) important: Binary ties and sample selection, Dec
+  2011.
+
+\bibitem{Qiu2018}
+J.~Qiu, Y.~Dong, H.~Ma, J.~Li, K.~Wang, and J.~Tang.
+\newblock {Network Embedding as Matrix Factorization: Unifying DeepWalk, LINE,
+  PTE, and Node2vec}.
+\newblock {\em Proceedings of the Eleventh ACM International Conference on Web
+  Search and Data Mining}, 2018-Febua:459--467, 2018.
+
+\bibitem{Weber2013}
+G.~M. Weber.
+\newblock {Identifying translational science within the triangle of
+  biomedicine}.
+\newblock {\em Journal of Translational Medicine}, 11(1):1--10, 2013.
+
+\bibitem{MEDLINE}
+{Download MEDLINE/PubMed Data}.
+\newblock \url{https://www.nlm.nih.gov/databases/download/pubmed_medline.html},
+  2008.
+\newblock [Online; accessed 22-Oct-2020].
+
+\bibitem{Narin1976}
+F.~Narin, G.~Pinski, and H.~H. Gee.
+\newblock {Structure of the Biomedical Literature}.
+\newblock {\em Journal of the American Society for Information Science},
+  27(1):25--45, 1976.
+
+\bibitem{Khoury2007}
+M.~J. Khoury, M.~Gwinn, P.~W. Yoon, N.~Dowling, C.~A. Moore, and L.~Bradley.
+\newblock {The continuum of translation research in genomic medicine: How can
+  we accelerate the appropriate integration of human genome discoveries into
+  health care and disease prevention?}
+\newblock {\em Genetics in Medicine}, 9(10):665--674, 2007.
+
+\bibitem{Tang:2015}
+J.~Tang, M.~Qu, M.~Wang, M.~Zhang, J.~Yan, and Q.~Mei.
+\newblock {LINE: Large-scale Information Network Embedding}.
+\newblock In {\em Proceedings of the 24th International Conference on World
+  Wide Web}, WWW '15, pages 1067--1077, Republic and Canton of Geneva,
+  Switzerland, 2015. International World Wide Web Conferences Steering
+  Committee.
+
+\bibitem{Grover:2016}
+A.~Grover and J.~Leskovec.
+\newblock {Node2Vec: Scalable Feature Learning for Networks}.
+\newblock In {\em Proceedings of the 22Nd ACM SIGKDD International Conference
+  on Knowledge Discovery and Data Mining}, KDD '16, pages 855--864, New York,
+  NY, USA, 2016. ACM.
+
+\bibitem{Tang2015}
+J.~Tang, M.~Qu, and Q.~Mei.
+\newblock Pte: Predictive text embedding through large-scale heterogeneous text
+  networks.
+\newblock In {\em Proceedings of the 21th ACM SIGKDD International Conference
+  on Knowledge Discovery and Data Mining}, KDD '15, page 1165^^e2^^80^^931174,
+  New York, NY, USA, 2015. Association for Computing Machinery.
+
+\bibitem{Gao2018}
+M.~Gao, L.~Chen, X.~He, and A.~Zhou.
+\newblock {BiNE: Bipartite Network Embedding}.
+\newblock In {\em The 41st International ACM SIGIR Conference on Research {\&}
+  Development in Information Retrieval}, pages 715--724, New York, NY, USA, jun
+  2018. ACM.
+
+\bibitem{Peng2020}
+H.~Peng, Q.~Ke, C.~Budak, D.~M. Romero, Y.-y. Ahn, A.~Arbor, C.~Science, and
+  A.~Arbor.
+\newblock {Neural Embeddings of Scholarly Periodicals Reveal Complex
+  Disciplinary Organizations.}
+\newblock {\em Preprint arXiv}, 2020.
+
+\bibitem{Chinazzi2019}
+M.~Chinazzi, B.~Gon{\c{c}}alves, Q.~Zhang, and A.~Vespignani.
+\newblock {Mapping the physics research space: a machine learning approach}.
+\newblock {\em EPJ Data Science}, 8(1):1--18, 2019.
+
+\bibitem{Ke2019}
+Q.~Ke.
+\newblock {Identifying translational science through embeddings of controlled
+  vocabularies}.
+\newblock {\em Journal of the American Medical Informatics Association},
+  26(6):516--523, 2019.
+
+\end{thebibliography}
