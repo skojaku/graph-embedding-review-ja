@@ -33,6 +33,10 @@ vec = embedding.embed_network(A, window_length=10, dim=128)
 
 # 図を生成したノートブック
 
+(ダウンロードしたデータをdataフォルダーに入れ、ノートブック内のパスを適宜再設定してください)
+
 - [球団と都道府県の埋め込み](notebook/ja-embedding.ipynb)
 - [空港網の埋め込み](notebook/plot-airport.ipynb)
 - [Health Science雑誌ネットワークの埋め込み](notebook/plot-journals.ipynb)
+
+
