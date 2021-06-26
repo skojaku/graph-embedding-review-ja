@@ -1459,28 +1459,28 @@ $$\halign to
 
 \newtoks\@stequation
 
-\def\subequations{\refstepcounter{equation}%
-  \edef\@savedequation{\the\c@equation}%
-  \@stequation=\expandafter{\theequation}%
-  \edef\@savedtheequation{\the\@stequation}%
-  \edef\oldtheequation{\theequation}%
-  \setcounter{equation}{0}%
-  \def\theequation{\oldtheequation\alph{equation}}%
-  %
-  \def\label##1{\@bsphack\if@filesw {\let\thepage\relax
-   \xdef\@gtempa{\write\@auxout{\string
-      \newlabel{##1}{{\@currentlabel}{\thepage}}}}}\@gtempa
-   \if@nobreak \ifvmode\nobreak\fi\fi\fi\@esphack\ignorespaces}%
-}
-
-\def\endsubequations{\ifnum\value{equation}=0%
-  \@warning{No numbered-equations in subequations environment}\fi%
-  \ifnum\value{equation}=1%
-  \@warning{Only one numbered-equation in subequations environment}\fi%
-  \setcounter{equation}{\@savedequation}%
-  \@stequation=\expandafter{\@savedtheequation}%
-  \edef\theequation{\the\@stequation}\global\@ignoretrue}
-
+%\def\subequations{\refstepcounter{equation}%
+%  \edef\@savedequation{\the\c@equation}%
+%  \@stequation=\expandafter{\theequation}%
+%  \edef\@savedtheequation{\the\@stequation}%
+%  \edef\oldtheequation{\theequation}%
+%  \setcounter{equation}{0}%
+%  \def\theequation{\oldtheequation\alph{equation}}%
+%  %
+%  \def\label##1{\@bsphack\if@filesw {\let\thepage\relax
+%   \xdef\@gtempa{\write\@auxout{\string
+%      \newlabel{##1}{{\@currentlabel}{\thepage}}}}}\@gtempa
+%   \if@nobreak \ifvmode\nobreak\fi\fi\fi\@esphack\ignorespaces}%
+%}
+%
+%\def\endsubequations{\ifnum\value{equation}=0%
+%  \@warning{No numbered-equations in subequations environment}\fi%
+%  \ifnum\value{equation}=1%
+%  \@warning{Only one numbered-equation in subequations environment}\fi%
+%  \setcounter{equation}{\@savedequation}%
+%  \@stequation=\expandafter{\@savedtheequation}%
+%  \edef\theequation{\the\@stequation}\global\@ignoretrue}
+%
 \newcounter{footequation}
 \setcounter{footequation}{0}
 \def\footnoteequation{\refstepcounter{footequation}%

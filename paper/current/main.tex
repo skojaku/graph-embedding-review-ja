@@ -7,7 +7,11 @@
 \usepackage[dvipdfmx]{graphicx}
 \graphicspath{{../../figs/}}
 
+%\usepackage[backend=bibtex,firstinits=true,style=numeric]{biblatex}
+%\addbibresource{main.bib} 
 \usepackage{amsmath}
+
+%\usepackage{jabbrv}
 %\usepackage[whole]{bxcjkjatype}
 %
 %               Usage:  \documentclass[J]{scitrans} (和文の場合)
@@ -37,7 +41,7 @@
 \title{埋め込み法が拓くネットワーク科学の新展開}
 \author{幸若 完壮*}
 
-\etitle{A New Paradigm for Network Science with Graph Embeddings}
+\etitle{A New Paradigm for Network Science with Network Embeddings}
 \eauthor{Sadamori {\sc Kojaku}*}
 \headingtitle{埋め込み法が切り拓くネットワーク分析の新展開}
 \headingauthors{システム}
@@ -48,9 +52,10 @@
 
 \address{*}{Luddy School of Informatics, Computing, and Engineering, Indiana University Bloomington, USA}
 
-\keywords{ネットワーク埋め込み法, 科学の科学, 機械学習}
+\keywords{ネットワーク埋め込み法, 機械学習, 科学の科学}
 
 %%% つぎの \input を削除し，本文を書き出して下さい．
+
 %-----------------
 \section{はじめに}
 %-----------------
@@ -63,22 +68,19 @@
 % このデータ形式のギャップは解決されないまま、ネットワーク分析のための専用の分析法が開発されてきた。
 % 最近になって、
 
-エクセルが登場するはるか昔に、「クリミアの天使」と呼ばれたデータサイエンティストがいた。
+エクセルが登場するはるか昔、「クリミアの天使」と呼ばれたデータサイエンティストがいた。
 イギリスの看護師フロレンス=ナイチンゲールは、1854年に勃発したクリミア戦争において、
-傷病者に関する膨大なデータから衛生状態と死亡の関連を突き止め、これを改善することで多くの兵士の命を救った。
-%1854年に勃発したクリミア戦争では負傷者の死亡率が高いことが問題視されていた。
-%近代看護学の母と言われるフロレンス=ナイチンゲールは、データサイエンスの先駆者である。
-%彼女は、クリミア戦争の傷病者に関する膨大なデータから衛生状態と死亡の関連を突き止め、これを改善することで多くの兵士の命を救った。
+傷病者に関する膨大なデータから衛生状態と死亡の関連を突き止め、多くの命を救った。
 データから隠れた規則性を見つけ出し、次の行動に生かすことはデータ分析の大きな目的である。
 
-従来、データは「特徴を持ったモノの集まり」だった。
-モノは、例えば、ひとりの兵士であり、特徴はその兵士の環境(ベッドの有無など)で、複数の特徴は1つのベクトルで表現される。
-多くの統計分析・機械学習はこの形式のデータを入力に想定している。
-一方で、情報の多様化が進み、人間の言語やネットワークといった従来の型にはまらないデータが登場している。
+従来、データは「ベクトルで記述されたモノの集まり」であった。
+例えば、傷病者に関するデータは、傷病者の特徴（身体的特徴や怪我の度合いなど）を記述したベクトルの集まりである。
+この「モノの集まり」を入力に想定して、これまで多くの統計分析・機械学習が開発されてきた。
+一方で、人間の言語やネットワークといった新たな形式のデータが登場してきている。
 
 ネットワークは「モノの集まり」ではなく「モノのつながり」を表したデータである。
-友好関係や銀行の融資関係、Webなど、ネットワークは身近に存在し、感染の拡大や倒産の連鎖など、社会に大きな影響を与える現象と深く関連している。
-これまで、データから様々なネットワークが分析されてきたが、データ形式の違いから、既存のデータ分析法やそれを発展させた最新の手法は十分に活用されてこなかった。%ず、ネットワーク形式のデータを入力に想定した専用の分析法が数多く開発されてきた。
+友好関係、銀行の融資関係、Webなど、ネットワークは身近に存在し、感染の拡大や倒産の連鎖など、社会に大きな影響を与える現象と深く関連している。
+これまで、ネットワーク分析のための様々な手法が開発されてきたが、データ形式の違いの問題で、一般的なデータ分析法の多くが十分に活用されてこなかった。%ず、ネットワーク形式のデータを入力に想定した専用の分析法が数多く開発されてきた。
 %そのため、ネットワークを分析する需要が増えている。
 %しかし、ネットワークは従来の型にはまらないデータであり、既存のデータ分析法の多くが活用できないという大きな障壁がある。
 %はじめているものの、その分析には大きな障壁がある。
@@ -102,60 +104,51 @@
 %そのため、感染疑いのある人を発見するためには個々の接触だけでなく、ネットワーク全体の接触関係を考えなくてはならない。
 %このように、ネットワークではつながりの組み合せが重要な意味を持つため、 ネットワーク分析のための専用の手法や理論が必要となる。
 
-このデータ形式のギャップを解消する手法として「埋め込み法」が登場し、ネットワーク分析に新たな流れを生んでいる。
-%このデータ形式のギャップを埋める技術\ddash 埋め込み法\ddash が登場し、ネットワーク分析に新たな流れを生んでいる。
-%このデータ形式のギャップを埋め、そして最新の統計的・機械学習法を利用可能にする技術として、ネットワークをベクトルに圧縮変換する技術\ddash 埋め込み法\ddash が登場し、新たな展開を見せている。
-埋め込み法は、 頂点を空間上の点と捉え、空間上の頂点の位置関係で、ネットワーク上での関係を表現する手法である。
-頂点の位置を特徴ベクトルとすることで、ベクトルを入力とする様々な分析法がネットワーク分析に利用できるようになる。
+このデータ形式のギャップを解消する「埋め込み法」が登場し、ネットワーク分析に新たな流れを生んでいる。
+埋め込み法は、 頂点に座標を与え、位置で頂点の関係を表現する手法である。
+頂点の位置はベクトルで記述できるため、ベクトルを入力とする様々な分析法がネットワーク分析に利用できるようになる。
 
-%この障壁を解決する方法として、ネットワークをベクトルに圧縮変換する技術\ddash 埋め込み法\ddash が登場し、新たな展開を見せている。
-%埋め込み法は、 頂点をある空間上の点として捉えて、頂点の位置関係によってその複雑な関係を表現する手法である(図1)。
-%各頂点は位置を表すベクトルで表現されるため、ベクトルデータを入力とする様々な統計的・機械学習的なデータ分析法がネットワーク分析に利用可能となる。
-
-本稿では、埋め込み法が拓くネットワーク科学の新たな展開について概説する。
-具体的に、前半部では埋め込み法の代表的な手法とその応用例を紹介し基本的な考えと仕組みを説明する。
+本稿では、ネットワークの埋め込み法と、埋め込み法が作るネットワーク科学の新しい流れを紹介する。
+具体的に、前半部では埋め込み法の仕組みを説明する。
 後半部では、埋め込み法を使って航空網と引用ネットワークを分析し、分析の流れや分析を助ける便利なツールを紹介する。
 
 \section{埋め込み法}
 
 \subsection{自然言語処理と埋め込み法}
 
-ネットワーク埋め込み法の元になっている埋め込み法は、もともと自然言語処理のために開発された手法である。
-自然言語処理では、曖昧な人間の言語を機械で処理できる形にどのように変換するかが大きな課題の一つであった。
-率直に考えれば、1つの単語に対して1つの数字を割り当てれば一応は数値化できる。
-例えば、「値段は高いが質が低い料理」という文を「値段,高い,質,低い,料理」と区切って各単語に1つの数字を割り当てて「1,2,3,4,5」と表現する。
+埋め込み法は、人間の言語を機械で処理しやすい形に変換する手法として発展してきた。
+率直に考えれば、1つの単語に対して1つの数字を割り当てれば機械で処理できる形に変えることができる。
+例えば、「値段は高いが質が低い料理」という文を「値段, 高い, 質, 低い, 料理」と区切って各単語に1つの数字を割り当てて「1, 2, 3, 4, 5」と表現する。
 これは局所表現と呼ばれる単語の表現方法であるが、「高いの対義語は低いである」といった単語の関係を捉えられない。
-
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\hsize]{baseball-map.pdf}
+    \includegraphics[width=\hsize]{baseball-map.pdf}
     \caption{
         プロ野球球団と都道府県の分散表現。
-        可視化のために各単語の空間ベクトルの次元(300次元)を主成分分析によって2次元に減らした。
-        点線は各球団と本拠地がある都道府県を示している。
-        都道府県と球団が左右に分かれ、球団の上下の順序は本拠地のそれと大まかに対応している。
-        単語の位置を得るため、国立国語研究所の日本語ウェブコーパスで学習させたWord2Vecを用いた\protect\cite{kawamura2020chive}。
+        可視化のために埋め込み空間の次元(300次元)を主成分分析によって2次元に減らした。
+        点線は各球団と本拠地の都道府県の対応を示している。
+        この分散表現はWord2Vecに国立国語研究所の日本語コーパスを学習させて構築した\protect\cite{kawamura2020chive}。
     }
     \label{fig:baseballmap}
 \end{figure}
 
 この局所表現の欠点を解決したのが「分散表現」だ。
-分散表現は、各単語をベクトル空間上の点と捉え、単語同士の意味的な関係を空間上の位置関係で表現する。
-例えば、プロ野球球団と都道府県名を分散表現で記述しよう(図1)。球団同士、都道府県同士を近くに配置することで「球団」と「都道府県」の区別を表現できる。
-さらに、単語の位置べクトルを直接演算することで様々な推論をすることができる。
-例えば、「北海道」と「ファイターズ」という関係は
+分散表現は、各単語に座標を割り振り、単語同士の意味的な関係を位置関係で表現する。
+例えば、プロ野球球団と都道府県名を分散表現で記述しよう(図\ref{fig:baseballmap})。
+球団名と都市名を左右に分けて配置することで、それらのものが同種の単語であることが表現できる。
+さらに、単語をうまく配置すれば、簡単な線形代数で推論をすることができる。
+例えば、「北海道」と「ファイターズ」の単語から、「$\sim$の球団」というベクトルを計算する。
 \begin{align}
-    v({\rm 北海道}) + v({\rm 球団}) = v({\rm ファイターズ})
+    v({\rm 北海道}) + v({\rm \sim の球団}) = v({\rm ファイターズ})
 \end{align}
-と書くことができる。 ここで単語$w$のベクトルを$v(w)$とした。
-したがって「福岡の球団は？」という問いの答えは
-$v({\rm 福岡}) + v({\rm 球団}) = v({\rm 福岡}) + v({\rm ファイターズ}) - v({\rm 北海道})$で与えられ、
-この答えが$v({\rm ホークス})$に大体一致する。
-
-分散表現は膨大な単語の配置を決定する難しさや計算量が大きいといった実用上の課題のため実践が進まなかった。
-これらの課題を解決し、自然言語処理に大きな進展をもたらした手法が「Word2Vec」である。
-図1の分散表現もWord2Vecによって得られたものである。
+ここで単語$w$のベクトルを$v(w)$とした。
+このとき、「福岡の球団は？」という問いの答えは$v({\rm 福岡}) + v({\rm \sim の球団})$、すなわち
+\begin{align}
+     v({\rm 福岡}) + v({\rm ファイターズ}) - v({\rm 北海道})
+\end{align}
+である。
+実際の日本語データから構築した分散表現では、この答えが$v({\rm ホークス})$に大体一致する(図\ref{fig:baseballmap})。
 
 \subsection{Word2Vec}
 
@@ -163,25 +156,29 @@ $v({\rm 福岡}) + v({\rm 球団}) = v({\rm 福岡}) + v({\rm ファイターズ
     \centering
     \includegraphics[width=\hsize]{schematic-word2vec.pdf}
     \caption{
-        Word2Vecは単語を入力としてその周辺の単語を出力するニューラルネットワークである。
+        Word2Vecは単語を入力としてその周辺の単語を予測するニューラルネットワークである。
         中間層が入力する単語の埋め込み空間上の座標である。
     }
     \label{fig:word2vec}
 \end{figure}
 
-Word2Vecは2層で構成されるニューラルネットワークである(図\ref{fig:word2vec})。
-入力層は文章中の単語、出力層は周辺に現われる単語、そして中間層が入力単語の分散表現である\footnote{これはSkip-gram法と呼ばれるWord2Vecの1つの手法である。Word2Vecの別の手法として、各単語を出力、周辺語を入力とするCBOW(Continuous Bag-of-Words)法がある\cite{Mikolov2013}。}。
+分散表現は膨大な単語の配置を決定する難しさや計算量が大きいといった実用上の課題のため実践が進まなかった。
+これらの課題を解決し、自然言語処理に大きな進展をもたらした手法がWord2Vecである~\cite{Mikolov2013a}。
+図\ref{fig:baseballmap}の分散表現もWord2Vecから生成した。
 
-この手法の重要なポイントは出力層である周辺の単語である。
-周辺の単語が近しければ、中間層である分散表現も近しい。言い換えれば、Word2Vecで得られる分散表現では、使われる文脈が似ている単語は近くに配置されるのである。
-例えば、図1の球団名は似たような文脈で使われるため近くに配置されるのである。
+Word2Vecは3層のニューラルネットワークである(図\ref{fig:word2vec})。
+入力層は文章中の単語、出力層は周辺に現われる単語、そして中間層が入力単語の分散表現である\footnote{これはSkip-gram法と呼ばれる。Word2Vecの別手法として、周辺語から中央の単語を予測させるCBOW(Continuous Bag-of-Words)がある\cite{Mikolov2013}。}。
 
-Word2Vecは情報圧縮装置と見ることもできる。
-Word2Vecの入力は単語であるが、実際には単語の記号の代わりに高次元のベクトルを入力する。
-このベクトルでは1つの要素が``1''で他の全てが要素が``0''であり、``1''が出現する場所で入力単語を表現する。
-そのため、単語が$N$個あれば入力ベクトルの長さは$N$である。
-この高次元ベクトルは入力層から中間層に渡ってより小さな次元のベクトルに「圧縮」され、その後に中間層から出力層に渡って文脈を表すベクトルに変換される。
+Word2Vecは情報圧縮装置と見ることができる。
+Word2Vecの入力は単語であるが、実際には単語を表す高次元のベクトルを入力する。
+このベクトルは1つの要素だけが``1''、他の全ての要素が``0''のベクトルで、``1''の場所で入力単語を表現する(図\ref{fig:word2vec})。
+%そのため、単語が$N$個あれば入力ベクトルの長さは$N$である。
+この高次元ベクトルは入力層から中間層に渡ってより小さな次元のベクトルに圧縮され、その後に中間層から出力層に渡って文脈を表すベクトルに変換される。
 この圧縮されたベクトルが入力単語の分散表現である。
+
+Word2Vecでは、似た文脈で使われる単語が近くなる傾向がある。
+異なる単語でも、使われる文脈が完全に同じであれば、出力層の周辺単語が一致し、出力層の信号元である中間層の分散表現も一致する。
+%例えば、図1の球団名は似たような文脈で使われるため近くに配置されるのである。
 
 Word2Vecの興味深い活用例を1つ紹介しよう。
 研究\cite{Tshitoyan2019}では材料科学に関する約330万本の論文の要旨をWord2Vecに学習させ、様々な材料の分散表現を構築した。
@@ -193,67 +190,89 @@ $v({\rm 二重六方最密構造}) - v({\rm La}) + v({\rm Cr}) = v({\rm 体心�
 Word2Vecの登場によって自然言語処理は大きく進展した。
 Word2Vecはその後様々な改良が加えられ\cite{Levy2014,pennington-etal-2014-glove,joulin2016fasttext,Bojanowski2017}、無償で利用できるパッケージにまとまっている\cite{gensim}。
 
-\subsection{グラフ埋め込み法}
+\subsection{ネットワークの埋め込み法}
 
-Word2Vecなどの自然言語の埋め込み法を応用して頂点を埋め込む手法が、これから紹介する「グラフ埋め込み法」である。
+自然言語処理の埋め込み法をネットワークに適用する手法を紹介する。
+自然言語処理の埋め込み法は文を入力とするため、当然ながらネットワークを入力に受け付けない。
+この文とネットワークという入力データの差を解消したのがDeepWalkである~\cite{Bryan2014}。
+%ネットワークに埋め込み法を適用すると何が嬉しいのだろうか？
+%埋め込み法は、頂点の関係を枝ではなく空間上の位置関係で表現する手法である。
+%枝で直接つながっていない頂点対であっても、配置されている距離や方向から、関係の強さや種類を調べることができる。
+%また、ネットワーク科学の知識がなくても、簡単なベクトル演算でネットワークをそれなりに分析することができる。
+%例えば、2頂点の関係を調べるとしよう。
+%ネットワークの分析では、とする場合、2頂点の直接のつながりに加えて、他の頂点を介した関係を調べることが多い。
+%
+%では頂点の関係を調べるためには直接つながっている隣接頂点だけでなく、
+%
+%
+%
+%例えば「敵の敵は味方」ということわざがある。自分（頂点）にとって直接的な敵対関係（枝）にある敵と敵対関係にある別の誰かは、たとえ自分と直接的な関係がなくても、味方という間接的な関係を持つ。
+%ある頂点と枝でつながる頂点はネットワーク全体から見ると少数である。
+%一方で、直接つながっていない頂点は数多くあり、それら頂点との関係は単語の関係と同じように非自明である。
 
-ネットワークの頂点の関係は、関係が未知な単語と異なり、枝で明確に表現されている。
-ではネットワークに埋め込み法を適用すると何が嬉しいのだろうか？
-頂点は直接つながっている頂点と関係を持つと同時に、直接つながっていない頂点とも関係を持つ。
-例えば「敵の敵は味方」ということわざがある。自分（頂点）にとって直接的な敵対関係（枝）にある敵と敵対関係にある別の誰かは、たとえ自分と直接的な関係がなくても、味方という間接的な関係を持つ。
-ある頂点と枝でつながる頂点はネットワーク全体から見ると少数である。
-一方で、直接つながっていない頂点は数多くあり、それら頂点との関係は単語の関係と同じように非自明である。
-グラフ埋め込み法は、頂点の関係を枝ではなく空間上の位置関係で表現する手法である。
-枝で直接つながっていない頂点対であっても、配置されている距離や方向から、関係の強さや種類を調べることができる。
-そしてこれらの分析は簡単なベクトル演算で行うことができる。
-
-ではどうやって頂点を埋め込むのだろうか？
-ここではネットワーク埋め込み法の先駆けであるDeepWalkについて紹介する。
-自然言語処理で発展した埋め込み法は、文章が入力であるので、当然ながらネットワークを入力として受け付けない。
-この問題を解決し、ネットワークに自然言語処理の埋め込み法を適用できるようにしたのがDeepWalk\cite{Bryan2014}である。
-
-\begin{figure}
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=0.8\hsize]{schematic-deepwalk.pdf}
+%    \caption{
+%    }
+%    \label{fig:deepwalk}
+%\end{figure}
+DeepWalkでは、頂点から構成される文をネットワークから生成する。
+例えば、ある頂点$i$から文を生成するとしよう(図\ref{fig:deepwalk})。
+DeepWalkでは、隣接する頂点($j$--$m$)のうち１つをランダムに選び、選んだ頂点を文に追加する。
+これを繰り返し行って十分に長い文を生成し、生成した文をWord2Vecに与えれば頂点の埋め込みが得られる。
+この「ある頂点から別の頂点を確率的に選んで移動する運動」はネットワークにおけるランダム・ウォークと呼ばれる。
+ランダム・ウォークには様々な種類があり、別種のランダム・ウォークを利用したネットワーク埋め込み法も提案されている\cite{Grover2016,Dong2017}。
+\begin{figure}[h!]
     \centering
-    \includegraphics[width=0.8\hsize]{schematic-deepwalk.pdf}
+    \includegraphics[width=\hsize]{example-graph.pdf}
     \caption{
+        DeepWalkのしくみ。頂点を単語とする文をランダム・ウォークで生成し、Word2Vecに与える。
     }
     \label{fig:deepwalk}
 \end{figure}
 
-DeepWalkでは、各頂点を1つの単語として、頂点の列（文）をネットワークから生成する(図\ref{fig:deepwalk})。
-生成する文がある頂点$i$から始まるとしよう。DeepWalkでは、$i$の次に来る頂点を隣接する頂点の中から確率的に選ぶ。
-これを繰り返し行うことで、頂点を単語とする文を生成する。
-あとはこの生成された文をWord2Vecに与えれば、頂点の埋め込みが得られる。
-この「ある頂点から別の頂点を確率的に選んで移動する運動」はネットワークにおけるランダム・ウォークと呼ばれる。
-ランダム・ウォークには様々な種類があり、別種のランダム・ウォークを利用したネットワーク埋め込み法も提案されている\cite{Grover2016,Dong2017}。
 
 \subsection{埋め込み空間の分析ツール}
 
-埋め込み空間は高次元であり、座標を見て頂点の位置関係を直接理解することは難しい。
-ここでは埋め込み空間の可視化と分析のためのツールについて紹介する。
+埋め込み空間は高次元であるため、直接理解することが難しい。
+ここでは埋め込み空間を分析して理解するためのツールを紹介する。
 
-埋め込み法を用いた研究では、頂点を高次元の埋め込み空間から2次元平面に射影して可視化することがよく行われる。
-よく用いられる手法として、線形の次元削減法である主成分分析法や、非線形の次元削減法であるt-SNE\cite{Maaten2008}, U-map\cite{McInnes2018}などがある。
-本稿では線形判別分析(Linear Disciminative Analysis; LDA)を主として用いる。
-LDAは教師あり学習の手法で、ラベルが付与されたデータ点を入力として、ラベルが異なるデータ点同士がなるべく離れるような低次元空間へ射影する。
-LDAは、頂点のラベルと埋め込み座標の定性的な関連を調べるときに有用である。
-どの次元削減法も頂点の元々の位置を変えるため、結果の解釈には注意しなければならい。
-例えば、ある2頂点が次元削除した空間で距離が近いからといって、元々の空間で近いとは限らない。
-したがって、次元削除法による可視化は分析の方針を立てる手段として用いることをおすすめする。
-
-頂点のメタ情報を使うことで埋め込み空間を解釈する方法がある。
-例えば、単語の埋め込み空間で、肯定的な単語から否定的な単語に軸を設定することで、単語の肯定度合いを測る軸を作ることができる。
+基本的な分析の方策は、頂点のメタ情報を活用して、埋め込み空間に解釈ができる軸を引くことである。
+例として、単語を埋め込んだ空間を考えよう。
+埋め込まれた単語の中には「楽しい」や「嬉しい」といった意味が肯定的な単語と、「つまらない」「悲しい」といった否定的な単語がいくつか含まれている。
+このとき、肯定的な単語のグループから否定的な単語のグループに向かって、単語の否定度合いを測る軸を作ることができる。
 これはSemAxisと呼ばれる手法である~\cite{An2018}。
-軸の作り方は1つではなく、次元削減法を使って作ることもできる。
-例えば、肯定的な単語集合をグループA、否定的な単語集合をグループBとし、LDAを使って1次元へ次元削減する。
-これによって2グループの単語が極力混ざらない軸を作ることができる。
 
-\section{ケーススタディー}
+SemAxisを設定するために、どのようなメタ情報が使えるのだろうか?
+これを探るために、線形の次元削減法である線形判別分析(Linear Discriminant Analysis; LDA)が便利である。
+LDAは、ラベルが付いたデータ点を入力として、異なるラベルのデータがなるべく離れるように、低次元空間(平面など)へデータ点を線形射影する手法である。
+メタ情報をラベルとし、LDAを用いて埋め込み空間を可視化することで、メタ情報と埋め込み位置の関連を調べることができる。
 
-グラフ埋め込み法で実際にネットワークを埋め込んでみよう。
-本稿では航空網と雑誌の引用ネットワークの２つのネットワークを埋め込んでいく。
-また、埋め込み空間を分析するために便利な解析手法についても紹介していく。
-本稿で用いたコードは\cite{}で公開している。
+メタ情報がない場合でも、頂点の分布を可視化することで分析のヒントが得られることがある。
+埋め込みを可視化する代表的な手法として、主成分分析法、t-SNE~\cite{Maaten2008}、U-map~\cite{McInnes2018}などがある。
+いずれの次元削除法も頂点の位置を変えることに注意が必要である。
+例えば、可視化したときに距離が近い頂点であっても、元々の空間で近いとは限らない。
+そのため、可視化は分析の方針を立てる手段と捉えておくのが良い。
+%したがって、次元削除法による可視化は分析の方針を立てる手段として用いることをおすすめする。
+
+%本稿では線形判別分析(Linear Disciminative Analysis; LDA)を主として用いる。
+%LDAは教師あり学習の手法で、ラベルが付与されたデータ点を入力として、ラベルが異なるデータ点同士がなるべく離れるような低次元空間へ射影する。
+%LDAは、頂点のラベルと埋め込み座標の定性的な関連を調べるときに有用である。
+%頂点のメタ情報から、埋め込み空間に解釈ができる軸を設定できる場合がある。
+
+%SemAxisは教師ありの次元削減法を使って作ることもできる。
+%例えば、肯定的な単語集合をグループA、否定的な単語集合をグループBとし、LDAを使って1次元へ次元削減する。
+%これによって2グループの単語が極力混ざらない軸を作ることができる。
+
+\section{ネットワークの埋め込みの実践}
+
+ネットワークはどう埋め込まれるのか？
+また、埋め込まれたネットワークをどう分析するのか？
+そして、ネットワークに埋め込み法を適用すると何が嬉しいのか？
+これらの問いを、2つの実践例で答えていく。
+本稿で用いたコードは\cite{code}で公開している。
+%本稿では航空網と雑誌の引用ネットワークの２つのネットワークを埋め込んでいく。
 
 \subsection{空港ネットワークの埋め込み}
 
@@ -261,43 +280,40 @@ LDAは、頂点のラベルと埋め込み座標の定性的な関連を調べ�
     \centering
     \includegraphics[width=\hsize]{embedding-airport-annotation.png}
     \caption{
-        空港ネットワークの埋め込み。可視化のため、128次元の埋め込み空間をLDAを用いて2次元に射影した。
-        各点は空港を表し、点の大きさはネットワーク上で隣接する空港の数（次数）を表す。
-        LDAへの入力ラベルとして、空港の位置する地域(アジア、アフリカ、アメリカ、オセアニア、ヨーロッパ)を用いた。
+        空港ネットワークの埋め込み。可視化のため128次元の埋め込み空間をLDAを用いて2次元に射影した。
+        各点は空港を表し、点の大きさはネットワーク上で隣接する空港の数を表す。
+        LDAへの入力ラベルとして、空港の地域(アジア、アフリカ、アメリカ、オセアニア、ヨーロッパ)を用いた。
     }
     \label{fig:airport}
 \end{figure}
 
-空港ネットワークは、地球表面に埋め込まれたネットワークである。
-空港をグラフ埋め込み法を用いて配置しなおしたとき、元々の空港の位置関係が復元されるのか？されなければどのような違いがあるか見てみよう。
+空港ネットワークは空港を頂点、航空便の有無を枝で表したネットワークである。
+このネットワークを埋め込んだとき、空港の埋め込み位置と地理的な位置にどのような違いがあるか見てみよう。
 
-%空港同士のつながりは空港の位置に影響される一方で、空港が位置する国の社会的、経済的な関係にも影響される~\cite{Guimera2005}。
-Openflight.orgで公開されているデータ\cite{opsahl_2011}を用いて、空港を頂点、定期便の有無を枝で表した空港ネットワークを構築した。
-枝に方向はなく重みもない。このネットワークを、行列分解法\cite{Qiu2018}に基づくDeepWalkを用いて128次元の空間に埋め込んだ。
+空港ネットワークを構築するために、Openflight.orgで公開されているデータ\cite{opsahl_2011}を用いた。
+枝に方向と重みはない。このネットワークを、行列分解法に基づくDeepWalk~\cite{Qiu2018}を用いて128次元の空間に埋め込んだ。
 
-
-埋め込み空間では、空港の地理的な関係に加えて社会的・経済的な結びつきが表れている(図\ref{fig:airport})。
-埋め込み空間には、大まかに3つのクラスターがあり、それぞれアジア・アフリカ・ヨーロッパ地域、アメリカ地域、オセアニア地域の空港からなる。
-アジア・アフリカ・ヨーロッパ地域のクラスター内では、アジアとヨーロッパ地域の空港はあまり混ざっていないのに対して、歴史的な理由で社会的・経済的な結びつきが強いアフリカとヨーロッパ地域の空港は混ざっている。
-他地域でも地理的な近さだけでは説明できない空港の結びつきが表れている。
-例えば、地理的にアジアに近いパプアニューギニアの空港(Port Moresby Jacksons Intl)よりも、オーストラリアの空港(Melbourne Intl, Syndney Intl)がアジア地域のクラスターに近い。
-同様にして、アメリカ地域では、地理的にヨーロッパに近いMiami空港より、John F Kennedy IntlやNewwark Liberty Intlがヨーロッパ地域寄りに埋め込まれている。
-各地域クラスターの境界には、多地域を結ぶハブ空港(Frankfurt Main, Heathrow, John F Kennedy Intl)や地域間を接続するゲートウェイ空港(Guam Intl, Honolulu Intl, Narita Intl)があり、
+埋め込み空間では、空港の地域的な結びつきの他に、社会的・経済的な結びつきが表れている(図\ref{fig:airport})。
+埋め込み空間には、アメリカ地域、オセアニア地域、そしてアジア・アフリカ・ヨーロッパ地域の空港からなる3つのクラスターがある。
+各クラスター内では地理的な近さだけでは説明できない空港の結びつきが表れている。
+%例えば、アメリカ地域では、地理的にヨーロッパに近いMiami空港より、John F Kennedy IntlやNewark Liberty Intlがヨーロッパ地域寄りに埋め込まれている。
+例えば、オセアニア地域では、地理的にアジアに近いパプアニューギニアの空港(Port Moresby Jacksons Intl)よりも、オーストラリアの空港(Melbourne Intl, Syndney Intl)がアジア地域寄りに埋め込まれている。
+また、ヨーロッパ地域の空港は、地理的にはより近いアジアよりも、歴史的な理由で社会的・経済的な結びつきが強いアフリカ地域の空港と混ざっている。
+各地域クラスターの境界には、多数の地域を結ぶハブ空港(Frankfurt Main, Heathrow, John F Kennedy Intl)や地域間を接続するゲートウェイ空港(Guam Intl, Honolulu Intl, Narita Intl)があり、
 空港の位置関係から空港の役割を読み解くことができる。
 
 \subsection{ライフサイエンス研究の埋め込み}
 
-新型コロナウイルス(COVID-19)の流行によって、社会・経済的な活動の制限が長期間続いており、
+新型コロナウイルス(COVID-19)の流行による社会・経済的な活動の制限が長期間続いており、
 治療法やワクチンの開発が精力的に進められている。
 
-治療法やワクチン開発には、様々な研究のプロセスを段階的に経る必要がある。
-例えば、ワクチン開発には、ウイルスの性質を調べ上げ、ワクチンの候補となるタンパク質を発見する必要がある。
-次に、候補となるタンパク質からワクチンを生成し、多くの動物実験や臨床試験を行って安全性を確認しなければならない。
-さらに、開発したワクチンの生産の効率化や、市民に届けるための社会的な仕組みの構築などが必要である。
-この基礎研究から臨床応用までの段階的なプロセスは``bench-to-bedside''、つまり実験台(bench)から患者の枕元(bedside)までのプロセスと呼ばれている。
+治療法やワクチン開発には、様々なプロセスを段階的に経る必要がある。
+例えば、ワクチンを開発するためには、ウイルスの性質を調べ上げ、ワクチンの候補を作る必要がある。
+次に、動物実験や臨床試験を行ってワクチンの安全性を確認しなければならない。
+さらに、開発したワクチンの大量生産や、市民に届けるための社会的な仕組みの構築などが必要である。
+この基礎研究から臨床応用までの段階的なプロセスは``Bench-to-Bedside''、つまり実験台(bench)から患者の枕元(bedside)までのプロセスと呼ばれている。
 
-Bench-to-bedsideのプロセスは優れた基礎研究の成果を実用化するために重要である。
-しかし、多くの基礎研究の成果が臨床応用につながっていない問題や、臨床応用までに時間がかかる問題が指摘されており、プロセスの効率化が求められている\cite{Khoury2007}。
+Bench-to-Bedsideのプロセスは優れた基礎研究の成果を実用化するために重要である。
 では、基礎研究が臨床応用にどのように橋渡しされているのだろうか？
 橋渡しの工程の中で、どの研究領域がどの程度重なっているのか？断絶はないか？
 これらの問いを、埋め込み法で答えてみよう。
@@ -305,114 +321,260 @@ Bench-to-bedsideのプロセスは優れた基礎研究の成果を実用化す�
 \begin{figure*}[h!]
     \centering
     \begin{minipage}{\hsize}
-        \legen{A} \\
         \includegraphics[width=\hsize]{medical-journal-map.png} 
     \end{minipage}
-    \begin{tabular}{cc}
-        \begin{minipage}{0.5\hsize}
-            \legen{B} \\
-            \includegraphics[width=\hsize]{bench-to-bedside.pdf}
-        \end{minipage}
-        &
-        \begin{minipage}{0.45\hsize}
-            \legen{C} \\
-            \includegraphics[width=\hsize]{ta-citation.png} 
-        \end{minipage}
-    \end{tabular}
     \caption{
         生命科学分野の雑誌の引用ネットワークの埋め込み。
         MEDLINEに登録されている$5,274$誌を128次元の空間に埋め込んだ。
-        {\bf (A)} 可視化のためLDAを用いて2次元面に射影した。LDAに与えるデータ点（雑誌）のラベルとして、National Library of Medicine (NLM)による
+        {\bf (A)} 可視化のためLDAを用いて2次元面に射影した。LDAに与えるデータ点（雑誌）のラベルとして、National Library of Medicineによる
         雑誌の分野別分類を用いた。
         {\bf (B)} 基礎から臨床までのスペクトル。
         このスペクトルは、基礎研究であるMicrobiologyと、臨床研究であるNursingとChildがなるべく離れるように、埋め込み空間上の全雑誌を直線に射影したものである。
-        上から下にかけて、軸上の雑誌の位置の中央値で分野を降順に並べている。
+        軸上の雑誌の位置の中央値で分野を降順に並べている。
         {\bf (C)} 基礎と臨床研究の引用ネットワーク。 全雑誌を(B)の軸上の位置で順にならべ、全雑誌を10のグループに等分した。
-        黒円は雑誌のグループを表す。グループ$i$から$j$への矢印は$i$から$j$への引用を表す。
-        矢印の幅は引用の数を表し、青は臨床から基礎研究の方向への引用、オレンジはその逆向きの方向への引用を表す。
+        円は雑誌のグループを表す。グループ$i$から$j$への矢印は$i$から$j$への引用を表す。
+        矢印の幅は引用数を表す。
     }
     \label{fig:journal-map}
 \end{figure*}
 
-優れた基礎研究の成果は、臨床研究の土台として引用される~\cite{Weber2013}。
-この考えのもと、論文雑誌の引用ネットワークを埋め込み、埋め込んだ空間から基礎研究から臨床応用へのスペクトルがあるか確認する。
-論文雑誌の引用ネットワークを構築するために、ライフサイエンスの文献情報を収録したMEDLINEを用いる~\cite{MEDLINE}。
+優れた基礎研究は、臨床研究の土台として引用される~\cite{Weber2013}。
+この考えのもと、雑誌の引用ネットワークを埋め込み、埋め込んだ空間に基礎研究から臨床応用へのスペクトルがあるか確認する。
+雑誌の引用ネットワークを構築するために、ライフサイエンスの文献情報を収録したMEDLINEを用いる~\cite{MEDLINE}。
 MEDLINEには$5,274$の雑誌が登録されており、専門家によって雑誌が分野別に分類されている。
-これらの雑誌が出版した全ての論文の書誌情報から雑誌の引用ネットワークを構築した。
+これらの雑誌の引用ネットワークを構築し、このネットワークを128次元の空間にDeepWalkを用いて埋め込んだ~(図\ref{fig:journal-map}A)。
 
-構築した引用ネットワークをDeepWalkを用いて128次元の空間に埋め込んだ~(図\ref{fig:journal-map}A)。
 全体的に、同じ分野の雑誌が大体まとまって配置され、分野の位置から基礎研究と臨床研究へのスペクトルを見ることができる。
-具体的に、基礎研究である生物学(Biology)系の分野から始まり、薬学(Pharmacology, Medicine)や腫瘍学(Neoplasms), そして公衆衛生(Public Health)へと分野が連続して重なっている。
+具体的に、基礎研究である微生物学(Microbiology)から始まり、薬学(Pharmacology, Medicine)や腫瘍学(Neoplasms), そして公衆衛生(Public Health)へと分野が連続して重なっている。
 臨床研究が多い小児科学(Child)や看護学(Nursing)は、公衆衛生と近いが重なりは比較的少ない。
  
 基礎研究から臨床研究までのスペクトルをより定量的に求めよう。
-Microbiologyの雑誌を基礎研究グループ、小児科学と看護学の雑誌を臨床研究グループとし、2グループが極力混ざらないような軸をLDAによって求めた(図\ref{fig:journal-map}B)。
-この軸を基礎-臨床軸と呼ぶ。
-この軸上では、雑誌が基礎から臨床研究まで順に並んでいる。
-この順序は、専門家による4雑誌(Biological Chemistry, JCI, NEJM, JAMA)の基礎から臨床までの順序付けと一致している\cite{Narin1976}。
+微生物学の雑誌を基礎研究グループ、小児科学と看護学の雑誌を臨床研究グループとし、2グループが極力混ざらないような軸をLDAによって求めた(図\ref{fig:journal-map}B)。
+この軸を基礎臨床軸と呼ぶ。
+この軸上での雑誌の順序は、専門家が行った雑誌の基礎・臨床の分類と一致している~\cite{Narin1976}。
 軸の両端の分野(Microbiology, Child, Nursing)を橋渡しする分野には、一般科学、薬学、腫瘍学、公衆衛生がある。
 %この軸上では、軸設定に用いた基礎研究グループ(Microbiology)と, 臨床研究グループ(Child, Nursing)の雑誌がほぼ混ざらずに両端に配置されていることから、狙い通りに軸が設定されていることが確認できる。
 
-基礎から臨床の各段階の研究はどの段階の研究成果を土台にしているのだろうか？
-この問いに答えるため、雑誌を基礎-臨床軸の位置で並び替えて10のグループに等分し、グループ間の引用数を数えた(図\ref{journal-map}C)。
-全体的に、各グループは基礎-臨床軸上で近しいグループの雑誌を多く引用している。
-研究の段階が臨床研究に進むにつれてグループ間の引用が少なくなっているが、これは分野の慣習によるところがある。
-基礎-臨床軸上で、基礎から臨床グループへの引用($365,898,827$)は、臨床から基礎への引用($113,195,427$)の約3倍である。
-したがって、各段階の研究は少し基礎よりの研究を引用する傾向があるが、臨床から基礎への研究の流れも少なからずあることがわかる。
+
+基礎研究の成果は臨床研究の土台になっているのだろうか？
+この問いに答えるため、雑誌を基礎臨床軸上の位置でランキングし、10のグループに等分してグループ間の引用数を数えた(図\ref{fig:journal-map}C)。
+全体的に、各グループは軸上で隣接するグループの雑誌を多く引用している、
+また、研究の段階が臨床研究に進むにつれてグループ間の引用が少なくなっている。
+引用が基礎から臨床に進むにつれて減少しているのは、臨床研究の論文が比較的少ないことが要因である可能性がある。
+引用の数を見ると、臨床から基礎への引用が3倍多い (臨床から基礎は$365,898,827$引用、基礎から臨床は$113,195,427$引用)。
+したがって、臨床研究は基礎研究の成果を元に展開されていることがわかる。
+一方で、基礎研究は、臨床研究の成果を取り入れながらも、他の基礎研究の成果をより多く取り入れて展開していることがわかる。
+%各段階の研究は少し基礎よりの研究を引用する傾向があるが、臨床から基礎への研究の流れも少なからずあることがわかる。
+%また、臨床に近づくにつれて、研究成果が次の臨床研究の段階から引用されにくくなる傾向がある。
+%実際、生命科学の分野では、多くの基礎研究の成果が臨床応用につながっていない問題が指摘されている\cite{Khoury2007}。
 
 %-----------------
 \section{おわりに}
 %-----------------
 
-ネットワークをコンパクトなベクトルに変換する手法であるネットワーク埋め込み法を紹介した。
-ネットワークをベクトルに変換することで、一般的な機械学習法や統計解析法を使ったネットワークの分析が可能となる。
+ネットワークをベクトルに変換する技術、ネットワーク埋め込み法を紹介した。
+埋め込みによって、一般的な機械学習法や統計解析法を使ったネットワークの分析が可能となる。
 また、埋め込み空間における頂点の位置関係から、頂点の役割やネットワークにおける立ち位置を読み解くことができる。
-航空網と雑誌の引用関係の分析を通して、次元削除法やSemAxisなどの埋め込み空間の理解を助けるツールを紹介した。
+%航空網と雑誌の引用関係の分析を通して、次元削除法やSemAxisなどの埋め込み空間の理解を助けるツールを紹介した。
 
-本稿ではWord2VecをベースにしたDeepWalkを紹介した。
-この他にも、LINE\cite{Tang:2015}、Node2Vec\cite{Grover:2016}、PTE\cite{Tang2015}などのネットワーク埋め込み法が広く使われている。 
-DeepWalkは一般のネットワークを埋め込む手法であるが、特定の種類のネットワーク、例えば、2部グラフを埋め込む方法\cite{Gao2018}や多重ネットワーク(Multiplex networks)を埋め込む方法\cite{Dong2017}も提案されている。
 
-埋め込み法の実践例として、航空網と雑誌の引用ネットワークを埋め込んで分析した。
-分析に用いたコードは\cite{code}から入手することができる。
-雑誌の引用関係の分析に関して、様々な分野の研究活動を埋め込み法で分析した研究\cite{Peng2020}を参考にし、本稿では生命科学の分野に焦点を絞って分析した。
-埋め込み法を使って研究活動を分析する試みとして、論文のキーワードから学術用語を埋め込んだ研究\cite{Chinazzi2019,Ke2019}や研究者の職歴を使って研究機関を埋め込んだ研究がある。
-研究活動の分析で扱うデータには、キーワードや要旨などのテキストデータ、共著関係、引用関係といったネットワークデータが多く、埋め込み法が活用され始めている。
+実践例として航空網と雑誌の引用ネットワークを分析した。
+分析に用いたコードは~\cite{code}から入手することができる。
+雑誌の引用関係の分析に関して、全分野の雑誌の引用関係を埋め込み法で分析した研究~\cite{Peng2020}を参考に、本稿では生命科学の分野に焦点を絞って分析した。
+埋め込み法を使って研究活動を分析する試みとして、学術用語を埋め込んだ研究~\cite{Chinazzi2019,Ke2019}がある。
+%研究活動の分析で扱うデータには、キーワードや要旨などのテキストデータ、共著関係、引用関係といったネットワークデータが多く、埋め込み法が活用され始めている。
 
-% close the loop
-自然言語処理の技術として発展した埋め込み法が、複雑ネットワーク研究に新たな学際的な広がりをもたらしている。
-人々の社会活動がデジタル世界にシフトする中、膨大な量のテキストデータやネットワークデータが生まれている。
+本稿ではDeepWalkを紹介したが、他にもLINE~\cite{Tang2015}、node2vec~\cite{Grover2016}、PTE~\cite{Tang2015a}などのネットワーク埋め込み法が広く使われている。 
+また、特種なネットワーク、例えば、2部グラフを埋め込む方法~\cite{Gao2018}や多重ネットワークを埋め込む方法~\cite{Dong2017}も提案されている。新たな手法が提案される一方で、ネットワーク科学の視点で埋め込み法を見直す研究もある~\cite{Seshadhri2020,Tandon2020}。
 
-計算社会科学の
-コミュニケーション技術の発展や書誌のデジタルアーカイブによって、
-大規模社会データを情報技術
-
-大量のテキスト、ネットワークデータが生まれている。
-
-SNSに代表されるコミュニケーション技術の発展と普及によって人々は
-ネットワーク科学に新たな流れをもたらしている。
-が
-最近急速に発展している計算社会学に
-
-複雑ネットワーク研究に学際的な広がりをもたらしている。
-
-ます。この点で特集号の趣旨によく合うかと思います
-
-\
+埋め込み法は、簡単なベクトル演算でネットワークを分析する手段を提供している。
+一度埋め込んでしまえば、ネットワーク科学の知識がなくても、配置されている距離や方向から、頂点の関係の強さや種類を調べることができる。
+埋め込み法はネットワーク分析のハードルを下げただけでなく、ネットワーク科学と様々な分野の知見をつなぐ機会を作っている。
+統計がナイチンゲールによって看護に展開され、それまでの常識を大きく変えたように、ネットワーク科学の新たな展開が今後期待される。
+%ナイチンゲールが統計を看護に持ち込んで常識を変えたように、ネットワーク科学の新たな展開が今後期待される。
 % 謝辞
 %------------------
-\acknowledgement
+%\acknowledgement
 %-----------------
 
-\bibliographystyle{unsrt}
-\bibliography{main}
+%\bibliographystyle{./unsrtabb}
+%\bibliography{main}
+\begin{thebibliography}{10}
 
+\bibitem{Mikolov2013a}
+T.~Mikolov, I.~Sutskever, K.~Chen, G.~Corrado, and J.~Dean.
+\newblock {Distributed representations of words and phrases and their compositionality}.
+\newblock In {\em Proc.~Conf.~on Empirical Methods in Natural Language Processing}, 1389--1399, Lake Tahoe, Nevada, 2013.
+
+\bibitem{kawamura2020chive}
+河村宗一郎, 久本空海, 真鍋陽俊, 高岡一馬, 内田佳孝, 岡照晃, 浅原正幸.
+\newblock chiVe 2.0: SudachiとNWJCを用いた実用的な日本語単語ベクトルの実現へ向けて.
+\newblock {\em 言語処理学会第26回年次大会}, 6--16. 言語処理学会, 2020.
+
+\bibitem{Mikolov2013}
+T.~Mikolov et~al.
+\newblock {Efficient estimation of word representations in vector space}.
+        \newblock {\em arXiv}, 1301.3781, 2013.
+
+\bibitem{Tshitoyan2019}
+V.~Tshitoyan, et~al.
+\newblock {Unsupervised word embeddings capture latent knowledge from materials science literature}.
+\newblock {\em Nature}, 571, 95--98, 2019.
+
+\bibitem{Levy2014}
+O.~Levy and Y.~Goldberg. \newblock {Neural word embedding as implicit matrix factorization}.
+\newblock {\em Advances in Neural Information Processing Systems},
+  3:2177--2185, 2014.
+
+\bibitem{pennington-etal-2014-glove}
+J.~Pennington, R.~Socher, and C.~Manning.
+\newblock {GloVe: Global vectors for word representation}.
+\newblock In {\em Proc.~Conf.~on Empirical Methods in
+  Natural Language Processing}, volume~19, 1532--1543,
+  Doha, Qatar, 2014.
+
+\bibitem{joulin2016fasttext}
+A.~Joulin, E.~Grave, P.~Bojanowski, M.~Douze, H.~J{\'e}gou, and T.~Mikolov.
+\newblock FastText.zip: Compressing text classification models.
+\newblock {\em arXiv}, 1612.03651, 2016.
+
+\bibitem{Bojanowski2017}
+P.~Bojanowski, E.~Grave, A.~Joulin, and T.~Mikolov.
+\newblock Enriching word vectors with subword information.
+\newblock {\em Transactions of the Association for Computational Linguistics}, 5:135--146, 2017.
+
+\bibitem{gensim}
+R.~{\v R}eh{\r u}{\v r}ek and P.~Sojka.
+\newblock gensim.
+\newblock {\url{https://radimrehurek.com/gensim/index.html}. [Accessed 26th Sept. 2020]}.
+
+\bibitem{Bryan2014}
+B.~Perozzi, R.~Al-Rfou, and S.~Skiena.
+\newblock {DeepWalk: Online learning of social representations}.
+\newblock In {\em Proc.~ACM SIGKDD Internal.~Conf. on Knowledge Discovery and Data Mining}, 701--710, New York, New York, USA, 2014.
+
+\bibitem{Grover2016}
+A.~Grover and J.~Leskovec.
+\newblock {Node2Vec: Scalable feature learning for networks}.
+\newblock In {\em Proc.~ACM SIGKDD Internat.~Conf.~on Knowledge Discovery and Data Mining}, 855--864, New York,
+  NY, USA, 2016.
+
+\bibitem{Dong2017}
+Y.~Dong, N.~V. Chawla, and A.~Swami.
+\newblock {Metapath2vec: Scalable representation learning for heterogeneous
+  networks}.
+\newblock In {\em Proc.~ACM SIGKDD Internat.~Conf.~on Knowledge Discovery and Data Mining}, 135--144 , Halifax, NS, Canada, 2017.
+
+\bibitem{An2018}
+J.~An, H.~Kwak, and Y.-Y. Ahn.
+\newblock SemAxis: A lightweight framework to characterize domain-specific word semantics beyond sentiment.
+\newblock In {\em Proc.~Annual Meeting of the Association for Computational Linguistics}, 2450--2461, Melbourne, Australia, 2018.
+
+\bibitem{Maaten2008}
+L.~van~der Maaten and G.~Hinton.
+\newblock Visualizing data using t-SNE.
+\newblock {\em J.~Machine Learning Research}, 9, 2579--2605, 2008.
+
+\bibitem{McInnes2018}
+L.~McInnes, J.~Healy, and J.~Melville.
+\newblock {UMAP: Uniform manifold approximation and projection for dimension reduction}.
+\newblock {\em arXiv}, 1802.03426, 2018.
+
+\bibitem{code}
+S.~Kojaku.
+\newblock https://github.com/skojaku/graph-embedding-review-ja.
+
+\bibitem{opsahl_2011}
+Why anchorage is not (that) important: Binary ties and sample selection, 2011.
+\newblock {\url{https://toreopsahl.com/2011/08/12/why-anchorage-is-not-that-important-binary-ties-and-sample-selection/}. [Accessed 26th Sept. 2020]}.
+
+\bibitem{Qiu2018}
+J.~Qiu, Y.~Dong, H.~Ma, J.~Li, K.~Wang, and J.~Tang.
+\newblock {Network embedding as matrix factorization: Unifying DeepWalk, LINE, PTE, and Node2vec}.
+\newblock In {\em Proc.~Conf.~on Web Search and Data Mining}, 459--467, Marina Del Rey, CA, USA, 2018.
+
+\bibitem{Weber2013}
+G.~M. Weber.
+\newblock {Identifying translational science within the triangle of biomedicine}.
+\newblock {\em J.~Translational Medicine}, 11, 1--10, 2013.
+
+\bibitem{MEDLINE}
+MEDLINE/PubMed Data.
+\newblock \url{https://www.nlm.nih.gov/databases/download/pubmed_medline.html}
+\newblock [Accessed 22th Oct. 2020].
+
+\bibitem{Narin1976}
+F.~Narin, G.~Pinski, and H.~H. Gee.
+\newblock {Structure of the biomedical literature}.
+\newblock {\em J.~American Society for Information Science},
+  27, 25--45, 1976.
+
+%\bibitem{Khoury2007}
+%M.~J. Khoury, M.~Gwinn, P.~W. Yoon, N.~Dowling, C.~A. Moore, and L.~Bradley.
+%\newblock {The continuum of translation research in genomic medicine: How can
+%  we accelerate the appropriate integration of human genome discoveries into
+%  health care and disease prevention?}
+%\newblock {\em Genetics in Medicine}, 9(10):665--674, 2007.
+
+\bibitem{Peng2020}
+H.~Peng, Q.~Ke, C.~Budak, D.~M. Romero, Y.-Y. Ahn.
+\newblock {Neural embeddings of scholarly periodicals reveal complex
+  disciplinary organizations.}
+\newblock {\em arXiv}, 2001.08199, 2020.
+
+\bibitem{Chinazzi2019}
+M.~Chinazzi, B.~Gon{\c{c}}alves, Q.~Zhang, and A.~Vespignani.
+\newblock {Mapping the physics research space: A machine learning approach}.
+\newblock {\em EPJ Data Science}, 8, 1--18, 2019.
+
+\bibitem{Ke2019}
+Q.~Ke.
+\newblock {Identifying translational science through embeddings of controlled
+  vocabularies}.
+\newblock {\em J.~American Medical Informatics Association},
+  26, 516--523, 2019.
+
+\bibitem{Tang2015}
+J.~Tang, M.~Qu, M.~Wang, M.~Zhang, J.~Yan, and Q.~Mei.
+\newblock {LINE: Large-scale information network embedding}.
+\newblock In {\em Proc.~Conf.~on World Wide Web}, 1067--1077, Republic and Canton of Geneva,
+  Switzerland, 2015.
+
+\bibitem{Tang2015a}
+J.~Tang, M.~Qu, and Q.~Mei.
+\newblock PTE: Predictive text embedding through large-scale heterogeneous text
+  networks.
+\newblock In {\em Proc.~the 21th ACM SIGKDD International Conference
+  on Knowledge Discovery and Data Mining}, page 1165--1174,
+  New York, NY, USA, 2015.
+
+\bibitem{Gao2018}
+M.~Gao, L.~Chen, X.~He, and A.~Zhou.
+\newblock {BiNE: Bipartite network embedding}.
+\newblock In {\em Internat. ACM SIGIR Conf.~on~Research {\&}
+  Development in Information Retrieval}, 715--724, New York, NY, USA, 2018.
+
+\bibitem{Meng2020}
+L.~Meng and N.~Masuda.
+\newblock {Analysis of node2vec random walks on networks}.
+\newblock {\em arXiv}, 2006.04904, 1--25, 2020.
+
+\bibitem{Seshadhri2020}
+C.~Seshadhri, A.~Sharma, A.~Stolman, and A.~Goel.
+\newblock {The impossibility of low-rank representations for triangle-rich complex}. 
+\newblock {\em Proc. of the National Academy of Sciences}, 117, 5631--5637, 2020.
+
+\bibitem{Tandon2020}
+A.~Tandon, A.~Albeshri, V.~Thayananthan, W.~Alhalabi, F.~Radicchi, and S.~Fortunato.
+\newblock {Community detection in networks using graph embeddings}.
+\newblock {\em arXiv}, 2009.05265, 1--25, 2020.
+
+\end{thebibliography}
 
 \authorbiography{幸,若,　,完,壮}{こう,じゃく,,さだ,もり}{非正会員}{%
- 2015年9月××大学大学院工学研究科○○工学専攻△△課程修了．
- 同年X月××助手．19XX年X月××となり現在に至る．
- ××の研究に従事．
- ××などの会員．}
+ 2015年9月北海道大学大学院情報科学研究家博士課程修了。
+ 2016年4月英ブリストル大学博士研究員。2020年2月米インディアナ大学博士研究員となり現在に至る。
+ 計算科学、ネットワーク科学の研究に従事。}
 
 %\authorbiography{佐,藤,　,花,子}{さ,とう,,はな,こ}{正会員}{%
 %  19XX年X月××大学大学院工学研究科○○工学専攻△△課程修了．
